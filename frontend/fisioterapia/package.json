@@ -1,0 +1,29 @@
+{
+  "name": "fisioterapia",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@iconoir/vue": "^7.7.0",
+    "axios": "^1.6.8",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "bootstrap-vue": "^2.23.1",
+    "firebase": "^10.12.1",
+    "moment": "^2.30.1",
+    "vue": "^3.4.25",
+    "vue-axios": "^3.5.2",
+    "vue-router": "^4.3.2",
+    "vuefire": "^3.1.23",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "vite": "^4.1.4"
+  }
+}

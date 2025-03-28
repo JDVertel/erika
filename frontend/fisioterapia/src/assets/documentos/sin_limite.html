@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <img
+      id="imagen"
+      src="https://i.ibb.co/3vt0CNr/Captura-de-pantalla-2023-11-27-114601.png"
+      alt="Logotipo"
+      class="logo-img"
+    />
+
+    <button id="borrarX">Borrar X</button>
+  </body>
+
+  <style>
+    body {
+      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+        sans-serif;
+    }
+
+    #imagen {
+      width: 500px;
+      height: 500px;
+      position: relative;
+    }
+  </style>
+
+  <script>
+    //======================================================================
+    // VARIABLES
+    //======================================================================
+    let imagen = document.querySelector("#imagen");
+    let botonBorrar = document.querySelector("#borrarX");
+    let correccionX = 0;
+    let correccionY = 0;
+
+    //======================================================================
+    // FUNCIONES
+    //======================================================================
+
+    /**
+     * Funcion que coloca una X en la posición actual
+     */
+    function colocarXEnPosicion(x, y) {
+      // Ajustar las coordenadas según el desplazamiento de la imagen
+      let nuevaX = x - correccionX - 0;
+      let nuevaY = y - correccionY + 0;
+
+      // Crear un elemento div para representar la "X"
+      let divX = document.createElement("div");
+      divX.innerHTML = "X";
+      divX.style.position = "absolute";
+      divX.style.left = nuevaX + "px";
+      divX.style.top = nuevaY + "px";
+      divX.style.fontSize = "20px";
+      divX.style.color = "#000";
+
+      // Agregar el elemento div a la imagen
+      divX.classList.add("borrarX"); // Agregar la clase "borrarX"
+      imagen.parentNode.appendChild(divX);
+    }
+
+    /**
+     * Funcion que coloca la X al hacer clic o toque
+     */
+    function colocarXEnEvento(event) {
+      // Obtener la posición de la imagen en la página
+      let posicion = imagen.getBoundingClientRect();
+      correccionX = posicion.x;
+      correccionY = posicion.y;
+
+      if (event.touches) {
+        // Versión touch, pantalla táctil
+        nuevaPosicionX = event.touches[0].pageX;
+        nuevaPosicionY = event.touches[0].pageY;
+      } else {
+        // Versión ratón
+        nuevaPosicionX = event.clientX;
+        nuevaPosicionY = event.clientY;
+      }
+
+      colocarXEnPosicion(nuevaPosicionX, nuevaPosicionY);
+    }
+
+    /**
+     * Funcion que borra las X
+     */
+    function borrarX() {
+      let xElements = document.querySelectorAll(".borrarX");
+      xElements.forEach((element) => {
+        element.remove();
+      });
+    }
+
+    //======================================================================
+    // EVENTOS
+    //======================================================================
+
+    // Evento clic o toque
+    imagen.addEventListener("mousedown", colocarXEnEvento, false);
+    imagen.addEventListener(
+      "touchstart",
+      function (event) {
+        event.preventDefault(); // Evitar el comportamiento táctil predeterminado
+        colocarXEnEvento(event);
+      },
+      false
+    );
+
+    // Evento clic en el botón para borrar las X
+    botonBorrar.addEventListener("click", borrarX);
+  </script>
+</html>

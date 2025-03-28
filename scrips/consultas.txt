@@ -1,0 +1,5 @@
+// consultar las citas disponibles en la agenda virtual
+
+SELECT * FROM `base_agendas` WHERE id_tipo_agenda= "A1" AND jornada="AM" AND hora NOT IN (SELECT hora FROM agendas where id_tipo_agenda="A1" and jornada="AM"  AND fecha="2023-04-18");
+
+//

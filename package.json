@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "vue-upload-multiple-image": "^1.1.6"
+  }
+}

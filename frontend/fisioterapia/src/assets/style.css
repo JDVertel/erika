@@ -1,0 +1,276 @@
+#App {
+  background-image: linear-gradient(to bottom right, #ffffff, rgb(37, 122, 99));
+  width: 100%;
+  min-height: 100vh;
+  position: absolute;
+  padding-bottom: 3rem;
+  /*   font-size: 0.75rem; */
+  text-decoration: none;
+}
+
+strong {
+  color: #34836e;
+}
+
+.card_titulo {
+  color: #dbf6ef;
+  text-shadow: 2px 2px 5px #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px !important;
+}
+
+
+
+.card_detalle {
+  font-size: 0.8rem !important;
+  padding: 1px;
+  text-shadow: 2px 2px 5px #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px !important;
+}
+
+.card_contador {
+  font-size: 0.8rem !important;
+  padding: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-shadow: 2px 2px 5px #333;
+}
+
+.card_login
+{
+  height: 400px !important;
+  width: 350px !important;
+}
+
+.Cont_hc {
+  margin-bottom: 15px;
+}
+
+button.accordion-button.collapsed {
+  padding: 8px;
+  color: #ffffff;
+  background-color: #34836e;
+}
+
+button.accordion-button {
+  padding: 15px;
+}
+
+div.accordion-body {
+  background-color: #dbf6ef;
+}
+
+div.content-body {
+  background-image: linear-gradient(
+    to bottom right,
+    #ffffff,
+    rgb(150, 230, 209)
+  );
+  padding: 5px !important;
+}
+
+.btnwsp {
+  padding: 4px !important;
+  border-style: none;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.imagenservicio {
+  height: 120px !important;
+  width: 100% !important;
+}
+
+.imagenconfig {
+  height: 70px !important;
+  width: 100% !important;
+}
+
+.centrarcontenido {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.centradosombra{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 2px 2px 5px #333;
+}
+
+.hrsencillo{
+  margin-top: 0;
+  margin-bottom: 0;
+
+}
+
+.card {
+  border: none !important;
+  border-radius: 10px !important;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+  padding: 5px !important;
+}
+
+.img_Dashboard{
+  width: 100%; /* Ancho relativo */
+  height: auto; /* Altura automática para mantener la proporción */
+}
+/*  */
+.cardDash{
+  padding: 13px !important;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2) ;
+}
+.cardDash:hover{
+  padding: 13px !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+/*  */
+.vitrinacard{
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.vitrinacard:hover{
+  box-shadow: 5px 8px 8px 0px rgba(0, 0, 0, 0.2);
+}
+/*  */
+.logobar{
+  width: 70%; /* Ancho relativo */
+  height: auto; 
+  border-radius: 15px !important;
+}
+
+/* .card:hover {
+  box-shadow: 0 9px 9px 0 rgba(0, 0, 0, 0.2);
+} */
+/* ........................................................ */
+/* .card-container {
+  display: flex;
+  overflow-x: auto; // Permite deslizar horizontalmente 
+  padding: 10px;
+  gap: 100px;
+}
+
+.card-content {
+  flex: 0 0 auto;  // Cada card ocupa su propio espacio 
+  width: 100px; // Ajusta el ancho de cada card
+  margin: 0px;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+}
+
+
+.card_detalle,
+.card_contador h5 {
+  margin-top: 0;
+}
+
+.theme_clases {
+  background-color: rgb(12, 199, 232);
+}
+.theme_fisio {
+  background-color: rgb(185, 67, 221);
+}
+.theme_consulta {
+  background-color: rgb(232, 206, 13);
+} */
+/* ....................................................... */
+
+
+.titulo {
+  font-size: 14px;
+  text-align: justify;
+}
+
+.cuerpo {
+  padding: 10px;
+  justify-content: center;
+  align-content: center;
+  height: 120px;
+  overflow: hidden;
+}
+
+.pie {
+  padding: 8px;
+  text-align: center;
+}
+
+.pie a {
+  text-decoration: none;
+  color: white;
+}
+
+.pie a:after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  content: "";
+}
+.tabla-compacta td,
+.tabla-compacta th {
+  padding-top: 0.1rem; /* Ajusta estos valores */
+  padding-bottom: 0.1rem; /* según sea necesario */
+}
+
+/*---------------------------------------------------mañas*/
+.radio-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0px;
+  margin-left: 15px;
+  margin-right: 5px;
+  padding: 5px;
+}
+
+.form-check {
+  margin-left: -15px;
+  margin-right: 2px;
+  padding: 2px;
+  font-size: 0.6em;
+}
+
+.degradado {
+  background-image: linear-gradient(to right, rgb(0, 128, 126), yellow, red);
+}
+
+input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  margin: 0 0 0 5px;
+  cursor: pointer;
+}
+
+.default {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.default td {
+  padding: 10px;
+  text-align: center;
+}
+hr{
+  padding: 0px !important;
+  margin: 0px !important;
+}
+a{
+  text-decoration: none;
+}
+
+

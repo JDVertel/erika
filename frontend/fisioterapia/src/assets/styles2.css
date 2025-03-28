@@ -1,0 +1,177 @@
+/*apps --------------------------------------------------------------------------------------------------*/
+#App {
+  background-image: linear-gradient(to bottom right, #ffffff, rgb(37, 122, 99));
+  width: 100%;
+  min-height: 100vh;
+  position: absolute;
+  padding-bottom: 3rem;
+  /*   font-size: 0.75rem; */
+  text-decoration: none;
+}
+
+.imagenservicio {
+  height: 120px !important;
+  width: 100% !important;
+}
+
+.cmenu {
+  margin: 5px;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+.cmenu:hover {
+  margin: 5px;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #2113e8;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btnwsp {
+  border-radius: 35px !important;
+  padding: 4px !important;
+  border-style: none;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.serviciostitlecolor {
+  color: #198754 !important;
+}
+
+.rurinatitlecolor {
+  color: #42a3fc !important;
+}
+
+.producttitlecolor {
+  color: #c6262e !important;
+}
+
+.imagenhc {
+  max-width: 40%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.centrarcontenido {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card:hover {
+  box-shadow: 0 9px 9px 0 rgba(0, 0, 0, 0.2);
+}
+
+nav.navbar a {
+  /*  background-color: transparent !important; */
+  color: #ffffff;
+}
+
+nav.navbar a :hover {
+  color: #afef00;
+}
+
+.navbar-text {
+  color: #ffffff !important;
+}
+
+a img.icono {
+  filter: invert(100%);
+}
+
+.logobar {
+  border-radius: 50%;
+  width: 40px;
+}
+
+li button {
+  color: #060606 !important;
+}
+
+
+/* HC */
+
+button.accordion-button.collapsed {
+  padding: 3px;
+  background-color: rgb(120, 195, 157);
+  /*   font-size: 0.8rem; */
+  color: rgb(254, 255, 255);
+  text-shadow: 1px 1px 2px black;
+}
+
+button.accordion-button:not(.collapsed) {
+  padding: 3px;
+  background-color: rgb(240, 204, 105);
+  /*   font-size: 0.8rem; */
+  color: rgb(245, 245, 245);
+  text-shadow: 1px 1px 2px black;
+}
+
+
+
+nav-link.active {
+  background-color: #198754;
+}
+
+.navbarprof{
+  background-color: #198754;
+  color: white;
+}
+
+
+/*---------------------------------------------------mañas*/
+.radio-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0px;
+  margin-left: 15px;
+  margin-right: 5px;
+  padding: 5px;
+}
+
+.form-check {
+  margin-left: -15px;
+  margin-right: 2px;
+  padding: 2px;
+  font-size: 0.6em;
+}
+
+
+.degradado {
+  background-image: linear-gradient(to right, rgb(0, 128, 126), yellow, red);
+}
+
+input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  margin: 0 0 0 5px;
+  cursor: pointer;
+}
+
+.default {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.default td {
+  padding: 10px;
+  text-align: center;
+}
