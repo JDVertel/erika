@@ -6,7 +6,7 @@
     <br>
     <div class="container">
         <div class="row">
-<!--             <div class="col-6 col-md-3">
+            <div class="col-6 col-md-3">
                 <div class="card mb-3 cardDash">
                     <div class="row">
                         <div class="col-3 p-2">
@@ -15,17 +15,18 @@
                         <div class="col-9">
                             <div class="col-12 p-2">
                                 <div>
-                                    <router-link :to="{ name: 'reservas', params: { id_user: this.id_user } }"><a class="nav-link-menu" aria-current="page">
-                                            <h2>Reservas</h2>
-                                        </a></router-link>
+                                    <router-link to="/informes"><a class="nav-link-menu" aria-current="page">
+                                        <h2>Informes</h2>
+
+                                    </a></router-link>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <hr>
-                    <strong class="centrarcontenido">Asignacion de citas</strong>
+                    <strong class="centrarcontenido">Detalle de Procesos</strong>
                 </div>
-            </div> -->
+            </div>
 
             <!--  -->
 

@@ -1,11 +1,13 @@
-<template lang="">
+<template>
 <div>
     <div class="container py-5 h-50">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="card card_login p-4 p-lg-5 text-black" style="border-radius: 1rem;">
                 <div class="d-flex align-items-center mb-3 pb-1">
                     <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
-                    <span class="h1 fw-bold mb-0">Logo</span>
+                    <span class="centrarcontenido">
+                    <img src="https://img.icons8.com/?size=100&id=94&format=png&color=000000" class="img-responsive" alt="Image">
+                    </span>
                 </div>
                 <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Ingreso al sistema</h5>
                 <div data-mdb-input-init class="form-outline mb-4">

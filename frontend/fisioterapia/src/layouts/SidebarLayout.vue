@@ -26,6 +26,24 @@
                     </router-link>
                 </li>
                 <li>
+                    <router-link to="/quienes_somos" @click="toggleNavbar" class="nav-link">
+                        <img class="icono" width="18" height="18" src="https://img.icons8.com/?size=100&id=77&format=png&color=000000" alt="info" />
+                        <span>Quienes somos</span>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/login" @click="toggleNavbar" class="nav-link">
+                        <img class="icono" width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/key--v1.png" alt="key--v1" />
+                        <span>Login</span>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/about" @click="toggleNavbar" class="nav-link">
+                        <img class="icono" width="18" height="18" src="https://img.icons8.com/?size=100&id=3439&format=png&color=000000" alt="info" />
+                        <span>About</span>
+                    </router-link>
+                </li>
+                <li>
                     <router-link to="/reservas/:id_user" @click="toggleNavbar" class="nav-link">
                         <img class="icono" width="18" height="18" src="https://img.icons8.com/?size=100&id=78945&format=png&color=000000" alt="profesional" />
                         <span>Reservas</span>
@@ -49,18 +67,7 @@
                         <span>Admin</span>
                     </router-link>
                 </li>
-                <li>
-                    <router-link to="/login" @click="toggleNavbar" class="nav-link">
-                        <img class="icono" width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/key--v1.png" alt="key--v1" />
-                        <span>Login</span>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/about" @click="toggleNavbar" class="nav-link">
-                        <img class="icono" width="18" height="18" src="https://img.icons8.com/ios/50/info--v1.png" alt="info" />
-                        <span>About</span>
-                    </router-link>
-                </li>
+
 
             </ul>
 

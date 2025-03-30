@@ -1,6 +1,6 @@
-<template lang="">
+<template>
     <div>
-        about page
+        <h2>Pagina de informes</h2>
     </div>
 </template>
 <script>

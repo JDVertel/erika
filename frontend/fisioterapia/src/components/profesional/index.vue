@@ -7,7 +7,8 @@
                 <h5>Agenda del dia</h5>
             </div>
             <div class="col-7" style="text-align: right;">
-                Ramon jose vertel <br> Consulta / <small> {{ this.fechaHoy }}</small>
+                Ramon jose vertel <br> Consulta / <small> {{ this.fechaHoy }}</small> <br>
+               
             </div>
         </div>
     </div>
@@ -123,9 +124,11 @@ export default {
     data: () => ({
         fechaHoy: "",
         idIPS: "1",
-        idProfesional: "",
+        //se reemplaza por el id del profesional logueado
+        idProfesional: "-OM_FrSjo_byHOMWXA-_",
         idAgenda: "",
         ParamsActualizarCita: "",
+        DataPCita:[],
         CitasAsistidas: [],
         CitasNOAsistidas: [],
         CitasAgendadas: [],
@@ -143,10 +146,11 @@ export default {
                 rta: "setStateCitas",
             }]
             await this.getDatabyParam(this.paramsGetAllcitas)
+            this.DataPCita=this.dataCitas.filter(cita => cita.idprofesional == this.idProfesional)
 
-            this.CitasAsistidas = this.dataCitas.filter(cita => cita.estado == "SI");
-            this.CitasNOAsistidas = this.dataCitas.filter(cita => cita.estado == "NO");
-            this.CitasAgendadas = this.dataCitas.filter(cita => cita.estado == "0");
+            this.CitasAsistidas = this.DataPCita.filter(cita => cita.estado == "SI");
+            this.CitasNOAsistidas = this.DataPCita.filter(cita => cita.estado == "NO");
+            this.CitasAgendadas = this.DataPCita.filter(cita => cita.estado == "0");
 
         },
 
