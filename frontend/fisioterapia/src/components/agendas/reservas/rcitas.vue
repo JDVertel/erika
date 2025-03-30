@@ -1,19 +1,17 @@
 <template>
-
-
 <div>
-<!--  -------------------------------------------->
+    <!--  -------------------------------------------->
     datos del store auth
-<hr>
-{{ user }}
-<hr>
+    <hr>
+    {{ user }}
+    <hr>
 
-<hr>
-id_ips :{{ id_ips }} - id_user: {{ id_user }}- rol: {{ rol }}- info:{{ info }}
-<hr>
-<!--     {{ dataAgendas }}
+    <hr>
+    id_ips :{{ id_ips }} - id_user: {{ id_user }}- rol: {{ rol }}- info:{{ info }}
+    <hr>
+    <!--     {{ dataAgendas }}
 {{ dataAllCitasPaciente }} -->
-<hr>
+    <hr>
 
     <!-- ------------------------------------ -->
 
@@ -27,17 +25,17 @@ id_ips :{{ id_ips }} - id_user: {{ id_user }}- rol: {{ rol }}- info:{{ info }}
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" @click="verListadoReservasByIdAgenda('0')">
                     Fisioterapias
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" @click="verListadoReservasByIdAgenda('0')">
                     Consultas
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" @click="verListadoReservasByIdAgenda('0')">
                     Clases
                 </button>
             </li>
@@ -146,37 +144,21 @@ id_ips :{{ id_ips }} - id_user: {{ id_user }}- rol: {{ rol }}- info:{{ info }}
                     <strong>{{ cita.hora }}</strong>
                 </span>
             </li>
-        </ol>
 
-        <!--       <table class="table table-sm table-striped" v-if="this.sortedListaCitasDia != ''">
-        <thead class="table-danger">
-          <tr>
-            <th scope="col">Hora</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Celular</th>
-            <th scope="col">Tipo</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="cita in this.sortedListaCitasDia" :key="cita.id">
-            <th>{{ cita.hora }}</th>
-            <td>{{ cita.paciente }}</td>
-            <td>{{ cita.telpaciente }}</td>
-            <td>{{ cita.tipo }}</td>
-          </tr>
-        </tbody>
-      </table> -->
+        </ol>
         <br />
         <div class="container">
             <div class="row mb-3">
-                <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="vaciarformbpaciente()" v-if="clase_agenda != ''" :class="{
-              'btn-primary': clase_agenda === 'clases',
-              'btn-success': clase_agenda === 'fisioterapia',
-              'btn-warning': clase_agenda === 'consulta',
-            }">
-                    <i class="bi bi-plus-circle"></i> Reservar {{ clase_agenda }} -
-                    {{ fecha_agenda }}
+                <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="vaciarformbpaciente()" v-if="clase_agenda !== '' && clase_agenda" :class="[
+                        {
+                            'btn-primary': clase_agenda === 'clases',
+                            'btn-success': clase_agenda === 'fisioterapia',
+                            'btn-warning': clase_agenda === 'consulta',
+                        },
+                    ]">
+                   {{ clase_agenda }}  ( {{ fecha_agenda }} )   <i class="bi bi-plus-circle"></i> Reservar  ó <i class="bi bi-calendar-x"></i> Eliminar
                 </button>
+
             </div>
         </div>
 
@@ -185,7 +167,7 @@ id_ips :{{ id_ips }} - id_user: {{ id_user }}- rol: {{ rol }}- info:{{ info }}
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <strong>Realizar una reserva</strong>
+                        <strong>Realizar una reserva o cancelacion </strong>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="this.cerrarmodal()"></button>
                     </div>
 
@@ -285,49 +267,48 @@ id_ips :{{ id_ips }} - id_user: {{ id_user }}- rol: {{ rol }}- info:{{ info }}
                     <div class="container" v-if="this.existepaciente == 1">
                         <div class="card">
                             <div class="card-body">
-                                <div class="container-fluid centrarcontenido">
-                                    <div class="row mb-3">
-                                        <div class="col-4">
-                                            <strong>Usuario</strong>
+                                <div class="row mb-3">
+                                    <div class="col-3">
+                                        <strong>Usuario</strong>
 
-                                            <tr v-for="pac in datapaciente" :key="pac.id">
-                                                <div class="row centrarcontenido">
-                                                    {{ pac.numdoc }} <br />{{ pac.name1 }}
-                                                    {{ pac.apell1 }}
-                                                </div>
-                                            </tr>
-                                        </div>
-
-                                        <div class="col-8">
+                                        <tr v-for="pac in datapaciente" :key="pac.id">
                                             <div class="row">
-                                                <div class="row">
-                                                    <strong>Fecha/Tipo:</strong>{{ clase_agenda }} -
-                                                    {{ fecha_agenda }}
-                                                </div>
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Hora:</span>
-                                                    <input type="time" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" v-model="listahora" />
-                                                </div>
+                                                {{ pac.numdoc }} <br />{{ pac.name1 }}
+                                                {{ pac.apell1 }}
+                                            </div>
+                                        </tr>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <div class="row">
+                                            <div class="row">
+                                                <strong>Tipo / Fecha</strong>{{ clase_agenda }} /
+                                                {{ fecha_agenda }}
+                                            </div>
+                                            <div class="input-group input-group-sm mb-3">
+                                                <span class="input-group-text" id="inputGroup-sizing-sm">Hora:</span>
+                                                <input type="time" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" v-model="listahora" @input="validarCampoTiempo" />
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <button class="btn btn-success btn-sm" @click="BTN_Guardar_cita(clase)">
+                                    <div class="col-3">
+                                        <button class="btn btn-success btn-sm" :disabled="!listahora" @click="BTN_Guardar_cita(clase)">
                                             Guardar cita
                                         </button>
                                     </div>
                                 </div>
+
                             </div>
                             <!--  -->
 
                             <!--  -->
-                            <div class="container" style="background-color: #c1c1c1">
+                            <div class="container">
                                 <br />
                                 <div>
                                     <h5>Citas Vigentes del Paciente</h5>
                                 </div>
 
-                                <table class="table table-sm table-striped">
+                                <table class="table table-sm ">
                                     <thead class="table-warning">
                                         <tr>
                                             <th scope="col">Fecha</th>
@@ -410,7 +391,7 @@ export default {
         params_GuardarFechaCita: [],
         //---variables de fecha
         paramsDelCitas: [],
-        listahora: "",
+        listahora: null,
         //---parametros consulta de tabla de citas del dia seleccionado
         params_citasDia: [],
         ListaCitasDia: [],
@@ -441,6 +422,8 @@ export default {
         dataagenda_fisioterapias: [],
         dataagenda_consultas: [],
         dataagenda_clases: [],
+      
+
     }),
 
     /* --------------------------------------------------------------------------- */
@@ -467,6 +450,7 @@ export default {
             "NewgetDataUsersbyParam",
             "getCountDatabyParam",
         ]),
+
 
         /* ---------PACIENTES--------------------------------------------------------------------------- */
 
@@ -586,6 +570,8 @@ export default {
             await this.DeleteItem(this.paramsDelCitas[0]);
             this.GetAllcitasToPaciente();
             this.Get_Citas_pacientes_fecha();
+            this.getDataUsersbyParam(this.paramsPaciente);
+            this.GetAllcitasToPaciente();
         },
         /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
         async VerListadoCitasAsignadas() {

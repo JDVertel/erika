@@ -4,14 +4,14 @@
     <!--    usuarios tipos de citas empresa ( nombre - direccion - nit -telefono- email)
     profesionales y areas -->
     <div class="container-fluid">
-        <div class="accordion" id="accordionExample">
+        <div class="accordion  accordion-flush" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <button class="accordion-button  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                         Usuarios del Sistema ({{ existeusuarios }})
                     </button>
                 </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div id="collapseOne" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <div class="row">
                             <div class="col-8">
