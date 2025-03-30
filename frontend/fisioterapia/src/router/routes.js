@@ -23,41 +23,55 @@ import ventas from "./../components/vitrina/ventas.vue";
 import profesional from "./../components/profesional/index.vue";
 
 const routes = [
-  //aplication
-  { path: "/", name: "home", component: Home },
-  { path: "/about", component: About, name: "about" },
-  { path: "/header", component: Header, name: "header" },
 
+  //home
+  { path: "/", name: "home", component: Home },
+/* --------------------------------------------------------------- */
+  //profesionales
+  {
+    component: profesional,
+    name: "profesional",
+  },
+/* -------------------------------------------------------------------------------- */
+  //dashboard -----
+  { path: "/dashboard", component: dashboard, name: "dashboard" },
+  /* ------------- */
   // agendas
   { path: "/agendas", component: Agendas, name: "agendas" },
+    //hc
+  { path: "/buscar_hc/:idpaciente?", component: buscar_hc, name: "buscar_hc" },
+  //hc 2
+  { path: "/hc/:idpaciente?", component: hc, name: "hc" },
+
+/* -------------------------------------------------------------------------------- */
+//login
+  {
+    path: "/login",
+    component: login,
+    name: "login",
+  },
+/* ---------------------------------------------------------------- */
+    //about
+    { path: "/about", component: About, name: "about" },
+
+
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
   //contenido web
   {
     path: "/vitrina",
     component: HomeVitrina,
     name: "vitrina",
   },
-  //hc
-  { path: "/buscar_hc/:idpaciente?", component: buscar_hc, name: "buscar_hc" },
-  { path: "/hc/:idpaciente?", component: hc, name: "hc" },
-  //dashboard
-  { path: "/dashboard", component: dashboard, name: "dashboard" },
-  //profesionales
-  {
-    path: "/profesional",
-    component: profesional,
-    name: "profesional",
-  },
 
-  {
-    path: "/login",
-    component: login,
-    name: "login",
-  },
 
   //parametros
   { path: "/parametros", component: parametros, name: "parametros" },
   { path: "/reservas/:id_user", component: reservas, name: "reservas" },
   { path: "/ventas", component: ventas, name: "ventas" },
+
+    /* { path: "/header", component: Header, name: "header" }, */
 ];
 
 const router = createRouter({

@@ -6,13 +6,14 @@
             <div class="cuerpo">
                 <strong>{{ producto.nombre }}</strong>
                 <br />
-                Precio: <strong>${{ producto.precio }}</strong> <hr>
+                Precio: <strong>${{ producto.precio }}</strong>
+                <hr>
                 <small>{{ producto.desc }}</small>
             </div>
             <div class="pie">
-                
+
                 <div class="row">
-                    <button type="button" v-on:click="reservaCitasW(producto.nombre, this.telefono1)" class="btn btn-warning btn-sm">
+                    <button type="button" v-on:click="enviarMensaje(producto.nombre)" class="btn btn-warning btn-sm">
                         <img width="20" height="20" src="https://img.icons8.com/fluency/48/whatsapp.png" alt="whatsapp" />
                         Solicitar
                     </button>
@@ -63,6 +64,13 @@ export default {
             this.precioP = this.dataproductos[id].precio;
             return;
         },
+
+    /*     name: "Productos", */
+
+        enviarMensaje(url) {
+            this.$emit("mensaje", url);
+        },
+
     },
     computed: {
         ...mapState({

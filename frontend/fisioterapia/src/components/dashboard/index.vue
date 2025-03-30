@@ -129,7 +129,7 @@
                             <div class="col-12">
                                 <div>
                                     <router-link to="/parametros"><a class="nav-link-menu" aria-current="page">
-                                            <h2>Config</h2>
+                                            <h2>Configuracion</h2>
 
                                         </a></router-link>
                                 </div>

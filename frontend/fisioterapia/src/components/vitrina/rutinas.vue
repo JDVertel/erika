@@ -86,7 +86,7 @@
                 <button
                   type="button"
                   class="btn btn-secundary btn-sm"
-                  v-on:click="reservaCitasW(this.t_nombre, this.telefono1)"
+                  v-on:click="enviarMensaje(this.t_nombre)"
                 >
                   <img
                     width="20"
@@ -147,11 +147,14 @@ export default {
       this.t_precios = data.precios;
     },
 
-    //link wps
-    reservaCitasW(link, celular) {
-      const url = `https://wa.me/${celular}?text=>%20Hola%20me%20interesa%20reservar%20una%20clase%20de%20( ${link} )%20desde%20tu%20pagina%20web%20<`;
-      window.open(url);
-    },
+
+
+
+
+enviarMensaje(url) {
+    this.$emit("mensaje", url);
+},
+
   },
   computed: {
     ...mapState({

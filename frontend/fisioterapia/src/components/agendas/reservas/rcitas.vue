@@ -1,5 +1,9 @@
 <template>
-<!-- datos del store auth
+
+
+<div>
+<!--  -------------------------------------------->
+    datos del store auth
 <hr>
 {{ user }}
 <hr>
@@ -7,11 +11,11 @@
 <hr>
 id_ips :{{ id_ips }} - id_user: {{ id_user }}- rol: {{ rol }}- info:{{ info }}
 <hr>
-    {{ dataAgendas }}
-{{ dataAllCitasPaciente }}
-<hr>-->
+<!--     {{ dataAgendas }}
+{{ dataAllCitasPaciente }} -->
+<hr>
 
-<div>
+    <!-- ------------------------------------ -->
 
     <div class="container">
         <h3>RESERVAR CITAS</h3>

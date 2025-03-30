@@ -560,7 +560,7 @@ export default {
         wsp: "",
         direccion: "",
         id_E: "",
-        id_P:"",
+        id_P: "",
         url_logo: "",
 
         datosEmpresa: [],
@@ -1013,7 +1013,6 @@ export default {
             this.direccion = this.DataEmpresa[0].direccion;
             this.logo = this.DataEmpresa[0].logo;
             this.id_E = this.DataEmpresa[0].id;
-
         },
 
     },
