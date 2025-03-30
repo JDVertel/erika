@@ -26,37 +26,38 @@ const routes = [
 
   //home
   { path: "/", name: "home", component: Home },
-/* --------------------------------------------------------------- */
+  /* --------------------------------------------------------------- */
   //profesionales
   {
+    path: "/profesional",
     component: profesional,
     name: "profesional",
   },
-/* -------------------------------------------------------------------------------- */
+  /* -------------------------------------------------------------------------------- */
   //dashboard -----
   { path: "/dashboard", component: dashboard, name: "dashboard" },
   /* ------------- */
   // agendas
   { path: "/agendas", component: Agendas, name: "agendas" },
-    //hc
+  //hc
   { path: "/buscar_hc/:idpaciente?", component: buscar_hc, name: "buscar_hc" },
   //hc 2
   { path: "/hc/:idpaciente?", component: hc, name: "hc" },
 
-/* -------------------------------------------------------------------------------- */
-//login
+  /* -------------------------------------------------------------------------------- */
+  //login
   {
     path: "/login",
     component: login,
     name: "login",
   },
-/* ---------------------------------------------------------------- */
-    //about
-    { path: "/about", component: About, name: "about" },
+  /* ---------------------------------------------------------------- */
+  //about
+  { path: "/about", component: About, name: "about" },
 
 
 
-/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+  /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
   //contenido web
   {
@@ -71,7 +72,9 @@ const routes = [
   { path: "/reservas/:id_user", component: reservas, name: "reservas" },
   { path: "/ventas", component: ventas, name: "ventas" },
 
-    /* { path: "/header", component: Header, name: "header" }, */
+
+
+  /* { path: "/header", component: Header, name: "header" }, */
 ];
 
 const router = createRouter({

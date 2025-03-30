@@ -36,9 +36,9 @@
                             <td>{{ cita.hora }}</td>
                             <td>{{ cita.paciente }}</td>
                             <td>{{ cita.telpaciente }} </td>
-                            <td><button type="button" class="btn btn-danger btn-sm" @click="ActualizaEstadoCita('NO', cita)">X</button>
+                            <td><button type="button" class="btn btn-danger btn-sm" @click="ActualizaEstadoCita('NO', cita)"><i class="bi bi-x-circle"></i></button>
                                 <router-link :to="{ name: 'hc', params: { idpaciente: cita.numdoc } }">
-                                    <button type="button" class="btn btn-primary btn-sm" @click="ActualizaEstadoCita('SI', cita)">OK</button>
+                                    <button type="button" class="btn btn-primary btn-sm" @click="ActualizaEstadoCita('SI', cita)"> <i class="bi bi-check-circle"></i></button>
                                 </router-link>
                                 <!-- 
 

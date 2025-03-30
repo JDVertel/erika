@@ -25,7 +25,18 @@
                         <span>Home</span>
                     </router-link>
                 </li>
-
+                <li>
+                    <router-link to="/reservas/:id_user" @click="toggleNavbar" class="nav-link">
+                        <img class="icono" width="18" height="18" src="https://img.icons8.com/?size=100&id=78945&format=png&color=000000" alt="profesional" />
+                        <span>Reservas</span>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/ventas" @click="toggleNavbar" class="nav-link">
+                        <img class="icono" width="18" height="18" src="https://img.icons8.com/?size=100&id=100257&format=png&color=000000" alt="profesional" />
+                        <span>Ventas</span>
+                    </router-link>
+                </li>
                 <li>
                     <router-link to="/profesional" @click="toggleNavbar" class="nav-link">
                         <img class="icono" width="18" height="18" src="https://img.icons8.com/external-febrian-hidayat-glyph-febrian-hidayat/64/external-11-disaster-febrian-hidayat-glyph-febrian-hidayat.png" alt="profesional" />

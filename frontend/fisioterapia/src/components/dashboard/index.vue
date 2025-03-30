@@ -6,7 +6,7 @@
     <br>
     <div class="container">
         <div class="row">
-            <div class="col-6 col-md-3">
+<!--             <div class="col-6 col-md-3">
                 <div class="card mb-3 cardDash">
                     <div class="row">
                         <div class="col-3 p-2">
@@ -25,7 +25,7 @@
                     <hr>
                     <strong class="centrarcontenido">Asignacion de citas</strong>
                 </div>
-            </div>
+            </div> -->
 
             <!--  -->
 
@@ -73,7 +73,7 @@
                 </div>
             </div>
             <!--  -->
-            <div class="col-6 col-md-3">
+<!--             <div class="col-6 col-md-3">
                 <div class="card mb-3 cardDash">
                     <div class="row">
                         <div class="col-3 p-2">
@@ -93,7 +93,7 @@
                     <hr>
                     <strong class="centrarcontenido">Registro de ventas</strong>
                 </div>
-            </div>
+            </div> -->
             <!--  -->
             <div class="col-6 col-md-3">
                 <div class="card mb-3 cardDash">
