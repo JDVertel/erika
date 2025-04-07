@@ -262,6 +262,7 @@
                                             <div class="row" v-for="(item, index) in DataEmpresa" :key="index">
                                                 <div class="col-6"><strong>Nombre IPS: </strong>{{item.nombre}}</div>
                                                 <div class="col-6"><strong>Nit:</strong>{{item.nit}}</div>
+                                                <div class="col-12"><strong>Descripcion:</strong>{{item.desc}}</div>
                                                 <div class="col-6"><strong>Celular:</strong>{{item.celular}}</div>
                                                 <div class="col-6"><strong>Wsp:</strong>{{item.wsp}}</div>
                                                 <div class="col-6"><strong>Direccion:</strong>{{item.direccion}}</div>
@@ -299,6 +300,12 @@
                                                     <span class="input-group-text" id="basic-addon1">Nit</span>
                                                     <input type="text" class="form-control" placeholder="Sin datos" aria-label="nit" aria-describedby="basic-addon1" v-model="nit" />
                                                 </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">Descripcion</span>
+                                                    <textarea class="form-control" aria-label="desc" v-model="desc" />
+                                                    </div>
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <div class="input-group mb-3">
@@ -413,99 +420,99 @@
                                     <div class="input-group">
                                         <span class="input-group-text">Quienes somos</span>
                                         <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="quienessomos"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-text">Mision</span>
-                                        <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="mision"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-text">vision</span>
-                                        <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="vision"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-text">Nuestros Servicios </span>
-                                        <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="nuestrosservicios"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-text">Nuestros Servicios Lm</span>
-                                        <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="nuestrosservicios_lm"></textarea>
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="col-12 col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-text">Clases Rutinas </span>
-                                        <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="clasesrutinas"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-text">Clases Rutinas Lm</span>
-                                        <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="clasesrutinas_lm"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-text">Tienda Online </span>
-                                        <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="tiendaonline"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-text">Tienda Online Lm</span>
-                                        <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="tiendaonline_lm"></textarea>
-                                    </div>
-                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">Mision</span>
+                                                    <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="mision"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">vision</span>
+                                                    <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="vision"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">Nuestros Servicios </span>
+                                                    <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="nuestrosservicios"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">Nuestros Servicios Lm</span>
+                                                    <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="nuestrosservicios_lm"></textarea>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="col-12 col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">Clases Rutinas </span>
+                                                    <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="clasesrutinas"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">Clases Rutinas Lm</span>
+                                                    <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="clasesrutinas_lm"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">Tienda Online </span>
+                                                    <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="tiendaonline"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">Tienda Online Lm</span>
+                                                    <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="tiendaonline_lm"></textarea>
+                                                </div>
+                                            </div>
 
-                                <div class="col-12 col-md-6" style="display: none;">
-                                    <div class="input-group">
-                                        <span class="input-group-text">id</span>
-                                        <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="id_P"></textarea>
+                                            <div class="col-12 col-md-6" style="display: none;">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">id</span>
+                                                    <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="id_P"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="container">
+                                                    <button type="button" class="btn btn-warning btn-sm" @click="Create_datosPagina()" v-if="stateEmpresa =='crear'">
+                                                        Crear
+                                                    </button>
+                                                    <button type="button" class="btn btn-warning btn-sm" @click="Update_datosPagina()" v-if="statePagina =='editar'">
+                                                        Actualizar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="container">
-                                        <button type="button" class="btn btn-warning btn-sm" @click="Create_datosPagina()" v-if="stateEmpresa =='crear'">
-                                            Crear
-                                        </button>
-                                        <button type="button" class="btn btn-warning btn-sm" @click="Update_datosPagina()" v-if="statePagina =='editar'">
-                                            Actualizar
-                                        </button>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                                    Parametros funcionales
+                                </button>
+                            </h2>
+                            <div id="collapse5" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <nav>parametros</nav>
+                                    <div class="tab-content" id="nav-tabContent">
+                                        <!-- COMUNICACIONES -->
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
-                        Parametros funcionales
-                    </button>
-                </h2>
-                <div id="collapse5" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <nav>parametros</nav>
-                        <div class="tab-content" id="nav-tabContent">
-                            <!-- COMUNICACIONES -->
 
-                        </div>
-                    </div>
-                </div>
             </div>
-        </div>
-    </div>
-
-</div>
 </template>
 
 <script>
@@ -556,6 +563,7 @@ export default {
         id: "",
         nombreips: "",
         nit: "",
+        desc: "",
         cel: "",
         wsp: "",
         direccion: "",
@@ -790,6 +798,7 @@ export default {
                 id_ips: "1",
                 nombre: this.nombreips,
                 nit: this.nit,
+                desc: this.desc,
                 direccion: this.direccion,
                 celular: this.cel,
                 wsp: this.wsp,
@@ -803,6 +812,7 @@ export default {
                 // Limpiar los campos después de agregar la empresa
                 this.nombreips = '';
                 this.nit = '';
+                this.desc = '';
                 this.direccion = '';
                 this.cel = '';
                 this.wsp = '';
@@ -845,6 +855,7 @@ export default {
                 id_ips: "1",
                 nombre: this.nombreips,
                 nit: this.nit,
+                desc: this.desc,
                 direccion: this.direccion,
                 celular: this.cel,
                 wsp: this.wsp,
@@ -1008,6 +1019,7 @@ export default {
         obtenerDatosEmpresa() {
             this.nombreips = this.DataEmpresa[0].nombre;
             this.nit = this.DataEmpresa[0].nit;
+            this.desc=this.DataEmpresa[0].desc;
             this.cel = this.DataEmpresa[0].celular;
             this.wsp = this.DataEmpresa[0].wsp;
             this.direccion = this.DataEmpresa[0].direccion;

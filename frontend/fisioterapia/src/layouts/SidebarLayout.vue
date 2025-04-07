@@ -13,9 +13,9 @@
                 </div>
 
                 <!-- @click="toggleNavbarClose" -->
-                <router-link to="/">
+                <!-- <router-link to="/">
                     <img :src="`${item.logo}`" class="logobar" />
-                </router-link>
+                </router-link> -->
             </div>
            
             <ul class="list-unstyled components">
@@ -79,9 +79,12 @@
             <nav class="navbar navbar-expand-lg" style="background-color: #34836e">
                 <div class="container-fluid"   >
                     <button type="button" id="sidebarCollapse" class="btn" @click="toggleNavbar">
-                        <span class="navbar-toggler-icon"></span>
+                        <span class="navbar-toggler-icon">
+                        </span>
                     </button>
-                    <span class="navbar-text">{{item.nombre}}</span> 
+                
+                    <span class="navbar-text"> {{item.nombre}}</span> 
+                    <span class="navbar-text"><small>Juan Vertel  / Admnin </small> </span> 
                 </div>
             </nav>
 

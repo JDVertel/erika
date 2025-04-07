@@ -4,11 +4,12 @@
 import firebase_api from "@/api/firebaseApi";
 /* crear Data*/
 export const Action_createDataEmpresa = async ({ commit }, entradasE) => {
-  const { id_ips, nombre, nit, direccion, celular, wsp, logo, bd } = entradasE;
+  const { id_ips, nombre, nit,desc, direccion, celular, wsp, logo, bd } = entradasE;
   const DataToSaveE = {
     id_ips,
     nombre,
     nit,
+    desc,
     direccion,
     celular,
     wsp,
@@ -24,9 +25,9 @@ export const Action_createDataEmpresa = async ({ commit }, entradasE) => {
 
 export const Action_update_Empresa = async ({ commit }, entradasE) => {
   console.log("variable entradas empresa", entradasE);
-  const { id_ips, nombre, nit, direccion, celular, wsp, bd, rta, logo, id } =
+  const { id_ips, nombre, nit,desc, direccion, celular, wsp, bd, rta, logo, id } =
     entradasE;
-  const dataToUpdateE = { id_ips, nombre, nit, direccion, celular, wsp, logo };
+  const dataToUpdateE = { id_ips, nombre, nit,desc, direccion, celular, wsp, logo };
   const rutaE = `/${bd}/${entradasE.id}.json`;
   //servicio
   const response = await firebase_api.put(rutaE, dataToUpdateE);

@@ -30,7 +30,7 @@
     <div class="accordion-item">
         <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse14" aria-expanded="false" aria-controls="panelsStayOpen-collapse14">
-                <v-icon name="fa-hand-holding-medical" fill="blue" />
+               
                 Guardar Historia clinica
             </button>
         </h2>
