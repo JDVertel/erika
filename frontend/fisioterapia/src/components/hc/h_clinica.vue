@@ -1,7 +1,7 @@
 <template>
 <div class="accordion custom-header" id="accordionPanelsStayOpenExample">
 
-    <D_consulta />
+<!--     <D_consulta />
 
      <D_observacion />
 
@@ -13,10 +13,10 @@
 
     <D_esc_visual />
 
-    <D_imagenes />
+    <D_imagenes /> -->
 
     <D_exp_fisica />
-
+<!-- 
     <D_sis_muscular />
 
     <D_analisis />
@@ -42,7 +42,7 @@
             </div>
         </div>
      
-    </div>
+    </div> -->
 <br>
 </div>
 </template>

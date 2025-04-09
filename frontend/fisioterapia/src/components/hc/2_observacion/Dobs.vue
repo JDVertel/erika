@@ -142,6 +142,8 @@ export default {
 
     methods: {
         ...mapActions("Hc", ["SaveDatos2"]),
+
+        /*  */
         AddOb(tipo, obs, detalle) {
             let item = {
                 tipo: tipo,
@@ -151,17 +153,18 @@ export default {
             this.NewAntec = [...this.NewAntec, item];
             this.limpiarcampos();
         },
-
-        eliminaritem(index) {
-            console.log(index);
-            this.NewAntec.splice(index, 1);
-        },
         limpiarcampos() {
             this.obs_marcha = "0";
             this.detalle_marcha = "";
             this.obs_tipo = "0";
             this.detalle_movilidad = "";
         },
+        eliminaritem(index) {
+            console.log(index);
+            this.NewAntec.splice(index, 1);
+        },
+
+        /*  */
         async guardarInfo() {
             this.datosObservacion = [{
                 idpaciente: this.iduser,

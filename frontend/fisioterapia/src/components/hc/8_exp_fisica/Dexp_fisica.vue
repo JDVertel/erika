@@ -91,6 +91,8 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- --------------------------------------------------------------------------- -->
                 <div class="tab-pane fade" id="nav-msuperior" role="tabpanel" tabindex="0">
                     <div class="row">
                         <h5>Valoracion de rangos de Mov (Miembro Superior)</h5>
@@ -98,37 +100,52 @@
                         <div class="col-12 col-md-4">
                             <h6>RAQUIS CERVICAL</h6>
                             <table class="table table-sm table-success">
+
                                 <thead>
                                     <tr>
                                         <th>
-                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento">
-                                                <option selected value="">-Movimiento-</option>
-                                                <option v-for="(item, index) in this.array_RAQUISCERVICAL" :key="index" value={item}>{{item}}</option>
+                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento1" @change="handleSelectChange1">
+                                                <option selected value="">-Seleccione Movimiento-</option>
+                                                <option v-for="(item,index) in this.array_RAQUISCERVICAL" :key="index" :value="item">
+                                                    {{ item }}
+                                                </option>
                                             </select>
+
                                         </th>
                                         <th>
-                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo" />
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo1" v-if="data_movimiento1!==''" />
                                         </th>
                                         <th>
-                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho" />
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho1" v-if="data_movimiento1!==''" />
                                         </th>
                                         <th>
-                                            <button type="button" class="btn btn-warning btn-sm" v-if="this.data_movimiento !== '' && this.data_izquierdo !== '' && this.data_derecho !== ''">+</button>
+                                            <button type="button" @click="
+                            AddItemArray1(data_movimiento1, data_derecho1, data_izquierdo1)
+                          " class="btn btn-warning btn-sm" v-if="
+                            this.data_movimiento1 !== '' &&
+                            this.data_izquierdo1 !== '' &&
+                            this.data_derecho1 !== ''
+                          ">
+                                                Agregar
+                                            </button>
                                         </th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
                                     <!--  -->
-                                    <tr>
-                                        <td>Extensión</td>
+                                    <tr v-for="(item, index) in this.array_RAQUISCERVICAL_Data" :key="index">
+                                        <td>{{ item.movimiento }}</td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" v-model="RC_extencion_I" placeholder="DATA" />
+                                            {{ item.izquierdo }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" v-model="RC_extencion_D" placeholder="DATA" />
+                                            {{ item.derecho }}
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-danger btn-sm">x</button>
+                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray1(index, item.movimiento)">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                     <!--  -->
@@ -137,236 +154,219 @@
                         </div>
                         <div class="col-12 col-md-4">
                             <h6>RAQUIS DORSOLUMBAR</h6>
-                            <table class="table table-sm table-info">
+                            <table class="table table-sm table-success">
                                 <thead>
                                     <tr>
-                                        <th>Mov</th>
-                                        <th>Izq</th>
-                                        <th>Der</th>
-                                        <th>Opc</th>
+                                        <th>
+                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento2" @change="handleSelectChange2">
+                                                <option selected value="">-Seleccione Movimiento-</option>
+                                                <option v-for="(item,index) in this.array_RAQUISDORSOLUMBAR" :key="index" :value="item">
+                                                    {{ item }}
+                                                </option>
+                                            </select>
+
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo2" v-if="data_movimiento2!==''" />
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho2" v-if="data_movimiento2!==''" />
+                                        </th>
+                                        <th>
+                                            <button type="button" @click="
+                            AddItemArray2(data_movimiento2, data_derecho2, data_izquierdo2)
+                          " class="btn btn-warning btn-sm" v-if="
+                            this.data_movimiento2 !== '' &&
+                            this.data_izquierdo2 !== '' &&
+                            this.data_derecho2 !== ''
+                          ">
+                                                Agregar
+                                            </button>
+                                        </th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
-                                    <tr>
-                                        <td>selector</td>
-                                        <td>izquierda</td>
-                                        <td>deracha</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Extención</td>
+                                    <!--  -->
+                                    <tr v-for="(item, index) in this.array_RAQUISDORSOLUMBAR_Data" :key="index">
+                                        <td>{{ item.movimiento }}</td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="RD_Extencion_I" />
+                                            {{ item.izquierdo }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="RD_Extencion_D" />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Inclinación lateral der</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="RD_IlateralD_I" />
+                                            {{ item.derecho }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="RD_IlateralD_D" />
+                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray2(index, item.movimiento)">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>Inclinación lateral izq</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="RD_IlateralI_I" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="RD_IlateralI_D" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Rotación Izq</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="RD_RotaI_I" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="RD_RotaI_D" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Rotación Der</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="RD_RotaD_I" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="RD_RotaD_D" />
-                                        </td>
-                                    </tr>
+                                    <!--  -->
                                 </tbody>
                             </table>
                         </div>
                         <div class="col-12 col-md-4">
                             <h6>HOMBRO</h6>
-                            <table class="table table-sm table-warning">
+                            <table class="table table-sm table-success">
                                 <thead>
                                     <tr>
-                                        <th>Mov</th>
-                                        <th>Izq</th>
-                                        <th>Der</th>
+                                        <th>
+                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento3" @change="handleSelectChange3">
+                                                <option selected value="">-Seleccione Movimiento-</option>
+                                                <option v-for="(item,index) in this.array_HOMBRO" :key="index" :value="item">
+                                                    {{ item }}
+                                                </option>
+                                            </select>
+
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo3" v-if="data_movimiento3!==''" />
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho3" v-if="data_movimiento3!==''" />
+                                        </th>
+                                        <th>
+                                            <button type="button" @click="
+                            AddItemArray3(data_movimiento3, data_derecho3, data_izquierdo3)
+                          " class="btn btn-warning btn-sm" v-if="
+                            this.data_movimiento3 !== '' &&
+                            this.data_izquierdo3 !== '' &&
+                            this.data_derecho3 !== ''
+                          ">
+                                                Agregar
+                                            </button>
+                                        </th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
-                                    <tr>
-                                        <td>Flexión</td>
+                                    <!--  -->
+                                    <tr v-for="(item, index) in this.array_HOMBRO_Data" :key="index">
+                                        <td>{{ item.movimiento }}</td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="h_Flexion_I" />
+                                            {{ item.izquierdo }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="h_Flexion_D" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Extención</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="h_Extencion_I" />
+                                            {{ item.derecho }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="h_Extencion_D" />
+                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray3(index, item.movimiento)">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>Abduccion</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="h_Abducion_I" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="h_Abducion_D" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Aduccion</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="h_Aduccion_I" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="h_Aduccion_D" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Rotación Interna</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="h_RotacionI_I" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="h_RotacionI_D" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Rotación Externa</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="h_RotacionE_I" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="h_RotacionE_D" />
-                                        </td>
-                                    </tr>
+                                    <!--  -->
                                 </tbody>
                             </table>
                         </div>
+
                         <div class="col-12 col-md-4">
                             <h6>CODO</h6>
-                            <table class="table table-sm table-primary">
+                            <table class="table table-sm table-success">
                                 <thead>
                                     <tr>
-                                        <th>Mov</th>
-                                        <th>Izq</th>
-                                        <th>Der</th>
+                                        <th>
+                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento4" @change="handleSelectChange4">
+                                                <option selected value="">-Seleccione Movimiento-</option>
+                                                <option v-for="(item,index) in this.array_CODO" :key="index" :value="item">
+                                                    {{ item }}
+                                                </option>
+                                            </select>
+
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo4" v-if="data_movimiento4!==''" />
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho4" v-if="data_movimiento4!==''" />
+                                        </th>
+                                        <th>
+                                            <button type="button" @click="
+                            AddItemArray4(data_movimiento4, data_derecho4, data_izquierdo4)
+                          " class="btn btn-warning btn-sm" v-if="
+                            this.data_movimiento4 !== '' &&
+                            this.data_izquierdo4 !== '' &&
+                            this.data_derecho4 !== ''
+                          ">
+                                                Agregar
+                                            </button>
+                                        </th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
-                                    <tr>
-                                        <td>Flexión</td>
+                                    <!--  -->
+                                    <tr v-for="(item, index) in this.array_CODO_Data" :key="index">
+                                        <td>{{ item.movimiento }}</td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="C_Flexion_I" />
+                                            {{ item.izquierdo }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="C_Flexion_D" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Extención</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="C_Extencionn_I" />
+                                            {{ item.derecho }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="C_Extencionn_D" />
+                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray4(index, item.movimiento)">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>Pronación</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="C_Pronacion_I" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="C_Pronacion_D" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Supinación</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="C_Supinacion_I" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="C_Supinacion_D" />
-                                        </td>
-                                    </tr>
+                                    <!--  -->
                                 </tbody>
                             </table>
                         </div>
+
                         <div class="col-12 col-md-4">
                             <h6>MUÑECA</h6>
-                            <table class="table table-sm table-danger">
+                            <table class="table table-sm table-success">
                                 <thead>
                                     <tr>
-                                        <th>Mov</th>
-                                        <th>Izq</th>
-                                        <th>Der</th>
+                                        <th>
+                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento5" @change="handleSelectChange5">
+                                                <option selected value="">-Seleccione Movimiento-</option>
+                                                <option v-for="(item,index) in this.array_MUNECA" :key="index" :value="item">
+                                                    {{ item }}
+                                                </option>
+                                            </select>
+
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo5" v-if="data_movimiento5!==''" />
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho5" v-if="data_movimiento5!==''" />
+                                        </th>
+                                        <th>
+                                            <button type="button" @click="
+                            AddItemArray5(data_movimiento5, data_derecho5, data_izquierdo5)
+                          " class="btn btn-warning btn-sm" v-if="
+                            this.data_movimiento5 !== '' &&
+                            this.data_izquierdo5 !== '' &&
+                            this.data_derecho5 !== ''
+                          ">
+                                                Agregar
+                                            </button>
+                                        </th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
-                                    <tr>
-                                        <td>Flexión</td>
+                                    <!--  -->
+                                    <tr v-for="(item, index) in this.array_MUNECA_Data" :key="index">
+                                        <td>{{ item.movimiento }}</td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="M_Flexion_I" />
+                                            {{ item.izquierdo }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="M_Flexion_D" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Extención</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="M_Extencion_I" />
+                                            {{ item.derecho }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="M_Extencion_D" />
+                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray5(index, item.movimiento)">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>Desviacion radial</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="M_DesviacionR_I" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="M_DesviacionR_D" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Desviacion cubital</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="M_DesviacionC_I" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="M_DesviacionC_D" />
-                                        </td>
-                                    </tr>
+                                    <!--  -->
                                 </tbody>
                             </table>
                         </div>
@@ -378,133 +378,163 @@
                     <div class="row">
                         <div class="col-12 col-md-3">
                             <h6>CADERA</h6>
-                            <table class="table table-sm table-secondary">
+                            <table class="table table-sm table-success">
                                 <thead>
                                     <tr>
-                                        <th>Mov</th>
-                                        <th>Izq</th>
-                                        <th>Der</th>
+                                        <th>
+                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento2" @change="handleSelectChange2">
+                                                <option selected value="">-Seleccione Movimiento-</option>
+                                                <option v-for="(item,index) in this.array_RAQUISDORSOLUMBAR" :key="index" :value="item">
+                                                    {{ item }}
+                                                </option>
+                                            </select>
+
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo2" v-if="data_movimiento2!==''" />
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho2" v-if="data_movimiento2!==''" />
+                                        </th>
+                                        <th>
+                                            <button type="button" @click="
+                            AddItemArray2(data_movimiento2, data_derecho2, data_izquierdo2)
+                          " class="btn btn-warning btn-sm" v-if="
+                            this.data_movimiento2 !== '' &&
+                            this.data_izquierdo2 !== '' &&
+                            this.data_derecho2 !== ''
+                          ">
+                                                Agregar
+                                            </button>
+                                        </th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
-                                    <tr>
-                                        <td>Flexión</td>
+                                    <!--  -->
+                                    <tr v-for="(item, index) in this.array_RAQUISDORSOLUMBAR_Data" :key="index">
+                                        <td>{{ item.movimiento }}</td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" v-model="CAD_Flexion_I" placeholder="DATA" />
+                                            {{ item.izquierdo }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" placeholder="DATA" v-model="CAD_Flexion_D" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Extensión</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" placeholder="DATA" v-model="CAD_Extenci_I" />
+                                            {{ item.derecho }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" v-model="CAD_Extenci_D" placeholder="DATA" />
+                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray2(index, item.movimiento)">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>Abducción</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" v-model="CAD_Abduccion_I" placeholder="DATA" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" v-model="CAD_Abduccion_D" placeholder="DATA" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Aducción</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" v-model="CAD_Aduccion_I" placeholder="DATA" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" v-model="CAD_Aduccion_D" placeholder="DATA" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Rotación Interna</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" v-model="CAD_RotaI_I" placeholder="DATA" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" v-model="CAD_RotaI_D" placeholder="DATA" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Rotación Externa</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" v-model="CAD_RotaE_I" placeholder="DATA" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" v-model="CAD_RotaE_D" placeholder="DATA" />
-                                        </td>
-                                    </tr>
+                                    <!--  -->
                                 </tbody>
                             </table>
                         </div>
                         <div class="col-12 col-md-3">
                             <h6>RODILLA</h6>
-                            <table class="table table-sm table-danger">
+                            <table class="table table-sm table-success">
                                 <thead>
                                     <tr>
-                                        <th>Mov</th>
-                                        <th>Izq</th>
-                                        <th>Der</th>
+                                        <th>
+                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento2" @change="handleSelectChange2">
+                                                <option selected value="">-Seleccione Movimiento-</option>
+                                                <option v-for="(item,index) in this.array_RAQUISDORSOLUMBAR" :key="index" :value="item">
+                                                    {{ item }}
+                                                </option>
+                                            </select>
+
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo2" v-if="data_movimiento2!==''" />
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho2" v-if="data_movimiento2!==''" />
+                                        </th>
+                                        <th>
+                                            <button type="button" @click="
+                            AddItemArray2(data_movimiento2, data_derecho2, data_izquierdo2)
+                          " class="btn btn-warning btn-sm" v-if="
+                            this.data_movimiento2 !== '' &&
+                            this.data_izquierdo2 !== '' &&
+                            this.data_derecho2 !== ''
+                          ">
+                                                Agregar
+                                            </button>
+                                        </th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
-                                    <tr>
-                                        <td>Flexión</td>
+                                    <!--  -->
+                                    <tr v-for="(item, index) in this.array_RAQUISDORSOLUMBAR_Data" :key="index">
+                                        <td>{{ item.movimiento }}</td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="ROD_Flexion_I" />
+                                            {{ item.izquierdo }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="ROD_Flexion_D" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Extención</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="ROD_Extencion_I" />
+                                            {{ item.derecho }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="ROD_Extencion_D" />
+                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray2(index, item.movimiento)">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
                                         </td>
                                     </tr>
+                                    <!--  -->
                                 </tbody>
                             </table>
                         </div>
                         <div class="col-12 col-md-3">
                             <h6>TOBILLO</h6>
-                            <table class="table table-sm table-warning">
+                            <table class="table table-sm table-success">
                                 <thead>
                                     <tr>
-                                        <th>Mov</th>
-                                        <th>Izq</th>
-                                        <th>Der</th>
+                                        <th>
+                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento2" @change="handleSelectChange2">
+                                                <option selected value="">-Seleccione Movimiento-</option>
+                                                <option v-for="(item,index) in this.array_RAQUISDORSOLUMBAR" :key="index" :value="item">
+                                                    {{ item }}
+                                                </option>
+                                            </select>
+
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo2" v-if="data_movimiento2!==''" />
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho2" v-if="data_movimiento2!==''" />
+                                        </th>
+                                        <th>
+                                            <button type="button" @click="
+                            AddItemArray2(data_movimiento2, data_derecho2, data_izquierdo2)
+                          " class="btn btn-warning btn-sm" v-if="
+                            this.data_movimiento2 !== '' &&
+                            this.data_izquierdo2 !== '' &&
+                            this.data_derecho2 !== ''
+                          ">
+                                                Agregar
+                                            </button>
+                                        </th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
-                                    <tr>
-                                        <td>Flexión plantar</td>
+                                    <!--  -->
+                                    <tr v-for="(item, index) in this.array_RAQUISDORSOLUMBAR_Data" :key="index">
+                                        <td>{{ item.movimiento }}</td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="T_FlexionP_I" />
+                                            {{ item.izquierdo }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="T_FlexionP_D" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Flexión dorsal</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="T_FlexionD_I" />
+                                            {{ item.derecho }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="T_FlexionD_D" />
+                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray2(index, item.movimiento)">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
                                         </td>
                                     </tr>
+                                    <!--  -->
                                 </tbody>
                             </table>
                         </div>
@@ -513,30 +543,52 @@
                             <table class="table table-sm table-success">
                                 <thead>
                                     <tr>
-                                        <th>Mov</th>
-                                        <th>Izq</th>
-                                        <th>Der</th>
+                                        <th>
+                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento2" @change="handleSelectChange2">
+                                                <option selected value="">-Seleccione Movimiento-</option>
+                                                <option v-for="(item,index) in this.array_RAQUISDORSOLUMBAR" :key="index" :value="item">
+                                                    {{ item }}
+                                                </option>
+                                            </select>
+
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo2" v-if="data_movimiento2!==''" />
+                                        </th>
+                                        <th>
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho2" v-if="data_movimiento2!==''" />
+                                        </th>
+                                        <th>
+                                            <button type="button" @click="
+                            AddItemArray2(data_movimiento2, data_derecho2, data_izquierdo2)
+                          " class="btn btn-warning btn-sm" v-if="
+                            this.data_movimiento2 !== '' &&
+                            this.data_izquierdo2 !== '' &&
+                            this.data_derecho2 !== ''
+                          ">
+                                                Agregar
+                                            </button>
+                                        </th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
-                                    <tr>
-                                        <td>Inversion</td>
+                                    <!--  -->
+                                    <tr v-for="(item, index) in this.array_RAQUISDORSOLUMBAR_Data" :key="index">
+                                        <td>{{ item.movimiento }}</td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="AS_Inversion_I" />
+                                            {{ item.izquierdo }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="AS_Inversion_D" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Eversión</td>
-                                        <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="AS_Eversion_I" />
+                                            {{ item.derecho }}
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="DATA" v-model="AS_Eversion_D" />
+                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray2(index, item.movimiento)">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
                                         </td>
                                     </tr>
+                                    <!--  -->
                                 </tbody>
                             </table>
                         </div>
@@ -556,6 +608,9 @@
 </template>
 
 <script>
+import {
+    computed
+} from "vue";
 import {
     exp_fisica
 } from "./../../../firebase/bd.js";
@@ -582,11 +637,16 @@ export default {
         datosC: "",
         detalle: "",
         observaciones: "",
-        /*  */
 
+        /* 1 */
         array_RAQUISCERVICAL: ["flexion", "extencion", "IncLateral", "rotacionI"],
         array_RAQUISCERVICAL_Data: [],
+        /* */
+        data_movimiento1: "",
+        data_izquierdo1: "",
+        data_derecho1: "",
 
+        /* 2 */
         array_RAQUISDORSOLUMBAR: [
             "RD_Flexión",
             "Extención",
@@ -596,7 +656,12 @@ export default {
             "Rotación Der",
         ],
         array_RAQUISDORSOLUMBAR_Data: [],
+        /*  */
+        data_movimiento2: "",
+        data_izquierdo2: "",
+        data_derecho2: "",
 
+        /* 3 */
         array_HOMBRO: [
             "Flexión",
             "Extención",
@@ -606,15 +671,28 @@ export default {
             "Rotación Externa",
         ],
         array_HOMBRO_Data: [],
+        /*  */
+        data_movimiento3: "",
+        data_izquierdo3: "",
+        data_derecho3: "",
 
+        /* 4 */
         array_CODO: ["Flexión", "Extención", "Pronación", "Supinación"],
         array_CODO_Data: [],
-
-        array_MUÑECA: ["Flexión", "Extención", "Desviacion radial", "Desviacion cubital"],
-        array_MUÑECA_Data: [],
-
         /*  */
+        data_movimiento4: "",
+        data_izquierdo4: "",
+        data_derecho4: "",
 
+        /* 5 */
+        array_MUNECA: ["Flexión", "Extención", "Desviacion radial", "Desviacion cubital"],
+        array_MUNECA_Data: [],
+        /*  */
+        data_movimiento5: "",
+        data_izquierdo5: "",
+        data_derecho5: "",
+
+        /* 6 */
         array_CADERA: [
             "Flexión",
             "Extensión",
@@ -624,24 +702,175 @@ export default {
             "Rotación Externa",
         ],
         array_CADERA_Data: [],
+        /*  */
+        data_movimiento6: "",
+        data_izquierdo6: "",
+        data_derecho6: "",
 
+        /* 7 */
         array_RODILLA: ["Flexión", "Extención"],
         array_RODILLA_Data: [],
+        /*  */
+        data_movimiento7: "",
+        data_izquierdo7: "",
+        data_derecho7: "",
 
+        /* 8 */
         array_TOBILLO: ["Flexión plantar", "Flexión dorsal"],
         array_TOBILLO_Data: [],
+        /*  */
+        data_movimiento8: "",
+        data_izquierdo8: "",
+        data_derecho8: "",
 
+        /* 9 */
         array_ART_SUBASTRAGALINA: ["inversion", "Eversión"],
         array_ART_SUBASTRAGALINA_Data: [],
+        /*  */
+        data_movimiento9: "",
+        data_izquierdo9: "",
+        data_derecho9: "",
 
-        data_movimiento: "",
-        data_izquierdo: "",
-        data_derecho: "",
+        /* ------------------------------------------ */
         NewAntec: [],
         ArraySaveConsulta: [],
+        Exp_Fisica_observaciones: "",
     }),
     methods: {
         ...mapActions("Hc", ["SaveDatos8"]),
+        /* ------------------------------------------------------------------------------- */
+        AddItemArray1(mov, izq, der) {
+            let itemM = {
+                movimiento: mov,
+                izquierdo: izq,
+                derecho: der,
+            };
+            this.array_RAQUISCERVICAL_Data = [...this.array_RAQUISCERVICAL_Data, itemM];
+            if (this.selectedIndex !== -1) {
+                this.array_RAQUISCERVICAL.splice(this.selectedIndex, 1);
+            }
+            this.clearInput1();
+        },
+        handleSelectChange1(event) {
+            this.selectedIndex = event.target.selectedIndex - 1;
+        },
+        clearInput1() {
+            this.data_movimiento1 = "";
+            this.data_izquierdo1 = "";
+            this.data_derecho1 = "";
+            this.selectedIndex = "";
+        },
+        deleteItemarray1(index, item) {
+            this.array_RAQUISCERVICAL.push(item);
+            this.array_RAQUISCERVICAL_Data.splice(index, 1);
+        },
+        /* --------------------------------------------------------------------------------- */
+        AddItemArray2(mov, izq, der) {
+            let itemM = {
+                movimiento: mov,
+                izquierdo: izq,
+                derecho: der,
+            };
+            this.array_RAQUISDORSOLUMBAR_Data = [...this.array_RAQUISDORSOLUMBAR_Data, itemM];
+            if (this.selectedIndex !== -1) {
+                this.array_RAQUISDORSOLUMBAR.splice(this.selectedIndex, 1);
+            }
+            this.clearInput2();
+        },
+        handleSelectChange2(event) {
+            this.selectedIndex = event.target.selectedIndex - 1;
+        },
+        clearInput2() {
+            this.data_movimiento2 = "";
+            this.data_izquierdo2 = "";
+            this.data_derecho2 = "";
+            this.selectedIndex = "";
+        },
+        deleteItemarray2(index, item) {
+            this.array_RAQUISDORSOLUMBAR.push(item);
+            this.array_RAQUISDORSOLUMBAR_Data.splice(index, 1);
+        },
+
+        /* --------------------------------------------------------------------------------- */
+        AddItemArray3(mov, izq, der) {
+            let itemM = {
+                movimiento: mov,
+                izquierdo: izq,
+                derecho: der,
+            };
+            this.array_HOMBRO_Data = [...this.array_HOMBRO_Data, itemM];
+            if (this.selectedIndex !== -1) {
+                this.array_HOMBRO.splice(this.selectedIndex, 1);
+            }
+            this.clearInput3();
+        },
+        handleSelectChange3(event) {
+            this.selectedIndex = event.target.selectedIndex - 1;
+        },
+        clearInput3() {
+            this.data_movimiento3 = "";
+            this.data_izquierdo3 = "";
+            this.data_derecho3 = "";
+            this.selectedIndex = "";
+        },
+        deleteItemarray3(index, item) {
+            this.array_HOMBRO.push(item);
+            this.array_HOMBRO_Data.splice(index, 1);
+        },
+        /* ---------------------------------------------------------------------- */
+        AddItemArray4(mov, izq, der) {
+            let itemM = {
+                movimiento: mov,
+                izquierdo: izq,
+                derecho: der,
+            };
+            this.array_CODO_Data = [...this.array_CODO_Data, itemM];
+            if (this.selectedIndex !== -1) {
+                this.array_CODO.splice(this.selectedIndex, 1);
+            }
+            this.clearInput4();
+        },
+        handleSelectChange4(event) {
+            this.selectedIndex = event.target.selectedIndex - 1;
+        },
+        clearInput4() {
+            this.data_movimiento4 = "";
+            this.data_izquierdo4 = "";
+            this.data_derecho4 = "";
+            this.selectedIndex = "";
+        },
+        deleteItemarray4(index, item) {
+            this.array_CODO.push(item);
+            this.array_CODO_Data.splice(index, 1);
+        },
+        /* --------------------------------------------------------------------------------- */
+        AddItemArray5(mov, izq, der) {
+            let itemM = {
+                movimiento: mov,
+                izquierdo: izq,
+                derecho: der,
+            };
+            this.array_MUNECA_Data = [...this.array_MUNECA_Data, itemM];
+            if (this.selectedIndex !== -1) {
+                this.array_MUNECA.splice(this.selectedIndex, 1);
+            }
+            this.clearInput5();
+        },
+        handleSelectChange5(event) {
+            this.selectedIndex = event.target.selectedIndex - 1;
+        },
+        clearInput5() {
+            this.data_movimiento5 = "";
+            this.data_izquierdo5 = "";
+            this.data_derecho5 = "";
+            this.selectedIndex = "";
+        },
+        deleteItemarray5(index, item) {
+            this.array_MUNECA.push(item);
+            this.array_MUNECA_Data.splice(index, 1);
+        },
+        /* -------------------------------------------------------------------------------------- */
+        /* -------------------------------------------------------------------------------------- */
         async guardarInfo() {
             /* this.ArraySaveConsulta = []; */
             this.datosObservacion = [{
@@ -684,7 +913,7 @@ export default {
             data_movimiento = "";
             data_izquierdo = "";
             data_derecho = "";
-        }
+        },
     },
 };
 </script>
