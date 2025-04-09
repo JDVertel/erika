@@ -137,11 +137,12 @@
                                     <tr v-for="(item, index) in this.array_RAQUISCERVICAL_Data" :key="index">
                                         <td>{{ item.movimiento }}</td>
                                         <td>
-                                            {{ item.izquierdo }}
+                                            Izq: {{ item.derecho }}
                                         </td>
                                         <td>
-                                            {{ item.derecho }}
+                                            Der: {{ item.izquierdo }}
                                         </td>
+
                                         <td>
                                             <button class="btn btn-sm btn-danger" @click="deleteItemarray1(index, item.movimiento)">
                                                 <i class="bi bi-trash-fill"></i>
@@ -191,10 +192,10 @@
                                     <tr v-for="(item, index) in this.array_RAQUISDORSOLUMBAR_Data" :key="index">
                                         <td>{{ item.movimiento }}</td>
                                         <td>
-                                            {{ item.izquierdo }}
+                                            Izq: {{ item.derecho }}
                                         </td>
                                         <td>
-                                            {{ item.derecho }}
+                                            Der: {{ item.izquierdo }}
                                         </td>
                                         <td>
                                             <button class="btn btn-sm btn-danger" @click="deleteItemarray2(index, item.movimiento)">
@@ -245,10 +246,10 @@
                                     <tr v-for="(item, index) in this.array_HOMBRO_Data" :key="index">
                                         <td>{{ item.movimiento }}</td>
                                         <td>
-                                            {{ item.izquierdo }}
+                                            Izq: {{ item.derecho }}
                                         </td>
                                         <td>
-                                            {{ item.derecho }}
+                                            Der: {{ item.izquierdo }}
                                         </td>
                                         <td>
                                             <button class="btn btn-sm btn-danger" @click="deleteItemarray3(index, item.movimiento)">
@@ -300,10 +301,10 @@
                                     <tr v-for="(item, index) in this.array_CODO_Data" :key="index">
                                         <td>{{ item.movimiento }}</td>
                                         <td>
-                                            {{ item.izquierdo }}
+                                            Izq: {{ item.derecho }}
                                         </td>
                                         <td>
-                                            {{ item.derecho }}
+                                            Der: {{ item.izquierdo }}
                                         </td>
                                         <td>
                                             <button class="btn btn-sm btn-danger" @click="deleteItemarray4(index, item.movimiento)">
@@ -355,10 +356,10 @@
                                     <tr v-for="(item, index) in this.array_MUNECA_Data" :key="index">
                                         <td>{{ item.movimiento }}</td>
                                         <td>
-                                            {{ item.izquierdo }}
+                                            Izq: {{ item.derecho }}
                                         </td>
                                         <td>
-                                            {{ item.derecho }}
+                                            Der: {{ item.izquierdo }}
                                         </td>
                                         <td>
                                             <button class="btn btn-sm btn-danger" @click="deleteItemarray5(index, item.movimiento)">
@@ -382,27 +383,27 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento2" @change="handleSelectChange2">
+                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento6" @change="handleSelectChange6">
                                                 <option selected value="">-Seleccione Movimiento-</option>
-                                                <option v-for="(item,index) in this.array_RAQUISDORSOLUMBAR" :key="index" :value="item">
+                                                <option v-for="(item,index) in this.array_CADERA" :key="index" :value="item">
                                                     {{ item }}
                                                 </option>
                                             </select>
 
                                         </th>
                                         <th>
-                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo2" v-if="data_movimiento2!==''" />
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo6" v-if="data_movimiento6!==''" />
                                         </th>
                                         <th>
-                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho2" v-if="data_movimiento2!==''" />
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho6" v-if="data_movimiento6!==''" />
                                         </th>
                                         <th>
                                             <button type="button" @click="
-                            AddItemArray2(data_movimiento2, data_derecho2, data_izquierdo2)
+                            AddItemArray6(data_movimiento6, data_derecho6, data_izquierdo6)
                           " class="btn btn-warning btn-sm" v-if="
-                            this.data_movimiento2 !== '' &&
-                            this.data_izquierdo2 !== '' &&
-                            this.data_derecho2 !== ''
+                            this.data_movimiento6 !== '' &&
+                            this.data_izquierdo6 !== '' &&
+                            this.data_derecho6 !== ''
                           ">
                                                 Agregar
                                             </button>
@@ -412,16 +413,16 @@
 
                                 <tbody>
                                     <!--  -->
-                                    <tr v-for="(item, index) in this.array_RAQUISDORSOLUMBAR_Data" :key="index">
+                                    <tr v-for="(item, index) in this.array_CADERA_Data" :key="index">
                                         <td>{{ item.movimiento }}</td>
                                         <td>
-                                            {{ item.izquierdo }}
+                                            Izq: {{ item.derecho }}
                                         </td>
                                         <td>
-                                            {{ item.derecho }}
+                                            Der: {{ item.izquierdo }}
                                         </td>
                                         <td>
-                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray2(index, item.movimiento)">
+                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray6(index, item.movimiento)">
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
                                         </td>
@@ -436,27 +437,27 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento2" @change="handleSelectChange2">
+                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento7" @change="handleSelectChange7">
                                                 <option selected value="">-Seleccione Movimiento-</option>
-                                                <option v-for="(item,index) in this.array_RAQUISDORSOLUMBAR" :key="index" :value="item">
+                                                <option v-for="(item,index) in this.array_RODILLA" :key="index" :value="item">
                                                     {{ item }}
                                                 </option>
                                             </select>
 
                                         </th>
                                         <th>
-                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo2" v-if="data_movimiento2!==''" />
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo7" v-if="data_movimiento7!==''" />
                                         </th>
                                         <th>
-                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho2" v-if="data_movimiento2!==''" />
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho7" v-if="data_movimiento7!==''" />
                                         </th>
                                         <th>
                                             <button type="button" @click="
-                            AddItemArray2(data_movimiento2, data_derecho2, data_izquierdo2)
+                            AddItemArray7(data_movimiento7, data_derecho7, data_izquierdo7)
                           " class="btn btn-warning btn-sm" v-if="
-                            this.data_movimiento2 !== '' &&
-                            this.data_izquierdo2 !== '' &&
-                            this.data_derecho2 !== ''
+                            this.data_movimiento7 !== '' &&
+                            this.data_izquierdo7 !== '' &&
+                            this.data_derecho7 !== ''
                           ">
                                                 Agregar
                                             </button>
@@ -466,16 +467,16 @@
 
                                 <tbody>
                                     <!--  -->
-                                    <tr v-for="(item, index) in this.array_RAQUISDORSOLUMBAR_Data" :key="index">
+                                    <tr v-for="(item, index) in this.array_RODILLA_Data" :key="index">
                                         <td>{{ item.movimiento }}</td>
                                         <td>
-                                            {{ item.izquierdo }}
+                                            Izq: {{ item.derecho }}
                                         </td>
                                         <td>
-                                            {{ item.derecho }}
+                                            Der: {{ item.izquierdo }}
                                         </td>
                                         <td>
-                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray2(index, item.movimiento)">
+                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray7(index, item.movimiento)">
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
                                         </td>
@@ -490,27 +491,27 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento2" @change="handleSelectChange2">
+                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento8" @change="handleSelectChange8">
                                                 <option selected value="">-Seleccione Movimiento-</option>
-                                                <option v-for="(item,index) in this.array_RAQUISDORSOLUMBAR" :key="index" :value="item">
+                                                <option v-for="(item,index) in this.array_TOBILLO" :key="index" :value="item">
                                                     {{ item }}
                                                 </option>
                                             </select>
 
                                         </th>
                                         <th>
-                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo2" v-if="data_movimiento2!==''" />
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo8" v-if="data_movimiento8!==''" />
                                         </th>
                                         <th>
-                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho2" v-if="data_movimiento2!==''" />
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho8" v-if="data_movimiento8!==''" />
                                         </th>
                                         <th>
                                             <button type="button" @click="
-                            AddItemArray2(data_movimiento2, data_derecho2, data_izquierdo2)
+                            AddItemArray8(data_movimiento8, data_derecho8, data_izquierdo8)
                           " class="btn btn-warning btn-sm" v-if="
-                            this.data_movimiento2 !== '' &&
-                            this.data_izquierdo2 !== '' &&
-                            this.data_derecho2 !== ''
+                            this.data_movimiento8 !== '' &&
+                            this.data_izquierdo8 !== '' &&
+                            this.data_derecho8 !== ''
                           ">
                                                 Agregar
                                             </button>
@@ -520,16 +521,16 @@
 
                                 <tbody>
                                     <!--  -->
-                                    <tr v-for="(item, index) in this.array_RAQUISDORSOLUMBAR_Data" :key="index">
+                                    <tr v-for="(item, index) in this.array_TOBILLO_Data" :key="index">
                                         <td>{{ item.movimiento }}</td>
                                         <td>
-                                            {{ item.izquierdo }}
+                                            Izq: {{ item.derecho }}
                                         </td>
                                         <td>
-                                            {{ item.derecho }}
+                                            Der: {{ item.izquierdo }}
                                         </td>
                                         <td>
-                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray2(index, item.movimiento)">
+                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray8(index, item.movimiento)">
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
                                         </td>
@@ -544,27 +545,27 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento2" @change="handleSelectChange2">
+                                            <select class="form-select form-select-sm" aria-label="Small select example" v-model="data_movimiento9" @change="handleSelectChange9">
                                                 <option selected value="">-Seleccione Movimiento-</option>
-                                                <option v-for="(item,index) in this.array_RAQUISDORSOLUMBAR" :key="index" :value="item">
+                                                <option v-for="(item,index) in this.array_ART_SUBASTRAGALINA" :key="index" :value="item">
                                                     {{ item }}
                                                 </option>
                                             </select>
 
                                         </th>
                                         <th>
-                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo2" v-if="data_movimiento2!==''" />
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="-Izquierdo-" v-model="data_izquierdo9" v-if="data_movimiento9!==''" />
                                         </th>
                                         <th>
-                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho2" v-if="data_movimiento2!==''" />
+                                            <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho9" v-if="data_movimiento9!==''" />
                                         </th>
                                         <th>
                                             <button type="button" @click="
-                            AddItemArray2(data_movimiento2, data_derecho2, data_izquierdo2)
+                            AddItemArray9(data_movimiento9, data_derecho9, data_izquierdo9)
                           " class="btn btn-warning btn-sm" v-if="
-                            this.data_movimiento2 !== '' &&
-                            this.data_izquierdo2 !== '' &&
-                            this.data_derecho2 !== ''
+                            this.data_movimiento9 !== '' &&
+                            this.data_izquierdo9 !== '' &&
+                            this.data_derecho9 !== ''
                           ">
                                                 Agregar
                                             </button>
@@ -574,16 +575,16 @@
 
                                 <tbody>
                                     <!--  -->
-                                    <tr v-for="(item, index) in this.array_RAQUISDORSOLUMBAR_Data" :key="index">
+                                    <tr v-for="(item, index) in this.array_ART_SUBASTRAGALINA_Data" :key="index">
                                         <td>{{ item.movimiento }}</td>
                                         <td>
-                                            {{ item.izquierdo }}
+                                            Izq: {{ item.derecho }}
                                         </td>
                                         <td>
-                                            {{ item.derecho }}
+                                            Der: {{ item.izquierdo }}
                                         </td>
                                         <td>
-                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray2(index, item.movimiento)">
+                                            <button class="btn btn-sm btn-danger" @click="deleteItemarray9(index, item.movimiento)">
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
                                         </td>
@@ -596,9 +597,11 @@
                 </div>
             </div>
 
-            <hr />
-            <div class="container">
-                <textarea class="form-control form-control-sm" id="exampleFormControlTextarea1" placeholder="Observaciones" rows="3" v-model="Exp_Fisica_observaciones"></textarea>
+       <br>
+            <div class="container-fluid">
+                <div class="col-12">
+                    <textarea class="form-control form-control-sm" id="exampleFormControlTextarea1" placeholder="Observaciones" rows="3" v-model="evalFisicaObservaciones"></textarea>
+                </div>
             </div>
 
             <button class="btn btn-warning mt-3" @click="guardarInfo">+ Guardar</button>
@@ -628,15 +631,15 @@ export default {
     data: () => ({
         idPaciente: "111",
         idhc: "1",
-        bd: "hc3_inspecionestatica",
-        /*  */
+        bd: "hc8_expfisica",
         data_exp: exp_fisica,
         tipoclase: "0",
-        tipoevaluacion: "0",
         tipomusculo: "0",
-        datosC: "",
         detalle: "",
+        tipoevaluacion: "0",
+        datosC: "",
         observaciones: "",
+        evalFisicaObservaciones:"",
 
         /* 1 */
         array_RAQUISCERVICAL: ["flexion", "extencion", "IncLateral", "rotacionI"],
@@ -734,7 +737,7 @@ export default {
         /* ------------------------------------------ */
         NewAntec: [],
         ArraySaveConsulta: [],
-        Exp_Fisica_observaciones: "",
+     
     }),
     methods: {
         ...mapActions("Hc", ["SaveDatos8"]),
@@ -871,16 +874,152 @@ export default {
         },
         /* -------------------------------------------------------------------------------------- */
         /* -------------------------------------------------------------------------------------- */
+        AddItemArray6(mov, izq, der) {
+            let itemM = {
+                movimiento: mov,
+                izquierdo: izq,
+                derecho: der,
+            };
+            this.array_CADERA_Data = [...this.array_CADERA_Data, itemM];
+            if (this.selectedIndex !== -1) {
+                this.array_CADERA.splice(this.selectedIndex, 1);
+            }
+            this.clearInput6();
+        },
+        handleSelectChange6(event) {
+            this.selectedIndex = event.target.selectedIndex - 1;
+        },
+        clearInput6() {
+            this.data_movimiento6 = "";
+            this.data_izquierdo6 = "";
+            this.data_derecho6 = "";
+            this.selectedIndex = "";
+        },
+        deleteItemarray6(index, item) {
+            this.array_CADERA.push(item);
+            this.array_CADERA_Data.splice(index, 1);
+        },
+        /* -------------------------------------------------------------------------------------- */
+        AddItemArray7(mov, izq, der) {
+            let itemM = {
+                movimiento: mov,
+                izquierdo: izq,
+                derecho: der,
+            };
+            this.array_RODILLA_Data = [...this.array_RODILLA_Data, itemM];
+            if (this.selectedIndex !== -1) {
+                this.array_RODILLA.splice(this.selectedIndex, 1);
+            }
+            this.clearInput7();
+        },
+        handleSelectChange7(event) {
+            this.selectedIndex = event.target.selectedIndex - 1;
+        },
+        clearInput7() {
+            this.data_movimiento7 = "";
+            this.data_izquierdo7 = "";
+            this.data_derecho7 = "";
+            this.selectedIndex = "";
+        },
+        deleteItemarray7(index, item) {
+            this.array_RODILLA.push(item);
+            this.array_RODILLA_Data.splice(index, 1);
+        },
+        /* -------------------------------------------------------------------------------------- */
+        AddItemArray8(mov, izq, der) {
+            let itemM = {
+                movimiento: mov,
+                izquierdo: izq,
+                derecho: der,
+            };
+            this.array_TOBILLO_Data = [...this.array_TOBILLO_Data, itemM];
+            if (this.selectedIndex !== -1) {
+                this.array_TOBILLO.splice(this.selectedIndex, 1);
+            }
+            this.clearInput8();
+        },
+        handleSelectChange8(event) {
+            this.selectedIndex = event.target.selectedIndex - 1;
+        },
+        clearInput8() {
+            this.data_movimiento8 = "";
+            this.data_izquierdo8 = "";
+            this.data_derecho8 = "";
+            this.selectedIndex = "";
+        },
+        deleteItemarray8(index, item) {
+            this.array_TOBILLO.push(item);
+            this.array_TOBILLO_Data.splice(index, 1);
+        },
+        /* -------------------------------------------------------------------------------------- */
+        AddItemArray9(mov, izq, der) {
+            let itemM = {
+                movimiento: mov,
+                izquierdo: izq,
+                derecho: der,
+            };
+            this.array_ART_SUBASTRAGALINA_Data = [...this.array_ART_SUBASTRAGALINA_Data, itemM];
+            if (this.selectedIndex !== -1) {
+                this.array_ART_SUBASTRAGALINA.splice(this.selectedIndex, 1);
+            }
+            this.clearInput9();
+        },
+        handleSelectChange9(event) {
+            this.selectedIndex = event.target.selectedIndex - 1;
+        },
+        clearInput9() {
+            this.data_movimiento9 = "";
+            this.data_izquierdo9 = "";
+            this.data_derecho9 = "";
+            this.selectedIndex = "";
+        },
+        deleteItemarray9(index, item) {
+            this.array_ART_SUBASTRAGALINA.push(item);
+            this.array_ART_SUBASTRAGALINA_Data.splice(index, 1);
+        },
+        /* -------------------------------------------------------------------------------------- */
         async guardarInfo() {
             /* this.ArraySaveConsulta = []; */
-            this.datosObservacion = [{
-                idpaciente: this.idpaciente,
+            this.datosObservacion = {
+                idpaciente: this.idPaciente,
                 idhc: this.idhc,
                 bd: this.bd,
-                dataeval: this.rangosMovimientos,
-                dataeval2: this.NewAntec,
-            }, ];
-            this.SaveDatos8(this.datosObservacion[0]);
+                Data_observaciones: this.evalFisicaObservaciones,
+                Data_SOseo: this.NewAntec,
+                Data_EvalMSuperior: [{
+                        RAQUISCERVICAL: this.array_RAQUISCERVICAL_Data
+                    },
+                    {
+                        RAQUISDORSOLUMBAR: this.array_RAQUISDORSOLUMBAR_Data
+                    },
+                    {
+                        HOMBRO: this.array_HOMBRO_Data
+                    },
+                    {
+                        CODO: this.array_CODO_Data
+                    },
+                    {
+                        MUNECA: this.array_MUNECA_Data
+                    },
+
+                ],
+
+                Data_EvalMInferior: [{
+                        CADERA: this.array_CADERA_Data
+                    },
+                    {
+                        RODILLA: this.array_RODILLA_Data
+                    },
+                    {
+                        TOBILLO: this.array_TOBILLO_Data
+                    },
+                    {
+                        ART_SUBASTRAGALINA: this.array_ART_SUBASTRAGALINA_Data
+                    },
+                ]
+
+            };
+            this.SaveDatos8(this.datosObservacion);
         },
 
         buscardata(x, y, z) {
