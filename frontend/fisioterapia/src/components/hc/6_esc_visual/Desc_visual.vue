@@ -3,8 +3,7 @@
 <div class="accordion-item">
     <h2 class="accordion-header">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse6" aria-expanded="false" aria-controls="panelsStayOpen-collapse6">
-
-            Escala Visual Analógica del Dolor ok
+            Escala Visual Analógica del Dolor
         </button>
     </h2>
     <div id="panelsStayOpen-collapse6" class="accordion-collapse collapse">

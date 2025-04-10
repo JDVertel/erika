@@ -3,7 +3,7 @@
 <div class="accordion-item">
     <h2 class="accordion-header">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse5" aria-expanded="false" aria-controls="panelsStayOpen-collapse5">
-            Inspeccion Dinamica ok
+            Inspeccion Dinamica
         </button>
     </h2>
     <div id="panelsStayOpen-collapse5" class="accordion-collapse collapse">

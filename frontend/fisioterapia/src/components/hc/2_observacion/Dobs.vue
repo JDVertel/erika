@@ -3,7 +3,7 @@
 <div class="accordion-item">
     <h2 class="accordion-header">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse2" aria-expanded="false" aria-controls="panelsStayOpen-collapse2">
-            Observacion_ok
+            Observacion
         </button>
     </h2>
     <div id="panelsStayOpen-collapse2" class="accordion-collapse collapse">

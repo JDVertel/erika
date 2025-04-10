@@ -3,7 +3,7 @@
 <div class="accordion-item">
     <h2 class="accordion-header d-flex justify-content-between">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse8" aria-expanded="false" aria-controls="panelsStayOpen-collapse8">
-            Exploracion Fisica ok
+            Exploracion Fisica
         </button>
         <!--  -->
         <!--         <button class="btn btn-outline-primary btn-sm">save</button> -->

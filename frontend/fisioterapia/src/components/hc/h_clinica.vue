@@ -13,13 +13,13 @@
 
     <D_esc_visual />
 
-    <D_imagenes /> -->
+    <D_imagenes />
 
     <D_exp_fisica />
-<!-- 
+
     <D_sis_muscular />
 
-    <D_analisis />
+    <D_analisis /> -->
 
     <D_diagnostico />
 
@@ -27,7 +27,7 @@
 
     <D_ordenmedica />
     
-    <div class="accordion-item">
+<!--     <div class="accordion-item">
         <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse14" aria-expanded="false" aria-controls="panelsStayOpen-collapse14">
                
@@ -42,8 +42,8 @@
             </div>
         </div>
      
-    </div> -->
-<br>
+    </div>
+<br> -->
 </div>
 </template>
 
