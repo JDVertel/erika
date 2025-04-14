@@ -22,7 +22,9 @@ strong {
   padding: 2px !important;
 }
 
-
+thead th {
+  border-bottom: 2px solid black; /* Línea negra de separación */
+}
 
 .card_detalle {
   font-size: 0.8rem !important;

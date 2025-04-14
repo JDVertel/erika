@@ -119,7 +119,7 @@
                                             <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2" placeholder="-Derecho-" v-model="data_derecho1" v-if="data_movimiento1!==''" />
                                         </th>
                                         <th>
-                                            <button type="button" @click="
+                                            <button type="button btn-sm" @click="
                             AddItemArray1(data_movimiento1, data_derecho1, data_izquierdo1)
                           " class="btn btn-warning btn-sm" v-if="
                             this.data_movimiento1 !== '' &&
@@ -604,7 +604,7 @@
                 </div>
             </div>
 
-            <button class="btn btn-warning mt-3" @click="guardarInfo">+ Guardar</button>
+            <button class="btn btn-sm btn-warning mt-3" @click="guardarInfo">+ Guardar</button>
         </div>
     </div>
 </div>

@@ -493,7 +493,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="accordion-item">
+                        <!--   <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
                                     Parametros funcionales
@@ -503,12 +503,12 @@
                                 <div class="accordion-body">
                                     <nav>parametros</nav>
                                     <div class="tab-content" id="nav-tabContent">
-                                        <!-- COMUNICACIONES -->
+                                      //  COMUNICACIONES
 
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -1019,7 +1019,7 @@ export default {
         obtenerDatosEmpresa() {
             this.nombreips = this.DataEmpresa[0].nombre;
             this.nit = this.DataEmpresa[0].nit;
-            this.desc=this.DataEmpresa[0].desc;
+            this.desc = this.DataEmpresa[0].desc;
             this.cel = this.DataEmpresa[0].celular;
             this.wsp = this.DataEmpresa[0].wsp;
             this.direccion = this.DataEmpresa[0].direccion;

@@ -104,8 +104,8 @@ export const SaveDatos6 = async ({ commit }, Data) => {
 /* hc7 imagenes */
 
 export const SaveDatos7 = async ({ commit }, Data) => {
-  const {} = Data;
-  const DatatoSave = {};
+  const {idpaciente,bd,idhc,imgDiag,tipoimg,descImagen} = Data;
+  const DatatoSave = {idpaciente,idhc,imgDiag,tipoimg,descImagen};
   const Ruta = `/${bd}.json`;
   const { data } = await firebase_api.post(Ruta, DatatoSave);
   DatatoSave.id = data.name;
@@ -159,11 +159,12 @@ export const SaveDatos11 = async ({ commit }, Data) => {
 /* hc12 tratamiento */
 
 export const SaveDatos12 = async ({ commit }, Data) => {
-  const { planTratamiento, objetivos, bd, idhc } = Data;
+  const { planTratamiento, objetivos, bd, idhc ,idPaciente} = Data;
   const DatatoSave = {
     planTratamiento,
     objetivos,
     idhc,
+    idPaciente
   };
   const Ruta = `/${bd}.json`;
   const { data } = await firebase_api.post(Ruta, DatatoSave);
@@ -174,8 +175,8 @@ export const SaveDatos12 = async ({ commit }, Data) => {
 /* hc13 orden medica */
 
 export const SaveDatos13 = async ({ commit }, Data) => {
-  const {} = Data;
-  const DatatoSave = {};
+  const {isPaciente,idhc,bd,DataOMedica} = Data;
+  const DatatoSave = {isPaciente,idhc,DataOMedica};
   const Ruta = `/${bd}.json`;
   const { data } = await firebase_api.post(Ruta, DatatoSave);
   DatatoSave.id = data.name;

@@ -1,7 +1,6 @@
 <template>
 <div class="accordion custom-header" id="accordionPanelsStayOpenExample">
-
-<!--     <D_consulta />
+     <D_consulta />
 
      <D_observacion />
 
@@ -19,7 +18,7 @@
 
     <D_sis_muscular />
 
-    <D_analisis /> -->
+    <D_analisis />
 
     <D_diagnostico />
 
@@ -42,9 +41,19 @@
             </div>
         </div>
      
+    </div> -->
+    <br>
+    <div class="row">
+        <button type="button" class="btn btn-warning btn-sm mb-3">
+            <i class="bi bi-floppy2"></i>  Guardar historia clinica
+        </button>
     </div>
-<br> -->
+   
+ 
+<br> 
 </div>
+
+
 </template>
 
 <script>

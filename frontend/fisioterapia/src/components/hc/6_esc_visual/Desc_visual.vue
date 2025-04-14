@@ -53,9 +53,10 @@
 
                 <!-- Tab Ubicación -->
                 <div class="tab-pane fade" id="nav-ubicacion" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                    <br>
                     <div class="container">
                         <div class="row">
-                            <div class="col-12 col-md-6 position-relative">
+                            <div class="col-12 col-md-4">
                                 <div class="image-container" ref="imageContainer1">
                                     <img id="imagen1" src="./../../../assets//images/HC_mapa_calor/cuerpohumano_1.jpeg" alt="Vista frontal" class="logo-img" @click="colocarMarcador($event, 'imagen1')" />
                                     <!-- Marcadores dinámicos -->
@@ -73,9 +74,9 @@
                                         marcador(es)</span>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 position-relative">
+                            <div class="col-12 col-md-4 position-relative">
                                 <div class="image-container" ref="imageContainer2">
-                                    <img id="imagen2" src="./../../../assets//images/HC_mapa_calor/cuerpohumano_2.jpeg" alt="Vista posterior" class="logo-img" @click="colocarMarcador($event, 'imagen2')" />
+                                    <img id="imagen2" src="./../../../assets//images/HC_mapa_calor/cuerpohumano_2.jpeg" alt="Vista posterior" class="logo-img" style="text-align:center" @click="colocarMarcador($event, 'imagen2')" />
                                     <!-- Marcadores dinámicos -->
                                     <div v-for="(mark, index) in getMarcadoresPorImagen('imagen2')" :key="index" class="pain-marker" :style="getMarkerStyle(mark)" @click.stop="seleccionarMarcador(mark)" :class="{ selected: marcadorSeleccionado === mark }">
                                         X
@@ -91,28 +92,32 @@
                                         marcador(es)</span>
                                 </div>
                             </div>
+                            <div class="col-12 col-md-4 position-relative">
+                                <div v-if="marcadorSeleccionado" class="marker-info mt-3 p-3 border rounded">
+                                                       <h5>Información del marcador</h5>
+                                                       <div class="mb-3">
+                                                           <label class="form-label">Intensidad del dolor</label>
+                                                           <input type="range" class="form-range" min="1" max="10" v-model="marcadorSeleccionado.intensidad" />
+                                                           <span class="ms-2">{{ marcadorSeleccionado.intensidad }}/10</span>
+                                                       </div>
+                                                       <div class="mb-3">
+                                                           <label class="form-label">Tipo de dolor</label>
+                                                           <select class="form-select" v-model="marcadorSeleccionado.tipoDolor">
+                                                               <option value="agudo">Agudo</option>
+                                                               <option value="cronico">Crónico</option>
+                                                               <option value="punzante">Punzante</option>
+                                                               <option value="quemante">Quemante</option>
+                                                           </select>
+                                                       </div>
+                                                       <button class="btn btn-danger btn-sm" @click="eliminarMarcador(marcadorSeleccionado)">
+                                                           Eliminar marcador
+                                                       </button>
+                                                   </div>
+                                                   </div>
                         </div>
+                      
                         <!-- Panel de información del marcador seleccionado -->
-                        <div v-if="marcadorSeleccionado" class="marker-info mt-3 p-3 border rounded">
-                            <h5>Información del marcador</h5>
-                            <div class="mb-3">
-                                <label class="form-label">Intensidad del dolor</label>
-                                <input type="range" class="form-range" min="1" max="10" v-model="marcadorSeleccionado.intensidad" />
-                                <span class="ms-2">{{ marcadorSeleccionado.intensidad }}/10</span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Tipo de dolor</label>
-                                <select class="form-select" v-model="marcadorSeleccionado.tipoDolor">
-                                    <option value="agudo">Agudo</option>
-                                    <option value="cronico">Crónico</option>
-                                    <option value="punzante">Punzante</option>
-                                    <option value="quemante">Quemante</option>
-                                </select>
-                            </div>
-                            <button class="btn btn-danger btn-sm" @click="eliminarMarcador(marcadorSeleccionado)">
-                                Eliminar marcador
-                            </button>
-                        </div>
+                   
                     </div>
                 </div>
 
@@ -360,7 +365,7 @@ export default {
 
 .logo-img {
     max-width: 100%;
-    height: auto;
+    height: 30rem;
     cursor: crosshair;
 }
 

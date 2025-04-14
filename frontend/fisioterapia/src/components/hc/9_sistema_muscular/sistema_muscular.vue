@@ -9,7 +9,7 @@
     <div id="panelsStayOpen-collapse9" class="accordion-collapse collapse">
         <div class="accordion-body">
             <small>
-                procedimiento actual diagnostico(funcional)fisioterapéutico pronóstico
+                Procedimiento actual diagnostico(funcional)fisioterapéutico pronóstico
                 de enfermedad objetivos del tratamiento (generales y específicos) plan
                 de atención y tratamientos observaciones.
             </small>
@@ -152,7 +152,7 @@
                                 <div class="card">
                                     <div class="card-header">Registro</div>
 
-                                    <table class="table table-sm">
+                                    <table class="table table-sm table-success">
                                         <thead>
                                             <tr>
                                                 <th>Eval</th>
@@ -178,12 +178,13 @@
                                     </table>
                                 </div>
                             </div>
+                            <br>
                             <div class="col-12 col-md-6">
-                                <div class="container">
+                                <div class="row">
                                     <div class="col-12">
                                         <div class="card">
                                             <div class="card-header">Registro 1</div>
-                                            <table class="table table-sm">
+                                            <table class="table table-sm table-warning">
                                                 <thead>
                                                     <tr>
                                                         <th>Eval</th>
@@ -218,8 +219,8 @@
                                     <div class="col-12">
                                         <div class="card">
                                             <div class="card-header">Registro 2</div>
-                                            <table class="table table-sm">
-                                                <thead>
+                                            <table class="table table-sm table-warning">
+                                                <thead >
                                                     <tr>
                                                         <th>Eval</th>
                                                         <th>Clase</th>
@@ -486,3 +487,4 @@ export default {
     },
 };
 </script>
+

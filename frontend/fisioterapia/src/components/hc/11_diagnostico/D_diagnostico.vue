@@ -3,35 +3,35 @@
 <div class="accordion-item">
     <h2 class="accordion-header">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse11" aria-expanded="false">
-            Diagnostico ok falta cie-10
+            Diagnostico CIE-10
         </button>
     </h2>
     <div id="panelsStayOpen-collapse11" class="accordion-collapse collapse">
         <div class="accordion-body">
             <div class="container">
                 <div class="row mt-3">
-                    <div class="col-4">
+                    <div class="col-12 col-md-4">
                         <div class="input-group">
                             <input type="text" class="form-control form-control-sm" :value="
                     cie10Seleccionado
                       ? `${cie10Seleccionado.codigo} - ${cie10Seleccionado.descripcion}`
                       : ''
-                  " placeholder="CIE-10" readonly />
+                  " placeholder="--CIE-10--" readonly />
                             <button class="btn btn-outline-secondary btn-sm" type="button" @click="abrirModalCIE10">
                                 Buscar
                             </button>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-6 col-md-4">
                         <select class="form-select form-select-sm" v-model="tipoDiagnostico">
-                            <option value="0">Tipo de Diagnostico</option>
-                            <option value="D_Principal">Diagnostico Principal</option>
-                            <option value="D_Secundario">Diagnostico Secundario</option>
-                            <option value="D_Terciario">Diagnostico Terciario</option>
-                            <option value="D_Relacionado">Diagnostico Relacionado</option>
+                            <option value="0">--Tipo de Diagnostico--</option>
+                            <option value="Principal">Diagnostico Principal</option>
+                            <option value="Confirmado">Diagnostico Confirmado</option>
+                            <option value="Imp_Diagnostiva">Impresion Diagnostica</option>
+                            <option value="Relacionado">Diagnostico Relacionado</option>
                         </select>
                     </div>
-                    <div class="col-4">
+                    <div class="col-6 col-md-4">
                         <button class="btn btn-warning btn-sm" @click="
                   AddAntec('diagnostico', cie10Seleccionado, tipoDiagnostico)
                 " :disabled="!cie10Seleccionado || tipoDiagnostico === '0'">
@@ -52,7 +52,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in NewAntec" :key="index">
-                            <td>{{ obtenerTipoDiagnostico(item.detalleenf) }}</td>
+                            <td>{{ item.tdiagnostico }}</td>
                             <td>{{ item.enfermedad.codigo }}</td>
                             <td>{{ item.enfermedad.descripcion }}</td>
                             <td>
@@ -64,7 +64,7 @@
                     </tbody>
                 </table>
             </div>
-            <hr />
+   <br>
             <button class="btn btn-warning" @click="guardarInfo">+ Guardar</button>
         </div>
     </div>
@@ -188,25 +188,24 @@ export default {
             this.cie10Seleccionado = item;
             this.modalInstance.hide();
         },
-        AddAntec(tipo, enf, detalle) {
+
+        AddAntec(tipoAct, enf, tdiagnostico) {
             let item = {
-                tipo: tipo,
+                tipoActividad: tipoAct,
                 enfermedad: enf,
-                detalleenf: detalle,
+                tdiagnostico: tdiagnostico,
             };
             this.NewAntec = [...this.NewAntec, item];
+            this.limpiarCampos();
         },
         eliminarDiagnostico(index) {
             this.NewAntec.splice(index, 1);
         },
-        obtenerTipoDiagnostico(valor) {
-            const tipos = {
-                1: "Principal",
-                2: "Secundario",
-                3: "Terciario",
-                4: "Relacionado",
-            };
-            return tipos[valor] || "No especificado";
+
+        limpiarCampos() {
+            this.cie10Seleccionado = "";
+            this.tipoDiagnostico = "0";
+            this.busquedaCIE10 = "";
         },
         guardarInfo() {
             this.ArraySaveConsulta = {

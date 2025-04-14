@@ -9,7 +9,7 @@
     <div id="panelsStayOpen-collapse10" class="accordion-collapse collapse">
         <div class="accordion-body">
             <div class="mb-3">
-                <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" v-model="Data_analisis" placeholder="analisis"></textarea>
+                <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" v-model="Data_analisis" placeholder="Detalle el analisis de la consulta"></textarea>
             </div>
             <button class="btn btn-warning" @click="guardarInfo">+ Guardar</button>
         </div>
