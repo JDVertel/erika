@@ -220,9 +220,9 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-warning mt-3" @click="guardarInfo()">
+   <!--          <button class="btn btn-warning mt-3" @click="guardarInfo1()">
                 + Guardar
-            </button>
+            </button> -->
         </div>
     </div>
 </div>
@@ -304,10 +304,10 @@ export default {
 
         ...mapActions("Hc", ["SaveDatos1"]),
 
-        async guardarInfo() {
+        async guardarInfo1() {
     
             this.ArrayDatosConsulta = [{
-                idpaciente: this.iduser,
+                idpaciente: this.idPaciente,
                 bd: this.bd,
                 idhc: this.idhc,
                 /*  */
@@ -327,6 +327,7 @@ export default {
             }, ];
 
             this.SaveDatos1(this.ArrayDatosConsulta[0]);
+            console.log("Datos de consulta guardados...");
         },
     },
     computed: {},

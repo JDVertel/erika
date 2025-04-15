@@ -12,16 +12,20 @@ export const updateDataVitrina = (state, entradas) => {
   state.entry[idx] = entradas;
 };
 /* =========================================================== */
-export const newDataVitrina = (state,entradas) => {
-state.entry=[entradas,...state.entry]
+export const newDataVitrina = (state, entradas) => {
+  state.entry = [entradas, ...state.entry]
 
 };
 /* =================================================== */
-export const DeleteItemVitrina=(state,idDelete)=>{
+export const DeleteItemVitrina = (state, idDelete) => {
 
-state.entry = state.entry.filter(e => e.id !== idDelete)
+  state.entry = state.entry.filter(e => e.id !== idDelete)
 
 }
+
+export const setStateInventario = (state, entrada) => {
+  state.StateInventario = [entrada, ...state.StateInventario]
+};
 
 // modifican el state
 

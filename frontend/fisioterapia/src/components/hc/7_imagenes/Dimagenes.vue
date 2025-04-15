@@ -39,9 +39,9 @@
 
             <!--  -->
 
-            <button class="btn btn-warning mt-3" @click="uploadImage_p">
+         <!--    <button class="btn btn-warning mt-3" @click="uploadImage_p7">
                 + Guardar
-            </button>
+            </button> -->
         </div>
     </div>
 </div>
@@ -104,7 +104,7 @@ export default {
             }
         },
         //2- se sube primero la imagen para generar ruta que se adiciona al conjunto de datos de emprea a guardar
-        async uploadImage_p() {
+        async uploadImage_p7() {
             try {
                 const storage = getStorage();
                 const storageRef = ref(storage, this.IMG);

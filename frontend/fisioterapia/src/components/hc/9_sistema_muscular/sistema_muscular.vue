@@ -335,9 +335,9 @@
                 </div>
             </div>
             <!-- Botón Guardar -->
-            <button class="btn btn-warning mt-3" @click="guardarInfo">
+         <!--    <button class="btn btn-warning mt-3" @click="guardarInfo9">
                 + Guardar
-            </button>
+            </button> -->
         </div>
     </div>
 </div>
@@ -472,7 +472,7 @@ export default {
             this.eDerecho = "0";
         },
         /*----------------------------  */
-        guardarInfo() {
+        guardarInfo9() {
           this.datosObservacion = {
                 idpaciente: this.idPaciente,
                 idhc: this.idhc,

@@ -68,7 +68,7 @@
                 </table>
             </div>
 
-            <button class="btn btn-warning" @click="guardarInfo">+ Guardar</button>
+      <!--       <button class="btn btn-warning" @click="guardarInfo13">+ Guardar</button> -->
         </div>
     </div>
 
@@ -209,7 +209,7 @@ export default {
         eliminarOrden(index) {
             this.NewAntec.splice(index, 1);
         },
-          guardarInfo() {
+          guardarInfo13() {
             this.ArraySaveConsulta = {
                 idPaciente: this.idPaciente,
                 idhc: this.idhc,

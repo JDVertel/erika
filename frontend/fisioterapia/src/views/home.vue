@@ -35,7 +35,7 @@ export default {
         };
     },
     methods: {
-        ...mapActions("vitrina", ["load_Vitrina"]),
+   
         ...mapActions("Auth", ["getDataIPSbyParam"]),
 
         manejarMensaje(mensaje) {

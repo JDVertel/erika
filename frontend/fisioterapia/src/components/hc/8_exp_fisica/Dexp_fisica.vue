@@ -604,7 +604,7 @@
                 </div>
             </div>
 
-            <button class="btn btn-sm btn-warning mt-3" @click="guardarInfo">+ Guardar</button>
+   <!--          <button class="btn btn-sm btn-warning mt-3" @click="guardarInfo8">+ Guardar</button> -->
         </div>
     </div>
 </div>
@@ -978,7 +978,7 @@ export default {
             this.array_ART_SUBASTRAGALINA_Data.splice(index, 1);
         },
         /* -------------------------------------------------------------------------------------- */
-        async guardarInfo() {
+        async guardarInfo8() {
             /* this.ArraySaveConsulta = []; */
             this.datosObservacion = {
                 idpaciente: this.idPaciente,

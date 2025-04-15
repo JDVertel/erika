@@ -1,59 +1,42 @@
 <template>
 <div class="accordion custom-header" id="accordionPanelsStayOpenExample">
-     <D_consulta />
+    <D_consulta ref="G_consulta" />
 
-     <D_observacion />
+    <D_observacion ref="G_observacion" />
 
-   <D_inspestatica />
+    <D_inspestatica ref="G_inspestatica" />
 
-    <D_eval_post />
+    <D_eval_post ref="G_eval_post" />
 
-    <D_insp_dinam />
+    <D_insp_dinam ref="G_insp_dinam" />
 
-    <D_esc_visual />
+    <D_esc_visual ref="G_esc_visual" />
 
-    <D_imagenes />
+    <D_imagenes ref="G_imagenes" />
 
-    <D_exp_fisica />
+    <D_exp_fisica ref="G_exp_fisica" />
 
-    <D_sis_muscular />
+    <D_sis_muscular ref="G_sis_muscular" />
 
-    <D_analisis />
+    <D_analisis ref="G_analisis" />
 
-    <D_diagnostico />
+    <D_diagnostico ref="G_diagnostico" />
 
-    <D_tratamiento />
+    <D_tratamiento ref="G_tratamiento" />
 
-    <D_ordenmedica />
-    
-<!--     <div class="accordion-item">
-        <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse14" aria-expanded="false" aria-controls="panelsStayOpen-collapse14">
-               
-                Guardar Historia clinica
-            </button>
-        </h2>
-        <div id="panelsStayOpen-collapse14" class="accordion-collapse collapse">
-            <div class="accordion-body">
-                <button type="button" class="btn btn-primary btn-sm">
-                    guardar historia clinica
-                </button>
-            </div>
-        </div>
-     
-    </div> -->
+    <D_ordenmedica ref="G_ordenmedica" />
+
     <br>
-    <div class="row">
-        <button type="button" class="btn btn-warning btn-sm mb-3">
-            <i class="bi bi-floppy2"></i>  Guardar historia clinica
+    <div class="row"> 
+     
+        <button type="button" class="btn btn-warning btn-sm mb-3" @click="guardarTodo">
+           
+            <i class="bi bi-floppy2"></i> Guardar historia clinica
         </button>
     </div>
-   
- 
-<br> 
+
+    <br>
 </div>
-
-
 </template>
 
 <script>
@@ -74,7 +57,6 @@ import D_ordenmedica from "./13_orden_medica/Dorden_medica.vue";
 export default {
     data: () => ({
 
-        /*  */
     }),
 
     components: {
@@ -92,6 +74,29 @@ export default {
         D_tratamiento,
         D_ordenmedica,
 
+    },
+    methods: {
+        async guardarTodo() {
+            console.log("Ejecutando todo");
+
+            try {
+                await this.$refs.G_consulta.guardarInfo1();
+                await this.$refs.G_observacion.guardarInfo2();
+                await this.$refs.G_inspestatica.guardarInfo3();
+                await this.$refs.G_eval_post.guardarInfo4();
+                await this.$refs.G_insp_dinam.guardarInfo5();
+                await this.$refs.G_esc_visual.guardarInfo6();
+                await this.$refs.G_imagenes.uploadImage_p7();
+                await this.$refs.G_exp_fisica.guardarInfo8();
+                await this.$refs.G_sis_muscular.guardarInfo9();
+                await this.$refs.G_analisis.guardarInfo10();
+                await this.$refs.G_diagnostico.guardarInfo11();
+                await this.$refs.G_tratamiento.guardarInfo12();
+                await this.$refs.G_ordenmedica.guardarInfo13();
+            } catch (error) {
+                console.error("Error al guardar información:", error);
+            }
+        },
     }
 };
 </script>

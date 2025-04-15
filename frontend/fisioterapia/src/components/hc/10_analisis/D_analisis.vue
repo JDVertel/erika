@@ -11,7 +11,7 @@
             <div class="mb-3">
                 <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" v-model="Data_analisis" placeholder="Detalle el analisis de la consulta"></textarea>
             </div>
-            <button class="btn btn-warning" @click="guardarInfo">+ Guardar</button>
+    <!--         <button class="btn btn-warning" @click="guardarInfo10">+ Guardar</button> -->
         </div>
     </div>
 </div>
@@ -38,7 +38,7 @@ export default {
     methods: {
 
         ...mapActions("Hc", ["SaveDatos10"]),
-        async guardarInfo() {
+        async guardarInfo10() {
 
             this.arrayDatosConsulta = [{
                 idpaciente: this.idPaciente,

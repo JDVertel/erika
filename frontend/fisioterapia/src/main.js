@@ -5,7 +5,6 @@ import router from "./router/routes";
 
 // store
 import store from './store/index.js';
-
 //bootstrap
 import "bootstrap/dist/css/bootstrap.css";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.js";

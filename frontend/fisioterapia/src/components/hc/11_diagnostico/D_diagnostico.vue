@@ -65,7 +65,7 @@
                 </table>
             </div>
    <br>
-            <button class="btn btn-warning" @click="guardarInfo">+ Guardar</button>
+<!--             <button class="btn btn-warning" @click="guardarInfo11">+ Guardar</button> -->
         </div>
     </div>
 
@@ -207,7 +207,7 @@ export default {
             this.tipoDiagnostico = "0";
             this.busquedaCIE10 = "";
         },
-        guardarInfo() {
+        guardarInfo11() {
             this.ArraySaveConsulta = {
                 idPaciente: this.idPaciente,
                 idhc: this.idhc,

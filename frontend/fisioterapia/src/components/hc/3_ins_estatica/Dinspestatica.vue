@@ -150,9 +150,9 @@
                             </tbody>
                         </table>
                     </div>
-                    <button class="btn btn-warning mt-3" @click="guardarInfo">
+             <!--        <button class="btn btn-warning mt-3" @click="guardarInfo3">
                         + Guardar
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </div>
@@ -218,10 +218,10 @@ export default {
             this.i_e_postura = "0";
             this.detalle_postura = "";
         },
-        async guardarInfo() {
+        async guardarInfo3() {
             /* this.ArraySaveConsulta = []; */
             this.datosObservacion = [{
-                idpaciente: this.idpaciente,
+                idpaciente: this.idPaciente,
                 idhc: this.idhc,
                 bd: this.bd,
                 dataeval: this.NewAntec,

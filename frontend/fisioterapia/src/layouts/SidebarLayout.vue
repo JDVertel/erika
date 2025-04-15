@@ -52,7 +52,7 @@
                 <li>
                     <router-link to="/ventas" @click="toggleNavbar" class="nav-link">
                         <img class="icono" width="18" height="18" src="https://img.icons8.com/?size=100&id=100257&format=png&color=000000" alt="profesional" />
-                        <span>Ventas</span>
+                        <span>Facturar</span>
                     </router-link>
                 </li>
                 <li>

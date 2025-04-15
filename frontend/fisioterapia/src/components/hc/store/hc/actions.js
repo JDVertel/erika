@@ -6,6 +6,7 @@ export const SaveDatos1 = async ({ commit }, Data) => {
   //desestructurar data
   console.log("llego", Data);
   const {
+    idpaciente,
     idhc,
     motivoConsulta,
     Enfermedad,
@@ -24,6 +25,7 @@ export const SaveDatos1 = async ({ commit }, Data) => {
   } = Data;
   //preparar datos de almacenamiento y parametros
   const DatatoSave = {
+    idpaciente,
     idhc,
     motivoConsulta,
     Enfermedad,
@@ -175,8 +177,8 @@ export const SaveDatos12 = async ({ commit }, Data) => {
 /* hc13 orden medica */
 
 export const SaveDatos13 = async ({ commit }, Data) => {
-  const {isPaciente,idhc,bd,DataOMedica} = Data;
-  const DatatoSave = {isPaciente,idhc,DataOMedica};
+  const {idPaciente,idhc,bd,DataOMedica} = Data;
+  const DatatoSave = {idPaciente,idhc,DataOMedica};
   const Ruta = `/${bd}.json`;
   const { data } = await firebase_api.post(Ruta, DatatoSave);
   DatatoSave.id = data.name;

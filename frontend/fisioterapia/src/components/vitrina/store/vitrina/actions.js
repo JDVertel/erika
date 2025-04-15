@@ -14,6 +14,34 @@ export const load_Vitrina = async ({ commit }) => {
 
   commit("setVitrina", dataentradas);
 }
+/*  */
+export const getDatosVitrinabyParams = async ({ commit }, parametros) => {
+  const { bd, parametro, valor, mutation } = parametros;
+
+  const response = await firebase_api.get(`/${bd}.json`, {
+    params: {
+      orderBy: `"${parametro}"`,
+      equalTo: `"${valor}"`,
+    },
+  });
+  const { data } = response;
+  const datasalida = [];
+  for (let id of Object.keys(data)) {
+    datasalida.push({
+      id,
+      ...data[id],
+    });
+  }
+  console.log("busqueda por parametro", parametro, bd, datasalida);
+  if (datasalida.length != 0) {
+    commit(`${mutation}`, datasalida);
+  } else {
+    console.log("sin datos en la consulta");
+   /*  const datasalida = 2;
+    commit("SetStatenoregistrado", datasalida); */
+  }
+};
+
 
 /* ============================================================= */
 

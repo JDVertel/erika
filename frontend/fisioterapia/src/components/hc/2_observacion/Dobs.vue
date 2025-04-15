@@ -102,9 +102,9 @@
                         </div>
                     </div>
                     <br />
-                    <button class="btn btn-warning" @click="guardarInfo">
+            <!--         <button class="btn btn-warning" @click="guardarInfo2">
                         + Guardar
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </div>
@@ -165,15 +165,16 @@ export default {
         },
 
         /*  */
-        async guardarInfo() {
+        async guardarInfo2() {
             this.datosObservacion = [{
-                idpaciente: this.iduser,
+                idpaciente: this.idPaciente,
                 bd: this.bd,
                 idhc: this.idhc,
                 dataObserv: this.NewAntec,
             }, ];
 
             this.SaveDatos2(this.datosObservacion[0]);
+            console.log("Datos de observacion guardados...");
         },
     },
 };

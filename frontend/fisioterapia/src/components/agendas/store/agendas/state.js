@@ -18,4 +18,7 @@ export default () => ({
   //carrito de compras
   dataCarrito: [],
   cant_elementos: "",
+
+  /* 
+   */
 });

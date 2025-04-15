@@ -16,7 +16,7 @@
 
             <div class="card mb-2 mt-2">
                 <div class="card-body">
-                    <h5>Registrar una venta </h5>
+                    <h5>Buscar cliente </h5>
                     <p class="card-text">Ingrese la identificacion del cliente</p>
 
                     <div class="row">
@@ -34,22 +34,22 @@
                         </div>
 
                         <div class="col-3 col-md-3 ">
-                            <button class="btn btn-success btn-sm" @click=" BTN_Buscar_paciente()" :disabled="BuscarP_Disabled">Buscar</button>
+                            <button class="btn btn-success btn-sm" @click=" BTN_Buscar_paciente()">Buscar</button>
                         </div>
 
                     </div>
 
                 </div>
             </div>
+            <div class="card">
+                <div v-if="this.existepaciente == 2">
+                    <br>
 
-            <div v-if="this.existepaciente == 2">
-                <br>
-                <div class="container">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Registro de nuevo cliente</h5>
                             <p class="card-text">Cliente no encontrado, ingrese los siguientes datos para
-                                registarlo y poder realizar una venta</p>
+                                registarlo y poder realizar una factura</p>
 
                             <div class="row">
                                 <div class="col-6">
@@ -102,12 +102,12 @@
                             </button>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="container" v-if="this.existepaciente == 1">
-                <div class="card">
-                    <div class="card-body">
+                </div>
+
+                <div class="container" v-if="this.existepaciente == 1">
+                    <div class="card">
+
                         <div>
                             <h5>Factura de venta</h5>
 
@@ -116,91 +116,87 @@
                                     <tr>
                                         <th>Documento</th>
                                         <th>Nombre</th>
-
+                                        <th>Fecha Factura</th>
+                                        <th>Opcion</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="pac in datapaciente" :key="pac.id">
                                         <td>{{pac.numdoc}}</td>
                                         <td>{{pac.name1}} {{pac.name2}} {{pac.apell1}} {{pac.apell2}}</td>
-                                        <td> <button class="btn btn-success btn-sm" @click=" BTN_Reservar_BuscarProfesionales">Facturar</button> </td>
+                                        <td></td>
+                                        <td><button class="btn btn-success">Facturar</button></td>
+
                                     </tr>
                                 </tbody>
                             </table>
+
                         </div>
-                        <div>
-                            <div class="container mt-3" style="background-color:lightsteelblue; border-radius:5px; padding:10px">
 
-                                <div class="row">
-                                    <p> <strong>Seleccione y agrege los articulos y cantidades que desea facturar </strong></p>
-                                    <div class="col-6 col-md-3 mb-2">
-                                        <select class="form-select form-select-sm textarea" id="inputGroupSelect01">
-                                            <option selected>Seleccione categoria</option>
-                                            <option value="cc">Terapia</option>
-                                            <option value="ti">Consulta</option>
-                                            <option value="ti">Clase</option>
+                        <div class="container mt-3" style="background-color:lightsteelblue; border-radius:5px; padding:10px">
 
-                                        </select>
-                                    </div>
-                                    <div class="col-6 col-md-3 mb-2">
+                            <div class="row">
 
-                                        <select class="form-select form-select-sm textarea" id="inputGroupSelect01">
-                                            <option selected>Seleccione producto</option>
-                                            <option value="cc">Terapia</option>
-                                            <option value="ti">Consulta</option>
-                                            <option value="ti">Clase</option>
+                                <h6>Seleccione y agrege los productos o servicios y las cantidades que desea facturar </h6>
 
-                                        </select>
-                                    </div>
-                                    <div class="col-4 col-md-2"><input type="number" class="form-control form-control-sm" placeholder="cantidad"> </div>
-                                    <div class="col-4 col-md-2">
-                                        <p class="m-2">Subtotal: <strong> $10.000</strong> </p>
-                                    </div>
-                                    <div class="col-4 col-md-2"><button class="btn btn-warning btn-sm">+ Agregar </button></div>
-                                  
-                       
+                                <div class="col-6 col-md-3 mb-2">
+                                    <select class="form-select form-select-sm textarea" id="inputGroupSelect01" v-model="select_categ">
+                                        <option selected value="">Seleccione categoria</option>
+                                        <option value="terapia">Terapia</option>
+                                        <option value="consulta">Consulta</option>
+                                        <option value="clase">Clase</option>
+                                        <option value="producto">Articulo</option>
+
+                                    </select>
                                 </div>
+                                <div class="col-6 col-md-3 mb-2">
+
+                                    <select class="form-select form-select-sm textarea" id="inputGroupSelect01" v-model="selec_prod">
+                                        <option value="">Seleccione producto</option>
+                                        <option value="terapia">Terapia</option>
+                                        <option value="cnsulta">Consulta</option>
+                                        <option value="clase">Clase</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-4 col-md-2"><input type="number" class="form-control form-control-sm" placeholder="cantidad" v-model="cant"> </div>
+                                <div class="col-4 col-md-2">
+                                    <p class="m-2">Subtotal: <strong> $10.000</strong> </p>
+                                </div>
+                                <div class="col-4 col-md-2"><button class="btn btn-warning btn-sm" @click="Addproducto">+ Agregar </button></div>
+
                             </div>
                         </div>
-                        <br>
-                        <div class="container">
+                    </div>
+                    <br>
+                    <div class="container">
                         <p>Carrito de compras</p>
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Cant</th>
-                                    <th scope="col">Producto</th>
-                                    <th scope="col">Subtotal</th>
-                                    <th scope="col">Opc</th>
+                                    <th>Cant</th>
+                                    <th>Categoria</th>
+                                    <th>Producto</th>
+                                    <th>Subtotal</th>
+                                    <th>Opc</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td><button class="btn btn-danger btn-sm Bredondo">-</button></td>
+                                <tr v-for="(item, index) in DataFactura" :key="index">
+                                    <td>{{item.cant}}</td>
+                                    <td>{{item.prod}}</td>
+                                    <td>{{item.cat}}</td>
+                                    <td>subtotal</td>
+                                    <td><button class="btn btn-danger btn-sm" @click="eliminaritem(index)">-</button></td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td><button class="btn btn-danger btn-sm Bredondo">-</button></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td colspan="2">Larry the Bird</td>
-                                    <td><button class="btn btn-danger btn-sm Bredondo">-</button></td>
-                                </tr>
+
                             </tbody>
                         </table>
                         <button class="btn btn-success btn-sm">Registrar Venta</button>
                     </div>
 
                 </div>
-                </div>
             </div>
-
         </div>
 
         <!--  -->
@@ -224,9 +220,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Otto</td>
-                                <td>Mark</td>
-                                <td>Otto</td>
+
                                 <td>@mdo</td>
                                 <td>@mdo</td>
                             </tr>
@@ -268,11 +262,23 @@ export default {
     data: () => ({
         B_tipodoc: "",
         B_numdoc: "",
+        selec_prod: "",
+        select_categ: "",
+        cant: "",
+        DataFactura: [],
+        /*  */
+        idfactura: "",
+        idpaciente: "",
+        /*  */
+        idIps: "1",
+        /*  */
+        paramsInventario: {},
 
     }),
     methods: {
 
         ...mapActions('Agendas', ['getDatabyParam', 'getDataUsersbyParam', 'DeleteItem', 'clearDataStoreA', 'NewgetDataUsersbyParam']),
+        ...mapActions('vitrina', ['getDatosVitrinabyParams']),
         /* ----------------------------------------------------------------------------------------------------------- */
         BTN_Buscar_paciente() {
             this.idpaciente = this.B_tipodoc + this.B_numdoc;
@@ -285,13 +291,47 @@ export default {
             this.getDataUsersbyParam(this.paramsPaciente);
 
         },
+        Addproducto() {
+            let item = {
+                idpac: this.idpaciente,
+                idfact: this.idfactura,
+                /*  */
+                prod: this.selec_prod,
+                cat: this.select_categ,
+                cant: this.cant,
+            };
+            this.DataFactura = [...this.DataFactura, item];
+            this.clearCampos();
+        },
+
+        clearCampos() {
+            this.selec_prod = "";
+            this.select_categ = "";
+            this.cant = "";
+        },
+        eliminaritem(index) {
+            console.log(index);
+            this.DataFactura.splice(index, 1);
+        },
+        GuardarFactura() {
+
+        },
     },
     computed: {
-        ...mapState('Agendas', ['datapaciente', 'existepaciente', 'dataprofesionales', 'existeprofesionales', 'dataCitas', 'dataAgendas', 'dataAllCitasPaciente']),
+        ...mapState('Agendas', ["existepaciente"]),
+    },
 
-        BuscarP_Disabled() {
-            return !this.B_tipodoc || !this.B_numdoc;
-        },
+    created() {
+        Promise.all([
+
+            this.paramsInventario = {
+                bd: "vitrina",
+                parametro: "id_ips",
+                valor: this.idIps,
+                mutation: "setStateInventario",
+            },
+            this.getDatosVitrinabyParams(this.paramsInventario),
+        ])
     },
 
 }

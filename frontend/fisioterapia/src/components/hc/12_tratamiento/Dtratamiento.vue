@@ -14,7 +14,7 @@
             <div class="mb-3">
                 <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" v-model="objetivos" placeholder="Describa los objetivos del plan"></textarea>
             </div>
-            <button class="btn btn-warning" @click="guardarInfo">+ Guardar</button>
+          <!--   <button class="btn btn-warning" @click="guardarInfo12">+ Guardar</button> -->
         </div>
     </div>
 </div>
@@ -42,7 +42,7 @@ export default {
 
         ...mapActions("Hc", ["SaveDatos12"]),
 
-        async guardarInfo() {
+        async guardarInfo12() {
 
             this.ArraySaveConsulta = {
                 planTratamiento: this.planTratamiento,

@@ -216,7 +216,7 @@
                             </table>
                         </div>
                     </div>
-                    <button class="btn btn-warning mt-3" @click="guardarInfo">+ Guardar</button>
+                 <!--    <button class="btn btn-warning mt-3" @click="guardarInfo5">+ Guardar</button> -->
                 </div>
             </div>
         </div>
@@ -305,10 +305,10 @@ export default {
             this.detalle_adaptaciones = "";
         },
 
-        guardarInfo() {
+        guardarInfo5() {
             this.guardaInfo2(),
                 this.dataInspecDinamica = {
-                    idPaciente: this.idPaciente,
+                    idpaciente: this.idPaciente,
                     idhc: this.idhc,
                     bd: this.bd,
                     Acualitativo: this.NewAntec,

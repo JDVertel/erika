@@ -187,9 +187,9 @@
 
                 </div>
             </div>
-            <button class="btn btn-warning mt-3" @click="guardarInfo">
+       <!--      <button class="btn btn-warning mt-3" @click="guardarInfo6">
                 + Guardar
-            </button>
+            </button> -->
         </div>
     </div>
 </div>
@@ -312,7 +312,7 @@ export default {
             console.log('Valores capturados:', this.valoresCapturados);
         },
 
-        guardarInfo() {
+        guardarInfo6() {
             this.datosEscala = {
                 escala: this.escala,
             };

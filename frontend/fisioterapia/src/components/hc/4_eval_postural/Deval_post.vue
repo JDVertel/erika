@@ -195,9 +195,9 @@
                             </table>
                         </div>
                     </div>
-                    <button class="btn btn-warning mt-3" @click="guardarInfo">
+                 <!--    <button class="btn btn-warning mt-3" @click="guardarInfo4">
                         + Guardar
-                    </button>
+                    </button> -->
                 </div>
             </div>
             <br />
@@ -280,9 +280,9 @@ export default {
             this.detalle_posterior = "";
         },
 
-        guardarInfo() {
+        guardarInfo4() {
             this.datosEvalPostural = [{
-                idpaciente: this.idpaciente,
+                idpaciente: this. idPaciente,
                 idhc: this.idhc,
                 bd: this.bd,
                 dataeval: this.NewAntec,
