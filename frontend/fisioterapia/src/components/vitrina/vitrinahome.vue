@@ -742,6 +742,7 @@ export default {
       this.data = null;
       this.modalOption = "";
       this.file = null;
+      this.ArrayPrecios= [];
     },
 
     //----------SERVICIOS-----------------------------------------

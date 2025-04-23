@@ -277,7 +277,7 @@
                                             </div>
 
                                             <br>
-                                            <button type="button" class="btn btn-primary btn-sm" @click="CargarParaActualizarEmpresa()">
+                                            <button type="button" class="btn btn-warning btn-sm" @click="CargarParaActualizarEmpresa()">
                                                 Actualizar Datos Empresa
                                             </button>
                                         </div>
@@ -385,6 +385,11 @@
                     <div class="accordion-body">
 
                         <div class="container" v-if="statePagina =='ver'">
+
+                            <button type="button" class="btn btn-warning btn-sm mb-3" @click="CargarParaActualizarPagina()">
+                                Actualizar Datos Pagina
+                            </button>
+                          
                             <div class="row" v-for="(item, index) in DataPagina" :key="index">
                                 <div class="col-12 col-md-6">
                                     <strong>Quienes Somos:</strong><br>
@@ -392,26 +397,27 @@
                                 </div>
 
                                 <div class=" col-12 col-md-6"><strong>Mision:</strong> <br> {{item.mision }} </div>
+                                <hr>
 
                                 <div class="col-12 col-md-6"> <strong>Vision:</strong> <br> {{item.vision}}</div>
 
-                                <div class="col-12 col-md-6"> <strong>Nuestros servicios:</strong> <br> {{item.nuestrosservicios }}</div>
+                                <hr><div class="col-12 col-md-6"> <strong>Nuestros servicios:</strong> <br> {{item.nuestrosservicios }}</div>
 
-                                <div class="col-12 col-md-6"> <strong>Nuestros servicios LM</strong> <br> {{item.nuestrosservicios_lm }}</div>
+                                <hr><div class="col-12 col-md-6"> <strong>Nuestros servicios LM</strong> <br> {{item.nuestrosservicios_lm }}</div>
 
-                                <div class="col-12 col-md-6"> <strong>Clases y rutinas</strong> <br> {{item.clasesrutinas }}</div>
+                                <hr><div class="col-12 col-md-6"> <strong>Clases y rutinas</strong> <br> {{item.clasesrutinas }}</div>
 
-                                <div class="col-12 col-md-6"> <strong>Clases y rutinas LM </strong><br> {{item.clasesrutinas_lm }}</div>
+                                <hr><div class="col-12 col-md-6"> <strong>Clases y rutinas LM </strong><br> {{item.clasesrutinas_lm }}</div>
 
-                                <div class="col-12 col-md-6"> <strong>Tienda Online</strong> <br> {{item.tiendaonline }}</div>
+                                <hr> <div class="col-12 col-md-6"> <strong>Tienda Online</strong> <br> {{item.tiendaonline }}</div>
 
-                                <div class="col-12 col-md-6"> <strong>Tienda Online LM</strong> <br> {{item.tiendaonline_lm }}</div>
+                                <hr> <div class="col-12 col-md-6"> <strong>Tienda Online LM</strong> <br> {{item.tiendaonline_lm }}</div>
                                 <div class="col-12 col-md-6" style="display: none;"> <strong>id</strong> <br> {{item.id }}</div>
                             </div>
 
-                            <button type="button" class="btn btn-primary btn-sm" @click="CargarParaActualizarPagina()">
-                                Actualizar Datos Pagina
-                            </button>
+                            <br>
+                            <br>
+                            <br>
                         </div>
 
                         <div class="container" v-if="statePagina =='crear'|| statePagina=='editar'">
