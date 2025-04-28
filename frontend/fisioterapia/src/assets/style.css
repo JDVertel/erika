@@ -114,7 +114,9 @@ div.content-body {
   margin-bottom: 0;
 
 }
-
+table {
+  background-color: transparent; /* elimina el color de fondo */
+}
 .card {
   border: none !important;
   border-radius: 10px !important;

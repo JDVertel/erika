@@ -252,7 +252,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="btn btn-warning btn-sm" @click="cancelar_cerrarmodal()">
+                                    <button class="btn btn-warning btn-sm" @click="vaciarformbpaciente()">
                                         Cancelar
                                     </button>
                                     <button class="btn btn-success btn-sm" @click="BTN_registar_Paciente()" :disabled="Guardar_p_isButtonDisabled">
@@ -686,6 +686,7 @@ export default {
             this.vaciarcamposReservas();
         },
 
+      
     },
     /* ==================================================================================== */
     computed: {

@@ -37,8 +37,8 @@ export const getDatosVitrinabyParams = async ({ commit }, parametros) => {
     commit(`${mutation}`, datasalida);
   } else {
     console.log("sin datos en la consulta");
-   /*  const datasalida = 2;
-    commit("SetStatenoregistrado", datasalida); */
+    /*  const datasalida = 2;
+     commit("SetStatenoregistrado", datasalida); */
   }
 };
 
@@ -47,8 +47,8 @@ export const getDatosVitrinabyParams = async ({ commit }, parametros) => {
 
 export const updateVitrinaP = async ({ commit }, entradas) => {
   console.log("variable entradas ", entradas);
-  const { id_ips, tipo, nombre, desc, precio, cant, publicado,img } = entradas;
-  const dataToSave = { id_ips, tipo, nombre, desc, precio, cant, publicado,img };
+  const { id_ips, tipo, nombre, desc, precio, cant, publicado, img } = entradas;
+  const dataToSave = { id_ips, tipo, nombre, desc, precio, cant, publicado, img };
   const ruta = `/vitrina/${entradas.id}.json`;
   //servicio
   const response = await firebase_api.put(ruta, dataToSave);
@@ -57,8 +57,8 @@ export const updateVitrinaP = async ({ commit }, entradas) => {
 
 export const updateVitrinaS = async ({ commit }, entradas) => {
   console.log("variable entradas ", entradas);
-  const { id_ips, tipo, nombre, desc, precios, publicado,img } = entradas;
-  const dataToSave = { id_ips, tipo, nombre, desc, precios, publicado,img  };
+  const { id_ips, tipo, nombre, desc, precios, publicado, img } = entradas;
+  const dataToSave = { id_ips, tipo, nombre, desc, precios, publicado, img };
   const ruta = `/vitrina/${entradas.id}.json`;
   //servicio
   const response = await firebase_api.put(ruta, dataToSave);
@@ -136,28 +136,55 @@ export const DeleteItemVitrina = async ({ commit }, entradas) => {
 
 // acciones asyncronas  que llaman a mutaciones
 
+export const createEntradaFactura = async (entradas) => {
+  console.log("data que llega", entradas);
+  const { idpac, idfact, idIps, detalle,fecha,total } = entradas;
+  if (idpac !== "") {
+    const DataToSave = {
+      idpac, idfact, idIps, detalle,fecha,total
+    };
+    console.log("ok a guardar", DataToSave);
+    const Ruta = `/facturas.json`;
+    //servicio
+    const { data } = await firebase_api.post(Ruta, DataToSave);
+    //agregamos el id al array para subirlo al strore
+    //  DataToSave.id = data.name;
+    //se llama a la mutacion y se pasa el array como
+    //commit("newDataFactura", DataToSave);
+    console.log(data.name);
+    return;
+  };
+  console.log("no se guardo nada");
+  return; 
+};
+
+/* ----------------------------------------- */
+
+export const getListFacturasDia = async ({ commit }, parametros) => {
+  /*  */
+  const { bd, parametro, valor, mutation} = parametros;
+
+  const response = await firebase_api.get(`/${bd}.json`, {
+    params: {
+      orderBy: `"${parametro}"`,
+      equalTo: `"${valor}"`,
+    },
+  });
+  const { data } = response;
+  const datasalida = [];
+  for (let id of Object.keys(data)) {
+    datasalida.push({
+      id,
+      ...data[id],
+    });
+  }
+  console.log("busqueda por parametro", parametro, bd, datasalida);
+  if (datasalida.length != 0) {
+    commit(`${mutation}`, datasalida);
+  } else {
+    console.log("sin datos en la consulta");
+    
+  }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ======================funcion filtrado x id */
-/* const response = await firebase_api.get('/vitrina.json', {
-  params: {
-    orderBy: '"tipo"',
-    equalTo: '"terapia"',
-  },
-});
- */
+}

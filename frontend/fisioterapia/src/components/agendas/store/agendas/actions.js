@@ -373,26 +373,8 @@ export const getCountDatabyParam = async ({ commit }, parametros) => {
   const { data } = response;
   const datasalida = [];
   const rta= datasalida.count
-  /*
-  for (let id of Object.keys(data)) {
-    datasalida.push({
-      id,
-      ...data[id],
-    });
-  }
-  
-  console.log(
-    "data consulta por parametros",
-    bd,
-    "por",
-    parametro,
-    "rta:",
-    datasalida
-  ); 
-  if (datasalida.length != 0) {
-    commit(`${rta}`, datasalida);
-  } else {
-    console.log("sin datos en la consulta");
-  } */
+
   return rta;
 };
+
+

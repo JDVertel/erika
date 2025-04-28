@@ -16,10 +16,12 @@
         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
             <!--  -->
 
-            <div class="card mb-2 mt-2" >
-                <div class="card-body" v-if="datapaciente.length == 0">
+            <div class="card">
+
+                <div v-if="datapaciente.length == 0">
+                    <br />
                     <h5><i class="bi bi-person-check"></i> Buscar cliente</h5>
-                    <p class="card-text">Ingrese la identificacion del cliente</p>
+                    <p class="card-text">Ingrese la identificacion del cliente para facturar el producto o servicio</p>
 
                     <div class="row">
                         <div class="col-4 col-md-3">
@@ -42,83 +44,80 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card">
+
                 <div v-if="this.existepaciente == 2">
                     <br />
 
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Registro de nuevo cliente</h5>
-                            <p class="card-text">
-                                Cliente no encontrado, ingrese los siguientes datos para registarlo y
-                                poder realizar una factura
-                            </p>
+                    <div>
+                        <h5 class="card-title">Registro de nuevo cliente</h5>
+                        <p class="card-text">
+                            Cliente no encontrado, ingrese los siguientes datos para registarlo y
+                            poder realizar una factura
+                        </p>
 
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="input-group mb-1">
-                                        <input type="text" class="form-control form-control-sm textarea" id="text_1nombre" placeholder="1 Nombre" v-model="name1" />
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="input-group mb-1">
-                                        <input type="text" class="form-control form-control-sm textarea" id="text_2nombre" placeholder="2 Nombre" v-model="name2" />
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="input-group mb-1">
-                                        <input type="text" class="form-control form-control-sm textarea" id="text_1apelli" placeholder="1 Apellido" v-model="apell1" />
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="input-group mb-1">
-                                        <input type="text" class="form-control form-control-sm textarea" id="text_2apell" placeholder="2 Apellido" v-model="apell2" />
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="input-group mb-1">
-                                        <input type="number" class="form-control form-control-sm textarea" id="text_tel" placeholder="Celular" v-model="celular" />
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="input-group mb-1">
-                                        <input type="text" class="form-control form-control-sm textarea" id="text_direccion" placeholder="Email" v-model="email" />
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="input-group mb-1">
-                                        <input type="text" class="form-control form-control-sm textarea" id="text_direccion" placeholder="Direccion" v-model="dir" />
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="input-group input-group-sm mb-3">
-                                        <span class="input-group-text" id="inputGroup-sizing-sm">F Nacimiento:</span>
-                                        <input type="date" class="form-control form-control-sm date" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" v-model="fnacimiento" />
-                                    </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="input-group mb-1">
+                                    <input type="text" class="form-control form-control-sm textarea" id="text_1nombre" placeholder="1 Nombre" v-model="name1" />
                                 </div>
                             </div>
-                            <button class="btn btn-warning btn-sm" @click="cancelar_cerrarmodal()">
-                                Cancelar
-                            </button>
-                            <button class="btn btn-success btn-sm" @click="BTN_registar_Paciente()" :disabled="Guardar_p_isButtonDisabled">
-                                <i class="bi bi-person-add"></i> Registrar cliente
-                            </button>
+                            <div class="col-6">
+                                <div class="input-group mb-1">
+                                    <input type="text" class="form-control form-control-sm textarea" id="text_2nombre" placeholder="2 Nombre" v-model="name2" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group mb-1">
+                                    <input type="text" class="form-control form-control-sm textarea" id="text_1apelli" placeholder="1 Apellido" v-model="apell1" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group mb-1">
+                                    <input type="text" class="form-control form-control-sm textarea" id="text_2apell" placeholder="2 Apellido" v-model="apell2" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group mb-1">
+                                    <input type="number" class="form-control form-control-sm textarea" id="text_tel" placeholder="Celular" v-model="celular" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group mb-1">
+                                    <input type="text" class="form-control form-control-sm textarea" id="text_direccion" placeholder="Email" v-model="email" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-1">
+                                    <input type="text" class="form-control form-control-sm textarea" id="text_direccion" placeholder="Direccion" v-model="dir" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">F Nacimiento:</span>
+                                    <input type="date" class="form-control form-control-sm date" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" v-model="fnacimiento" />
+                                </div>
+                            </div>
                         </div>
+                        <button class="btn btn-warning btn-sm" @click="cancelar_cerrarmodal()">
+                            Cancelar
+                        </button>
+                        <button class="btn btn-success btn-sm" @click="BTN_registar_Paciente()" :disabled="Guardar_p_isButtonDisabled">
+                            <i class="bi bi-person-add"></i> Registrar cliente
+                        </button>
                     </div>
+
                 </div>
                 <div class="container" v-if="this.existepaciente == 1">
-                    <div class="card">
+                    <div>
                         <div>
                             <h5><i class="bi bi-cart"></i> Factura de venta</h5>
-                      
+
                             <table class="table table-sm">
                                 <thead>
                                     <tr>
                                         <th>Documento</th>
                                         <th>Nombre</th>
-                                
-                                      
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -127,20 +126,19 @@
                                         <td>
                                             {{ pac.name1 }} {{ pac.name2 }} {{ pac.apell1 }} {{ pac.apell2 }}
                                         </td>
-                               
-                              
+
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
                         <div class="container mt-3" style="
-                  background-color:darkgrey;
+                  background-color:#e8f0a3;
                   border-radius: 5px;
                   padding: 10px;
                 ">
                             <div class="row">
-                              <h5><i class="bi bi-cash-coin"></i> Facturar</h5>
+                                <h5><i class="bi bi-cash-coin"></i> Facturar</h5>
                                 <h6>
                                     Seleccione y agrege los productos o servicios y las cantidades que
                                     desea facturar
@@ -155,16 +153,18 @@
                                         </option>
                                     </select>
                                 </div>
-                                <!--  producto -->
+
+                                <!--  Articulo/servicio -->
                                 <div class="col-6 col-md-3 mb-2">
                                     <label for="inputGroupSelect02">Articulo/Servicio</label>
                                     <select class="form-select form-select-sm textarea" id="inputGroupSelect02" v-model="selec_prod" @change="FiltrarCombos(this.select_categ, this.selec_prod.nombre)">
                                         <option value="">---Seleccione---</option>
-                                        <option :value="{ nombre: desc.nombre, precio: desc.precio }" v-for="(desc, index) in this.filtro" :key="index">
+                                        <option :value="{ nombre: desc.nombre, precio:desc.precio }" v-for="(desc, index) in filtro" :key="index">
                                             {{ desc.nombre }}
                                         </option>
                                     </select>
                                 </div>
+
                                 <!-- combo -->
                                 <div class="col-6 col-md-3 mb-2" v-if="
                       this.select_categ == 'clase' ||
@@ -174,7 +174,7 @@
                                     <label for="inputGroupSelect03">Paquete</label>
                                     <select class="form-select form-select-sm textarea" id="inputGroupSelect03" v-model="selec_combo">
                                         <option value="">---Seleccione---</option>
-                                        <option :value="{ precio: combo.precio, cant: combo.cant }" v-for="(combo, index) in this.selectcombo" :key="index">
+                                        <option :value="{ precio: combo.precio, cant:combo.cant }" v-for="(combo, index) in selectcombo" :key="index">
                                             ({{ combo.cant }}) / ${{ combo.precio }}
                                         </option>
                                     </select>
@@ -203,35 +203,38 @@
                     </div>
                     <br />
 
-                    <!-- {{ DataFactura }} -->
+                    <!--  {{ DataFactura }} -->
 
                     <strong><i class="bi bi-cart-plus"></i> Listado de articulos y servicios a
                         facturar</strong>
-                    <table class="table table-sm">
+
+                    <table class="table table-sm table-striped">
                         <thead>
                             <tr>
-                                <th>Cant</th>
+
                                 <th>Categoria</th>
                                 <th>Nombre/Combo/Valor</th>
+                                <th>Cant</th>
                                 <th>Subtotal</th>
                                 <th>Opc</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(item, index) in DataFactura" :key="index">
-                                <td>{{ item.cant }}</td>
+
                                 <td>{{ item.categoria }}</td>
                                 <td v-if="item.categoria !== 'producto'">
-                                    {{ item.nombre.nombre }}
+                                    {{ item.nombre }}
                                     <hr />
-                                    ({{ item.combo.cant }}) / ${{ item.combo.precio }}
+                                    ({{ item.combo }}) / ${{ item.precio }}
                                 </td>
                                 <td v-if="item.categoria == 'producto'">
                                     {{ item.nombre }}
                                     <hr />
-                                    ${{ item.precio }}
+                                    ({{ item.combo }}) / $ ${{ item.precio }}
                                 </td>
-                                <td>${{ item.subt }}</td>
+                                <td>{{ item.cant }}</td>
+                                <td>{{ item.subt }}</td>
                                 <td>
                                     <button class="btn btn-danger btn-sm" @click="eliminaritem(index)">
                                         <i class="bi bi-trash-fill"></i>
@@ -241,8 +244,8 @@
                         </tbody>
                     </table>
                     <div class="row">
-                        <button class="btn btn-warning btn-sm" v-if="totalFactura > 0" style="word-spacing: 20px" @click="GuardarFactura()">
-                            ${{ totalFactura }} <i class="bi bi-floppy"></i> Facturar
+                        <button class="btn btn-warning btn-sm" v-if="totalFactura > 0" style="word-spacing: 20px" @click="crearNuevoRegistroFactura(40)">
+                            Total: ${{ totalFactura }} <i class="bi bi-floppy"></i> Facturar
                         </button>
                     </div>
                     <hr />
@@ -258,39 +261,14 @@
             <div class="container">
                 <strong>Registros de ventas diarias</strong>
                 <br />
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">factura</th>
-                                <th scope="col">Articulo</th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Cliente</th>
-                                <th scope="col">Subtotal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <td>Jacob</td>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                                <td>@twitter</td>
-                                <td>@mdo</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <h2>Facturas Diarias</h2>
+
+                <!-- ---------------------------------- -->
+                {{ this.StateFacturasDiarias }}
+
+                
+                <!-- ------------------------------------------ -->
+             
             </div>
         </div>
         <!--  -->
@@ -306,6 +284,9 @@ import {
     mapState
 } from "vuex";
 import moment from "moment";
+import {
+    createEntradaFactura
+} from "./store/vitrina/actions";
 export default {
     data: () => ({
         B_tipodoc: "",
@@ -318,7 +299,7 @@ export default {
         idfactura: "",
         idpaciente: "",
         /*  */
-        idIps: "1",
+        idips: "1",
         /*  */
         paramsInventario: {},
         /* crear pacientte */
@@ -341,6 +322,7 @@ export default {
         selectcombo: [],
         selec_combo: "",
         cantFact: "",
+       FacturasDiarias: [],
     }),
     methods: {
         ...mapActions("Agendas", [
@@ -348,9 +330,11 @@ export default {
             "getDataUsersbyParam",
             "DeleteItem",
             "clearDataStoreA",
+            "clearStorePaciente",
             "NewgetDataUsersbyParam",
+            "createEntradanewPaciente",
         ]),
-        ...mapActions("vitrina", ["getDatosVitrinabyParams"]),
+        ...mapActions("vitrina", ["getDatosVitrinabyParams", "createEntradaFactura", "getListFacturasDia"]),
 
         /* ----------------------------------------------------------------------------------------------------------- */
         BTN_Buscar_paciente() {
@@ -363,15 +347,34 @@ export default {
             }, ];
             this.getDataUsersbyParam(this.paramsPaciente);
         },
+        /* ----------------------------------------------------------------------------------------------------------- */
+        async BTN_registar_Paciente() {
+            this.idpaciente = this.B_tipodoc + this.B_numdoc;
+            this.paramsGuardarPaciente = [{
+                numdoc: this.idpaciente,
+                name1: this.name1,
+                name2: this.name2,
+                apell1: this.apell1,
+                apell2: this.apell2,
+                celular: this.celular,
+                email: this.email,
+                dir: this.dir,
+                fnacimiento: this.fnacimento,
+                bd: "pacientes",
+            }, ];
+            await this.createEntradanewPaciente(this.paramsGuardarPaciente[0]);
+            this.BTN_Buscar_paciente();
+        },
         AddArticulo() {
             let itemA = {
                 idpac: this.idpaciente,
                 idfact: this.idfactura,
-                idIps: this.idIps,
+                idips: this.idips,
                 /*  */
 
                 categoria: this.select_categ,
                 nombre: this.selec_prod.nombre,
+                combo: 1,
                 precio: this.selec_prod.precio,
                 cant: Number(this.cantFact),
                 subt: Number(this.selec_prod.precio * this.cantFact),
@@ -386,12 +389,12 @@ export default {
             let itemS = {
                 idpac: this.idpaciente,
                 idfact: this.idfactura,
-                idIps: this.idIps,
+                idips: this.idips,
                 /*  */
-
                 categoria: this.select_categ,
-                nombre: this.selec_prod,
-                combo: this.selec_combo,
+                nombre: this.selec_prod.nombre,
+                combo: this.selec_combo.cant,
+                precio: this.selec_combo.precio,
                 cant: Number(this.cantFact),
                 subt: Number(this.cantFact * this.selec_combo.precio),
                 /*  */
@@ -433,15 +436,8 @@ export default {
             }
         },
 
-        miFuncion(cantidad) {
-            console.log("cantidad", cantidad);
-            let precio = this.selec_combo;
-            let subtotal = precio * cantidad;
-            this.subtotal = subtotal;
-        },
         cancelar_cerrarmodal() {
-            this.existepaciente = 0;
-            this.clearCampos();
+
             this.name1 = "";
             this.name2 = "";
             this.apell1 = "";
@@ -450,12 +446,88 @@ export default {
             this.email = "";
             this.dir = "";
             this.fnacimiento = "";
+            this.B_tipodoc = "";
+            this.B_numdoc = "";
+
+            this.vaciarStorePaciente();
+        },
+
+        async crearNuevoRegistroFactura(x) {
+            // Asigna el nuevo ID a cada elemento
+            const registrosActualizados = this.DataFactura.map(item => ({
+                ...item,
+                idfact: x
+            }));
+            let factura = {
+                idfact: x,
+                idpac: this.idpaciente,
+                idips: this.idips,
+                detalle: registrosActualizados,
+                fecha: moment().format("YYYY-MM-DD"),
+                total: this.totalFactura,
+            };
+
+            await createEntradaFactura(factura);
+            this.vaciarformulario();
+            this.vaciarStorePaciente()
+            this.Alerta_ok()
+        },
+
+        Alerta_ok() {
+            // Simula un proceso largo
+            Swal.fire({
+                title: '¡Proceso finalizado!',
+                text: 'Venta facturada exitosamente.',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            });
+
+        },
+
+        vaciarformulario() {
+            this.B_tipodoc = "";
+            this.B_numdoc = "";
+            this.selec_prod = "";
+            this.select_categ = "";
+            this.cant = "";
+            this.DataFactura = [];
+            /*  */
+            this.idfactura = "";
+            this.idpaciente = "";
+            /*  */
+            this.idips = "1";
+            /*  */
+            this.paramsInventario = {};
+            /* crear pacientte */
+            this.name1 = "";
+            this.name2 = "";
+            this.apell1 = "";
+            this.apell2 = "";
+            this.celular = "";
+            this.email = "";
+            this.dir = "";
+            this.fnacimiento = "";
+            this.email = "";
+        },
+
+        vaciarStorePaciente() {
+            this.clearStorePaciente();
+        },
+
+        ventasDiarias() {
+            let parametros = {
+                bd: "facturas",
+                parametro: "fecha",
+                valor: moment().format("YYYY-MM-DD"),
+                mutation: "setStateFacturasDiarias",
+            };
+            this.getListFacturasDia(parametros);
         },
     },
     computed: {
-        ...mapState("Agendas", ["existepaciente", "datapaciente"]),
+        ...mapState("Agendas", ["existepaciente", "datapaciente", ]),
 
-        ...mapState("vitrina", ["StateInventario"]),
+        ...mapState("vitrina", ["StateInventario", "StateFacturasDiarias"]),
 
         categoriasUnicas() {
             if (!this.StateInventario) return [];
@@ -476,10 +548,12 @@ export default {
             (this.paramsInventario = {
                 bd: "vitrina",
                 parametro: "id_ips",
-                valor: this.idIps,
+                valor: this.idips,
                 mutation: "setStateInventario",
             }),
             this.getDatosVitrinabyParams(this.paramsInventario),
+
+            this.ventasDiarias(),
         ]);
     },
 };

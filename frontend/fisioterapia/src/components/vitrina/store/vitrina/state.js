@@ -3,4 +3,5 @@ export default () => ({
   cargando: true,
   cant: "",
   StateInventario:[],
+  StateFacturasDiarias:[],
 });

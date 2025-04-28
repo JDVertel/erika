@@ -21,14 +21,12 @@ export const DeleteItemVitrina = (state, idDelete) => {
 
   state.entry = state.entry.filter(e => e.id !== idDelete)
 
-}
-
+};
+/* =================================================== */
 export const setStateInventario = (state, entrada) => {
   state.StateInventario = [entrada, ...state.StateInventario]
 };
 
-// modifican el state
-
-/* export const myGetters =(state)=>{
-
-}  */
+export const setStateFacturasDiarias=(state, entrada) => {
+  state.StateFacturasDiarias = [entrada, ...state.StateFacturasDiarias]
+} 
