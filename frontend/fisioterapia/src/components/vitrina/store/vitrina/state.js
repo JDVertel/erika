@@ -4,4 +4,5 @@ export default () => ({
   cant: "",
   StateInventario:[],
   StateFacturasDiarias:[],
+  StateQueryFacturas:[],	
 });

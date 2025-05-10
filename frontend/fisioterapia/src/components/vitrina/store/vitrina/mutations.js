@@ -30,3 +30,7 @@ export const setStateInventario = (state, entrada) => {
 export const setStateFacturasDiarias=(state, entrada) => {
   state.StateFacturasDiarias = [entrada, ...state.StateFacturasDiarias]
 } 
+
+export const setStateQueryFacturas=(state, entrada) => {
+  state.StateQueryFacturas = [entrada, ...state.StateQueryFacturas]
+}
