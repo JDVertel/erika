@@ -84,7 +84,7 @@
                     </button>
                 
                     <span class="navbar-text"> {{item.nombre}}</span> 
-                    <span class="navbar-text"><small>Juan Vertel  / Admnin </small> </span> 
+            
                 </div>
             </nav>
 
@@ -151,9 +151,10 @@ export default {
     z-index: 1040;
 }
 
+
 #sidebar {
-    min-width: 150px;
-    max-width: 200px;
+    min-width: 170px;
+    max-width: 220px;
     background: #34836e;
     color: #fff;
     transition: all 0.3s ease-in-out;
@@ -162,6 +163,9 @@ export default {
     left: -250px;
     top: 0;
     z-index: 1050;
+    box-shadow: 2px 0 16px 0 rgba(44, 118, 97, 0.12);
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
 }
 
 #sidebar.active {
@@ -189,18 +193,26 @@ export default {
     list-style: none;
 }
 
+
+#sidebar ul li {
+    margin-bottom: 6px;
+}
 #sidebar ul li a {
-    padding: 15px;
+    padding: 13px 18px;
     display: flex;
     align-items: center;
     gap: 10px;
     color: #fff;
     text-decoration: none;
-    transition: all 0.3s;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(44, 118, 97, 0.08);
+    transition: background 0.2s, box-shadow 0.2s;
 }
-
 #sidebar ul li a:hover {
     background: #2c7661;
+    box-shadow: 0 4px 16px rgba(44, 118, 97, 0.18);
 }
 
 .icono {

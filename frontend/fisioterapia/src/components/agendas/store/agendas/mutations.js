@@ -112,3 +112,9 @@ export const updateDataVitrina = (state, entradas) => {
 
 
   /* -------------------------------------------------------- */
+
+  export const setStateDataProfesional=(state, entryDataProfesional)=>{
+      state.dataprofesionales="";
+      state.dataprofesionales=[...state.dataprofesionales, ...entryDataProfesional];
+
+  }

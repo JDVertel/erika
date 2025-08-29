@@ -34,6 +34,37 @@ export const getDatabyParam = async ({ commit }, parametros) => {
   return datasalida;
 };
 
+export const getDatabyKey = async ({ commit }, parametros) => {
+  console.log(parametros);
+
+  // Suponiendo que parametros tiene: bd (base de datos), clavePrincipal (la clave del nodo), y rta (mutation)
+  const { bd, clavePrincipal, rta } = parametros;
+
+  const response = await firebase_api.get(`/${bd}/${clavePrincipal}.json`);
+  const data = response.data;
+
+  // Datos de salida con id como clave principal y datos internos
+  const datasalida = [];
+  if (data) {
+    datasalida.push({
+      id: clavePrincipal,
+      ...data,
+    });
+  }
+
+  console.log("data consulta por clave principal", bd, "clave:", clavePrincipal, "rta:", datasalida);
+
+  if (datasalida.length !== 0) {
+    commit(rta, datasalida);
+  } else {
+    console.log("sin datos en la consulta");
+  }
+
+  return datasalida;
+};
+
+
+
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
 export const getDataByRangoSuperior = async ({ commit }, parametros) => {
@@ -328,36 +359,26 @@ export const clearStorePaciente = async ({commit})=>{
 
 export const updateReserva = async ({ commit }, entradas) => {
   console.log("variable entradas ", entradas);
-  const {
-    id,
-    estado,
-    fecha,
-    hora,
-    id_agenda,
-    idprofesional,
-    numdoc,
-    paciente,
-    telpaciente,
-    tipo,
-    bd,
-  } = entradas;
+  const { id, estado, bd } = entradas;
+  const ruta = `/${bd}/${id}.json`;
+
+  // Obtener el objeto completo actual
+  const currentDataResponse = await firebase_api.get(ruta);
+  const currentData = currentDataResponse.data || {};
+
+  // Actualizar solo el estado sin eliminar otras propiedades
   const dataToSave = {
-    id,
-    estado,
-    fecha,
-    hora,
-    id_agenda,
-    idprofesional,
-    numdoc,
-    paciente,
-    telpaciente,
-    tipo,
-    bd,
+    ...currentData,
+    estado
   };
-  const Ruta = `/${bd}/${id}.json`;
-  //servicio
-  const response = await firebase_api.put(Ruta, dataToSave);
-  /* commit("updateDataVitrina", { ...entradas }); */
+
+  // Guardar el objeto actualizado
+  const response = await firebase_api.put(ruta, dataToSave);
+
+  // Si quieres usar commit para actualizar el estado en Vuex o similar
+  // commit("updateDataVitrina", { ...entradas });
+
+  return response;
 };
 
 /* ------------------Contar Elementos de un listado------------- */
@@ -376,5 +397,3 @@ export const getCountDatabyParam = async ({ commit }, parametros) => {
 
   return rta;
 };
-
-

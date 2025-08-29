@@ -676,7 +676,7 @@ export default {
         vaciarformbpaciente() {
             this.B_tipodoc = "";
             this.B_numdoc = "";
-            this.existepaciente = "";
+            // No se puede modificar existepaciente directamente, es una propiedad computada
             this.citaspaciente = [];
             /* this.vaciar_store_dataallcitaspaciente(); */
             this.clearStorePaciente();

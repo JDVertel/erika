@@ -45,6 +45,7 @@
                   </button>
                 </div>
               </div>
+
               <br />
             </div>
           </div>
@@ -53,14 +54,17 @@
     </div>
 
     <!-- **************************************************************************************************** -->
-    <div id="register" v-if="registrado == '0'">
+    <div id="register" v-if="existepaciente === 2">
       <h6 class="display-6 text-center">Paciente no Encontrado !!!</h6>
       <Registro />
     </div>
 
-    <div class="container">
+    <div class="container" v-if="existepaciente === 1">
+      {{ datapaciente }}
       <div class="row">
-        <div class="col-10"><h6 class="display-6">Historias clinicas</h6></div>
+        <div class="col-10">
+          <h6 class="display-6">Historias clinicas</h6>
+        </div>
         <div class="col-2">
           <router-link to="/hc" tag="button" class="mi-boton"
             ><button type="button btn-sm" class="btn btn-warning">
@@ -69,11 +73,6 @@
           >
         </div>
       </div>
-      <!--   <router-link to="/vitrina"
-                  ><a class="nav-link-menu" aria-current="page">
-                    <h3 style="color: black">Vitrina</h3>
-                    <p style="color: black">Gestión de productos y servicios</p>
-                  </a></router-link -->
 
       <hr />
       <h6>Registro</h6>
@@ -110,6 +109,7 @@
 import HCdetallada from "./h_clinica.vue";
 
 import Registro from "./registroForm.vue";
+import { mapActions, mapState } from "vuex";
 export default {
   data: () => ({
     registrado: "",
@@ -120,28 +120,19 @@ export default {
     responsetable: "",
   }),
   methods: {
+    ...mapActions("Agendas", ["getDataUsersbyParam"]),
+
     BTN_Buscar_paciente(tipodoc, numdoc) {
-      this.iduser = tipodoc + numdoc;
-      console.log(this.iduser);
-      /* consultar si existe el paciente */
-      /* CONSULTA */
-
-      if (this.response) {
-        console.log("paciente encontrado");
-        /* trae los datos del paciente y consulta el registro de hc */
-        /* CONSULTAS */
-        /* consulta los registros de hc del paciente */
-        this.selectRegHcPac();
-
-        if (this.responsetable) {
-          /* renderiza el contenido en la tabla */
-        } else {
-          /* muestra en pantalla el mensaje sin registros del hc del paciente */
-        }
-      } else {
-        console.log("el paciente no existe");
-        /* muestra en pantalla el container son la informacion sin registros  */
-      }
+      let idpaciente = tipodoc + numdoc;
+      let paramsPaciente = [
+        {
+          bd: "pacientes",
+          parametro: "numdoc",
+          valor: idpaciente,
+          rta: "setStatePaciente",
+        },
+      ];
+      this.getDataUsersbyParam(paramsPaciente);
     },
 
     selectRegHcPac() {
@@ -150,6 +141,9 @@ export default {
     },
   },
 
+  computed: {
+    ...mapState("Agendas", ["datapaciente", "existepaciente"]),
+  },
   created() {
     // Recuperar el parámetro 'id' de la ruta
     this.iduser = this.$route.params.idpaciente || "13862306";

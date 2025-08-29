@@ -1,57 +1,65 @@
 <template>
 <div>
-
+    {{ dataprofesionales }}
     <div class="container-fluid navbarprof">
         <div class="row">
             <div class="col-5">
                 <h5>Agenda del dia</h5>
             </div>
             <div class="col-7" style="text-align: right;">
-                Ramon jose vertel <br> Consulta / <small> {{ this.fechaHoy }}</small> <br>
-               
+                Profesional:
+                <span v-if="dataprofesionales && dataprofesionales.length">
+                    {{ dataprofesionales[0].name1 }} {{ dataprofesionales[0].apell1 }}
+                </span>
+                <span v-else>
+                    Cargando profesional...
+                </span>
+                <br>
+                Consulta
+                <span v-if="dataprofesionales && dataprofesionales.length">
+                    {{ dataprofesionales[0].tipo }}
+                </span>
+                <span v-else>
+                    ...
+                </span>
+                / <small> {{ this.fechaHoy }}</small> <br>
+
             </div>
         </div>
     </div>
 
     <div class="container-fluid">
 
-        <!--  pagina de profesional
-    llegan ( idprofesional - id_ips- tipoagenda)
-    se cargan de entrada citas del profesional en el dia actual
-    renderiza tabla y cada registro debe tener el campo de asistir y opcion de llenar hc usar el store de AUTH para registro y el de HC Para el resto de hc -->
+ 
+
+        <h5 class="card-title">Citas</h5>
+
+        <table class="table table-striped table-sm ">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Hora</th>
+                    <th scope="col">Paciente</th>
+                    <th scope="col">Celular</th>
+                    <th scope="col">Asistencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="cita in this.CitasAgendadas" :key="cita.id">
+                    <td>{{ cita.hora }}</td>
+                    <td>{{ cita.paciente }}</td>
+                    <td>{{ cita.telpaciente }} </td>
+                    <td><button type="button" class="btn btn-danger btn-sm" @click="ActualizaEstadoCita('NO', cita)"><i class="bi bi-x-circle"></i> No Asistió</button>
+                        <router-link :to="{ name: 'hc', params: { idpaciente: cita.numdoc, idprofesional: this.dataprofesionales[0].id, idips: this.idIPS } }">
+                            <button type="button" class="btn btn-primary btn-sm" @click="ActualizaEstadoCita('SI', cita)"> <i class="bi bi-check-circle"></i> Asistió</button>
+                        </router-link>
 
 
-                <h5 class="card-title">Citas</h5>
+                    </td>
+                </tr>
 
-                <table class="table table-striped table-sm ">
-                    <thead class="table-dark">
-                        <tr>
-                            <th scope="col">Hora</th>
-                            <th scope="col">Paciente</th>
-                            <th scope="col">Celular</th>
-                            <th scope="col">Asistencia</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="cita in this.CitasAgendadas" :key="cita.id">
-                            <td>{{ cita.hora }}</td>
-                            <td>{{ cita.paciente }}</td>
-                            <td>{{ cita.telpaciente }} </td>
-                            <td><button type="button" class="btn btn-danger btn-sm" @click="ActualizaEstadoCita('NO', cita)"><i class="bi bi-x-circle"></i></button>
-                                <router-link :to="{ name: 'hc', params: { idpaciente: cita.numdoc } }">
-                                    <button type="button" class="btn btn-primary btn-sm" @click="ActualizaEstadoCita('SI', cita)"> <i class="bi bi-check-circle"></i></button>
-                                </router-link>
-                                <!-- 
-
-      @click="$router.push({ name: 'somewhere', state: { myData } })"
- -->
-
-                            </td>
-                        </tr>
-
-                    </tbody>
-                </table>
-                <!--             <a href="#" class="btn btn-primary">Button</a> -->
+            </tbody>
+        </table>
+      
 
         <p class="d-inline-flex gap-1">
             <a class="btn btn-primary btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -122,13 +130,15 @@ export default {
 
     },
     data: () => ({
-        fechaHoy: "",
+
         idIPS: "1",
+        fechaHoy: "",
+        idProfesional: "-OM_G1R4rWmmq1GMZo1H",
         //se reemplaza por el id del profesional logueado
-        idProfesional: "-OM_FrSjo_byHOMWXA-_",
+
         idAgenda: "",
         ParamsActualizarCita: "",
-        DataPCita:[],
+        DataPCita: [],
         CitasAsistidas: [],
         CitasNOAsistidas: [],
         CitasAgendadas: [],
@@ -137,7 +147,7 @@ export default {
 
     }),
     methods: {
-        ...mapActions('Agendas', ['getDatabyParam', 'updateReserva']),
+        ...mapActions('Agendas', ['getDatabyParam', 'updateReserva', 'getDatabyKey']),
         async GetAllCitasDia() {
             this.paramsGetAllcitas = [{
                 bd: "citas",
@@ -146,7 +156,7 @@ export default {
                 rta: "setStateCitas",
             }]
             await this.getDatabyParam(this.paramsGetAllcitas)
-            this.DataPCita=this.dataCitas.filter(cita => cita.idprofesional == this.idProfesional)
+            this.DataPCita = this.dataCitas.filter(cita => cita.idprofesional == this.idProfesional)
 
             this.CitasAsistidas = this.DataPCita.filter(cita => cita.estado == "SI");
             this.CitasNOAsistidas = this.DataPCita.filter(cita => cita.estado == "NO");
@@ -160,19 +170,12 @@ export default {
         },
 
         async ActualizaEstadoCita(rta, Dcita) {
-            this.ParamsActualizarCita = [{
+            this.ParamsActualizarCita = {
                 id: Dcita.id,
                 estado: rta,
-                fecha: Dcita.fecha,
-                hora: Dcita.hora,
-                id_agenda: Dcita.id_agenda,
-                idprofesional: Dcita.idprofesional,
-                numdoc: Dcita.numdoc,
-                paciente: Dcita.paciente,
-                telpaciente: Dcita.telpaciente,
-                tip: Dcita.tipo,
                 bd: "citas",
-            }];
+                /* recompilar esto , solo se reuqiere actualizar el estado */
+            };
 
             if (rta == "SI") {
                 console.log("cita asistida");
@@ -180,13 +183,22 @@ export default {
                 console.log("cita no asistida");
             };
 
-            await this.updateReserva(this.ParamsActualizarCita[0])
+            await this.updateReserva(this.ParamsActualizarCita)
             this.GetAllCitasDia();
+        },
+
+        getDataProfesional() {
+            this.params = {
+                bd: "profesionales",
+                clavePrincipal: this.idProfesional,
+                rta: "setStateDataProfesional",
+            }
+            this.getDatabyKey(this.params)
         }
 
     },
     computed: {
-        ...mapState('Agendas', ['dataCitas', ]),
+        ...mapState('Agendas', ['dataCitas', 'dataprofesionales']),
         /*     ...mapState('Auth', []),
 
  */
@@ -199,6 +211,8 @@ export default {
     created() {
         this.fijarfechadia();
         this.GetAllCitasDia();
+        this.getDataProfesional();
+
     }
 }
 </script>

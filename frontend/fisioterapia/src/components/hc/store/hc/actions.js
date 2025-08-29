@@ -2,6 +2,10 @@ import firebase_api from "@/api/firebaseApi";
 
 /* hc1 datos de consulta */
 
+export const SaveHCcabecera= async({commit}) => {
+  // lógica para manejar la cabecera
+}
+
 export const SaveDatos1 = async ({ commit }, Data) => {
   //desestructurar data
   console.log("llego", Data);

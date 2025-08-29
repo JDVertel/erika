@@ -40,10 +40,12 @@ const routes = [
   /* ------------- */
   // agendas
   { path: "/agendas", component: Agendas, name: "agendas" },
+  
+  //buscar hc
+  { path: '/buscar_hc', component: buscar_hc, name: "buscar_hc" },
+
   //hc
-  { path: "/buscar_hc/:idpaciente?", component: buscar_hc, name: "buscar_hc" },
-  //hc 2
-  { path: "/hc/:idpaciente?", component: hc, name: "hc" },
+  { path: "/hc/:idpaciente/:idprofesional/:idips", component: hc, name: "hc" },
 
   /* -------------------------------------------------------------------------------- */
   { path: "/informes", component: Informes, name: "informes" },
