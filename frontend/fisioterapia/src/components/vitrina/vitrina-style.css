@@ -1,9 +1,9 @@
-/* Estilos visuales mejorados para vitrina */
+/* Estilos visuales modernos para las vitrinas, tablas y modales */
 .vitrinacard {
-    background: #fff;
+    background: linear-gradient(120deg, #e0f7fa 0%, #34836e 100%);
     border-radius: 18px;
     box-shadow: 0 4px 18px rgba(44, 118, 97, 0.13);
-    padding: 10px 8px;
+    padding: 12px 10px;
     margin-bottom: 18px;
     transition: box-shadow 0.2s, transform 0.2s;
     display: flex;
@@ -14,6 +14,7 @@
 .vitrinacard:hover {
     box-shadow: 0 8px 32px rgba(44, 118, 97, 0.18);
     transform: scale(1.03);
+    background: linear-gradient(120deg, #2c7661 0%, #34836e 100%);
 }
 .imagenservicio {
     width: 100%;
@@ -27,12 +28,14 @@
 .cuerpo {
     text-align: center;
     font-size: 1rem;
-    color: #22604d;
+    color: #fff;
     margin-bottom: 6px;
+    text-shadow: 0 2px 8px rgba(44, 118, 97, 0.10);
 }
 .cuerpo strong {
     font-size: 1.1rem;
-    color: #34836e;
+    color: #e0f7fa;
+    text-shadow: 0 2px 8px rgba(44, 118, 97, 0.18);
 }
 .pie {
     width: 100%;
@@ -45,17 +48,106 @@
     font-weight: 600;
     box-shadow: 0 2px 8px rgba(44, 118, 97, 0.10);
     transition: background 0.2s, box-shadow 0.2s;
+    background: #34836e;
+    color: #fff;
 }
 .pie .btn:hover {
-    background: #22604d;
-    color: #fff;
+    background: #2c7661;
+    color: #e0f7fa;
     box-shadow: 0 4px 16px rgba(44, 118, 97, 0.18);
 }
+/* Modales */
+.vitrina-modal {
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(44, 118, 97, 0.18);
+    background: linear-gradient(120deg, #e0f7fa 0%, #34836e 100%);
+    padding: 18px 12px;
+    animation: fadeInModal 0.5s;
+}
+.vitrina-modal-header {
+    border-bottom: 1px solid #b2f7ef;
+    background: #2c7661;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+}
+.vitrina-modal-title {
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(44, 118, 97, 0.18);
+}
+.vitrina-modal-body {
+    background: #e0f7fa;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(44, 118, 97, 0.10);
+    padding: 12px 8px;
+}
+.vitrina-modal-footer {
+    border-top: 1px solid #b2f7ef;
+    background: #2c7661;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+.vitrina-modal-footer .btn {
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(44, 118, 97, 0.10);
+    transition: background 0.2s, box-shadow 0.2s;
+    background: #34836e;
+    color: #fff;
+}
+.vitrina-modal-footer .btn:hover {
+    background: #e0f7fa;
+    color: #34836e;
+    box-shadow: 0 4px 16px rgba(44, 118, 97, 0.18);
+}
+/* Tablas */
+.vitrina-table {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(44, 118, 97, 0.10);
+    background: #34836e;
+    margin-bottom: 0;
+}
+.vitrina-table th {
+    background: #2c7661;
+    color: #e0f7fa;
+    font-weight: 700;
+    border: none;
+    font-size: 1rem;
+    padding: 8px 6px;
+}
+.vitrina-table td {
+    background: #34836e;
+    color: #e0f7fa;
+    border: none;
+    font-size: 0.98rem;
+    padding: 8px 6px;
+}
+.vitrina-table-striped tbody tr:nth-of-type(odd) {
+    background: #2c7661;
+}
+.vitrina-table-borderless th, .vitrina-table-borderless td {
+    border: none !important;
+}
 @keyframes fadeInCard {
+    from { opacity: 0; transform: scale(0.98) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes fadeInModal {
     from { opacity: 0; transform: scale(0.98) translateY(20px); }
     to { opacity: 1; transform: scale(1) translateY(0); }
 }
 @media (max-width: 900px) {
     .vitrinacard { padding: 8px 4px; }
     .imagenservicio { height: 80px; }
+    .vitrina-table th,
+    .vitrina-table td {
+        font-size: 0.9rem;
+        padding: 6px 4px;
+    }
 }

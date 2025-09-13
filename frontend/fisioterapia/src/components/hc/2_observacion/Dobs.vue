@@ -141,7 +141,7 @@ export default {
     }),
 
     methods: {
-        ...mapActions("Hc", ["SaveDatos2"]),
+        ...mapActions("hc", ["SaveDatos2"]),
 
         /*  */
         AddOb(tipo, obs, detalle) {

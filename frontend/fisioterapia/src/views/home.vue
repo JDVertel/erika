@@ -72,11 +72,11 @@ export default {
 </script>
 
 <template>
-<div class="container">
+<div class="container-fluid">
     <!--     <p>Mensaje recibido: {{ mensajeRecibido }}</p>
    <p>aca:{{ DataEmpresa[0].wsp }} </p>  -->
     <!-- sesion informacion -->
-    <div class="container">
+    <div class="container-fluid">
         <div class="row" v-for="(iten, index) in DataEmpresa" :key="index">
 
             <div class="col-4 col-md-2">
@@ -90,7 +90,7 @@ export default {
 
             </div>
             <div class="d-none d-sm-none d-md-block col-md-4">
-                <p><strong>Contactenos</strong> </p>
+                <p><strong>Contacto</strong> </p>
                 <p> Direccion: {{iten.direccion}}  <br>  Celular:{{iten.celular}}</p>
                 
             </div>
@@ -98,7 +98,7 @@ export default {
         </div>
     </div>
     <br />
-    <div class="container">
+    <div class="container-fluid">
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">

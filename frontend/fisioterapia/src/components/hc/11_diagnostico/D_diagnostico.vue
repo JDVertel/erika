@@ -138,7 +138,7 @@ export default {
         );
     },
     methods: {
-        ...mapActions("Hc", ["SaveDatos11"]),
+        ...mapActions("hc", ["SaveDatos11"]),
 
         abrirModalCIE10() {
             this.modalInstance.show();

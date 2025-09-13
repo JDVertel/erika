@@ -37,7 +37,7 @@ export default {
     },
     methods: {
 
-        ...mapActions("Hc", ["SaveDatos10"]),
+        ...mapActions("hc", ["SaveDatos10"]),
         async guardarInfo10() {
 
             this.arrayDatosConsulta = [{

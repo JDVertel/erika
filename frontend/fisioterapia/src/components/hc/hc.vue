@@ -10,6 +10,9 @@
             idprofesional: {{ idprofesional }}
             idips: {{ idips }}
             <hr>
+            idfactura:{{ idfactura }}
+            <hr>
+
             <div class="row">
                 <div class="col-12 col-md-2 relleno1">
                     <h5>
@@ -39,11 +42,11 @@
             </div>
         </div>
         <div>
-            <button class="btn btn-primary" @click="crearNuevoRegistro">+ Crear nuevo registro en HC</button>
+            <button class="btn btn-primary" @click="crearNuevoRegistro" v-if="! this.StateNumRegHC">+ Crear nuevo registro en HC</button>
         </div>
 
         <br />
-        <div class="container-fluid" v-if="idpaciente && idprofesional && idips && nuevafact === 0">
+        <div class="container-fluid" v-if="idpaciente && idprofesional && idips && this.StateNumRegHC ">
             <C_Hc />
         </div>
         <router-link to="/dashboard">Home</router-link>
@@ -63,7 +66,8 @@ import HCdetallada from "./h_clinica.vue";
 
 import Registro from "./registroForm.vue";
 import {
-    mapState
+    mapState,
+    mapActions
 } from "vuex/dist/vuex.cjs.js";
 
 export default {
@@ -84,16 +88,29 @@ export default {
         this.idprofesional = this.$route.params.idprofesional;
     },
     methods: {
+        ...mapActions("hc", ["SaveHCcabecera"]),
+
         crearNuevoRegistro() {
+
             let datos = {
                 idpaciente: this.idpaciente,
                 idprofesional: this.idprofesional,
                 idips: this.idips,
             }
+
+            this.SaveHCcabecera(datos);
         },
     },
     computed: {
-        ...mapState(["DataEmpresa"])
+        ...mapState("hc", ["StateNumRegHC"]),
+        ...mapState("Auth", [
+            "DataPagina"
+        ]),
+
+        idfactura(){
+            return this.StateNumRegHC && this.StateNumRegHC[0].idfactura ? this.StateNumRegHC[0].idfactura : null;
+        }
+
     },
 
     created() {

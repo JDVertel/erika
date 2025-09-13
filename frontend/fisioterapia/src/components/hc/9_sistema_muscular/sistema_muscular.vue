@@ -388,7 +388,7 @@ export default {
     }),
     methods: {
 
-      ...mapActions("Hc", ["SaveDatos9"]),
+      ...mapActions("hc", ["SaveDatos9"]),
 
 
         busquedamuscular(x, y, z) {

@@ -193,7 +193,7 @@ export default {
     }),
 
     methods: {
-        ...mapActions("Hc", ["SaveDatos3"]),
+        ...mapActions("hc", ["SaveDatos3"]),
 
         AddAntec(tipo, enf, detalle) {
             let item = {

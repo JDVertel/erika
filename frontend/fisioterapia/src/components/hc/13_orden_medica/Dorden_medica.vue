@@ -143,7 +143,7 @@ export default {
         );
     },
     methods: {
-...mapActions('Hc',["SaveDatos13"]),
+...mapActions('hc',["SaveDatos13"]),
 
         abrirModalCUPS() {
             this.modalInstance.show();

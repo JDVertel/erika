@@ -241,7 +241,7 @@ export default {
     },
     methods: {
 
-        ...mapActions("Hc", ["SaveDatos6"]),
+        ...mapActions("hc", ["SaveDatos6"]),
 
         colocarMarcador(event, imagenId) {
             const imagen = event.target;

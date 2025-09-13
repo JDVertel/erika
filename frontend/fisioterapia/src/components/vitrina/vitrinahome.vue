@@ -72,7 +72,7 @@
           <!--  -->
           <div class="col-12">
             <div class="table-responsive">
-              <table class="table table-sm">
+              <table class="vitrina-table table-sm">
                 <thead>
                   <tr>
                     <th>Imagen</th>
@@ -83,13 +83,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="articulo in vitrinaservicios" :key="articulo.id">
+                  <tr v-for="articulo in vitrinaservicios" :key="articulo.id" class="vitrinacard">
                     <td>
-                      <img
-                        :src="`${articulo.img}`"
-                        alt="imagen producto"
-                        style="height: 70px"
-                      />
+                        <img
+                          :src="`${articulo.img}`"
+                          alt="imagen producto"
+                          class="imagenservicio"
+                        />
                     </td>
 
                     <td>
@@ -132,7 +132,7 @@
                     </td>
                     <td class="tablaconfig">
                       <table
-                        class="table table-sm table-striped table-borderless tablaconfig"
+                        class="vitrina-table table-sm vitrina-table-striped vitrina-table-borderless tablaconfig"
                       >
                         <thead>
                           <tr>
@@ -164,17 +164,17 @@
           <br />
           <!-- inicio modal 1  servicios-->
           <div
-            class="modal fade"
+            class="modal fade vitrina-modal"
             id="exampleModal2"
             tabindex="-1"
             aria-labelledby="exampleModalLabel2"
             aria-hidden="true"
           >
             <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
+              <div class="modal-content vitrina-modal">
+                <div class="modal-header vitrina-modal-header">
                   <h1
-                    class="modal-title fs-5"
+                    class="modal-title fs-5 vitrina-modal-title"
                     id="exampleModalLabel2"
                     v-if="this.modalOption === 'N'"
                   >
@@ -194,7 +194,7 @@
                     aria-label="Close"
                   ></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body vitrina-modal-body">
                   <div class="container">
                     <h6><strong>Datos del servicio</strong></h6>
 
@@ -369,7 +369,7 @@
                     </table>
                   </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer vitrina-modal-footer">
                   <button
                     type="button"
                     class="btn btn-secondary"
@@ -440,7 +440,7 @@
           <!--  -->
           <div class="col-12">
             <div class="table-responsive">
-              <table class="table table-sm">
+              <table class="vitrina-table table-sm">
                 <thead>
                   <tr>
                     <th>Imagen</th>
@@ -451,13 +451,13 @@
                 </thead>
 
                 <tbody>
-                  <tr v-for="item in productosFiltrados" :key="item.id">
+                  <tr v-for="item in productosFiltrados" :key="item.id" class="vitrinacard">
                     <td>
                       <div class="container centrarcontenido">
                         <img
                           :src="`${item.img}`"
                           alt="imagen producto"
-                          style="height: 70px"
+                          class="imagenservicio"
                         />
                       </div>
                     </td>
@@ -509,16 +509,16 @@
           </div>
           <!--INICIO  Modal 2  productos-->
           <div
-            class="modal fade"
+            class="modal fade vitrina-modal"
             id="exampleModal"
             tabindex="-1"
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
           >
             <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">
+              <div class="modal-content vitrina-modal">
+                <div class="modal-header vitrina-modal-header">
+                  <h1 class="modal-title fs-5 vitrina-modal-title" id="exampleModalLabel">
                     Agregar nuevo articulo a la tienda
                   </h1>
                   <button
@@ -528,7 +528,7 @@
                     aria-label="Close"
                   ></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body vitrina-modal-body">
                   <div class="container">
                     <br />
                     <h6>Ingrese los datos para crear un nuevo articulo</h6>
@@ -610,7 +610,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer vitrina-modal-footer">
                   <button
                     type="button"
                     class="btn btn-secondary"

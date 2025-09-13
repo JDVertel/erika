@@ -40,7 +40,7 @@ export default {
     },
     methods: {
 
-        ...mapActions("Hc", ["SaveDatos12"]),
+        ...mapActions("hc", ["SaveDatos12"]),
 
         async guardarInfo12() {
 

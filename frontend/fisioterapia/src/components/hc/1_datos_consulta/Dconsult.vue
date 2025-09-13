@@ -302,7 +302,7 @@ export default {
             this.DetalleEnf = "";
         },
 
-        ...mapActions("Hc", ["SaveDatos1"]),
+        ...mapActions("hc", ["SaveDatos1"]),
 
         async guardarInfo1() {
     

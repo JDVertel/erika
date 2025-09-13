@@ -242,7 +242,7 @@ export default {
     methods: {
 
 
-      ...mapActions("Hc",["SaveDatos4"]),
+      ...mapActions("hc",["SaveDatos4"]),
 
         buscar_detalle(id, bd) {
             this.detalle_rta = BuscarDetalles(id, bd, "detalle");

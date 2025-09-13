@@ -272,7 +272,7 @@ export default {
     }),
     methods: {
 
-        ...mapActions("Hc", ["SaveDatos5"]),
+        ...mapActions("hc", ["SaveDatos5"]),
 
         b_evaluacion(x, y, z) {
             this.data_evaluacion = BuscarIsnpDinamicaDetalleNombre(x, y, z);

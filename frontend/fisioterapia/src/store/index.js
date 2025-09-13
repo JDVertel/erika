@@ -8,9 +8,8 @@ const store = createStore({
   modules: {
     Auth,
     Agendas,
-    Hc,
+    hc: Hc,
     vitrina
-
   },
 });
 

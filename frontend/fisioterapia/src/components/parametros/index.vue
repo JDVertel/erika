@@ -1,8 +1,7 @@
 <template>
 <div>
     <h2>Configuracion de App</h2>
-    <!--    usuarios tipos de citas empresa ( nombre - direccion - nit -telefono- email)
-    profesionales y areas -->
+
     <div class="container-fluid">
         <div class="accordion  accordion-flush" id="accordionExample">
             <div class="accordion-item">
@@ -70,11 +69,11 @@
                                 <div class="col-6 col-md-4">
                                     <div class="mb-3">
                                         <button class="btn btn-success btn-sm" @click="adduser" v-if="
-                          this.user_tipodoc !== '' &&
-                          this.user_numdoc !== '' &&
-                          this.user_nombre !== '' &&
-                          this.user_rol !== ''
-                        ">
+                                                this.user_tipodoc !== '' &&
+                                                this.user_numdoc !== '' &&
+                                                this.user_nombre !== '' &&
+                                                this.user_rol !== ''
+                                            ">
                                             Guardar
                                         </button>
                                     </div>
@@ -201,16 +200,16 @@
                                 </div>
                                 <div class="col-6 col-md-4">
                                     <button class="btn btn-success btn-sm" @click="addprof" v-if="
-                        this.pro_tipodoc !== '' &&
-                        this.pro_numdoc !== '' &&
-                        this.pro_name1 !== '' &&
-                        this.pro_apell1 !== '' &&
-                        this.pro_email !== '' &&
-                        this.pro_celular !== '' &&
-                        this.pro_reg_medico !== '' &&
-                        this.pro_tipo !== '' &&
-                        this.pro_correo !== ''
-                      ">
+                                            this.pro_tipodoc !== '' &&
+                                            this.pro_numdoc !== '' &&
+                                            this.pro_name1 !== '' &&
+                                            this.pro_apell1 !== '' &&
+                                            this.pro_email !== '' &&
+                                            this.pro_celular !== '' &&
+                                            this.pro_reg_medico !== '' &&
+                                            this.pro_tipo !== '' &&
+                                            this.pro_correo !== ''
+                                        ">
                                         Guardar
                                     </button>
                                 </div>
@@ -232,9 +231,6 @@
                                     <td>{{ prof.name1 }} {{ prof.apell1 }}</td>
                                     <td>{{ prof.cel }}</td>
                                     <td>
-                                        <!--     <button class="btn btn-danger m-1 btn-sm" @click="eliminaritemP(prof.id)">
-                                            <i class="bi bi-trash3-fill"></i>
-                                        </button> -->
                                         <button class="btn btn-warning m-1 btn-sm">
                                             <i class="bi bi-key"></i>
                                         </button>
@@ -256,17 +252,20 @@
                     <div class="accordion-body">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="container" v-if="stateEmpresa=='ver'">
+                                <div class="container" v-if="stateEmpresa == 'ver'">
                                     <div class="row">
                                         <div class="col-12 col-md-9 mb-2">
                                             <div class="row" v-for="(item, index) in DataEmpresa" :key="index">
-                                                <div class="col-6"><strong>Nombre IPS: </strong>{{item.nombre}}</div>
-                                                <div class="col-6"><strong>Nit:</strong>{{item.nit}}</div>
-                                                <div class="col-12"><strong>Descripcion:</strong>{{item.desc}}</div>
-                                                <div class="col-6"><strong>Celular:</strong>{{item.celular}}</div>
-                                                <div class="col-6"><strong>Wsp:</strong>{{item.wsp}}</div>
-                                                <div class="col-6"><strong>Direccion:</strong>{{item.direccion}}</div>
-                                                <div class="col-6" style="display: none;"><strong>ID:</strong>{{item.id}}</div>
+                                                <div class="col-6"><strong>Nombre IPS: </strong>{{ item.nombre }}
+                                                </div>
+                                                <div class="col-6"><strong>Nit:</strong>{{ item.nit }}</div>
+                                                <div class="col-12"><strong>Descripcion:</strong>{{ item.desc }}</div>
+                                                <div class="col-6"><strong>Celular:</strong>{{ item.celular }}</div>
+                                                <div class="col-6"><strong>Wsp:</strong>{{ item.wsp }}</div>
+                                                <div class="col-6"><strong>Direccion:</strong>{{ item.direccion }}
+                                                </div>
+                                                <div class="col-6" style="display: none;">
+                                                    <strong>ID:</strong>{{ item.id }}</div>
                                             </div>
                                         </div>
 
@@ -285,13 +284,14 @@
 
                                 </div>
                                 <!-- ------------------------------------------------------------------------------------------------------------------------------------ -->
-                                <div class="container" v-if="stateEmpresa=='crear' || stateEmpresa=='editar'">
+                                <div class="container" v-if="stateEmpresa == 'crear' || stateEmpresa == 'editar'">
 
                                     <div class="col-12 col-md-10">
                                         <div class="row">
                                             <div class="col-12 col-md-6">
                                                 <div class="input-group mb-3">
-                                                    <span class="input-group-text" id="basic-addon1">Nombre Ips</span>
+                                                    <span class="input-group-text" id="basic-addon1">Nombre
+                                                        Ips</span>
                                                     <input type="text" class="form-control" placeholder="Sin datos" aria-label="nombreips" aria-describedby="basic-addon1" v-model="nombreips" />
                                                 </div>
                                             </div>
@@ -306,126 +306,161 @@
                                                     <span class="input-group-text" id="basic-addon1">Descripcion</span>
                                                     <textarea class="form-control" aria-label="desc" v-model="desc" />
                                                     </div>
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text" id="basic-addon1"> Celular</span>
-                                                    <input type="number" class="form-control" placeholder="Sin datos" aria-label="cel" aria-describedby="basic-addon1" v-model="cel" />
                                                 </div>
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text" id="basic-addon1">WhatsApp</span>
-                                                    <input type="number" class="form-control" placeholder="Sin datos" aria-label="wsp" aria-describedby="basic-addon1" v-model="wsp" />
+                                                <div class="col-12 col-md-6">
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1"> Celular</span>
+                                                        <input type="number" class="form-control"
+                                                            placeholder="Sin datos" aria-label="cel"
+                                                            aria-describedby="basic-addon1" v-model="cel" />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text" id="basic-addon1">Direccion</span>
-                                                    <input type="text" class="form-control" placeholder="Sin datos" aria-label="direccion" aria-describedby="basic-addon1" v-model="direccion" />
+                                                <div class="col-12 col-md-6">
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">WhatsApp</span>
+                                                        <input type="number" class="form-control"
+                                                            placeholder="Sin datos" aria-label="wsp"
+                                                            aria-describedby="basic-addon1" v-model="wsp" />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-12 col-md-6" style="display: none;">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text" id="basic-addon1">Id_e</span>
-                                                    <input type="text" class="form-control" placeholder="Sin datos" aria-label="direccion" aria-describedby="basic-addon1" v-model="id_E" />
+                                                <div class="col-12 col-md-6">
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text"
+                                                            id="basic-addon1">Direccion</span>
+                                                        <input type="text" class="form-control" placeholder="Sin datos"
+                                                            aria-label="direccion" aria-describedby="basic-addon1"
+                                                            v-model="direccion" />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-12 col-md-6" style="display: none;">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text" id="basic-addon1">URL Logo</span>
-                                                    <input type="text" class="form-control" placeholder="Sin datos" aria-label="direccion" aria-describedby="basic-addon1" v-model="url_logo" />
+                                                <div class="col-12 col-md-6" style="display: none;">
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">Id_e</span>
+                                                        <input type="text" class="form-control" placeholder="Sin datos"
+                                                            aria-label="direccion" aria-describedby="basic-addon1"
+                                                            v-model="id_E" />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-12 col-md-6" v-if="stateEmpresa=='crear'">
-                                                <div class="input-group mb-3">
-                                                    <input type="file" class="form-control" id="logoImg" @change="onSelectImage_s($event)" accept="image/png,  image/jpeg,  image/jpg" />
-                                                    <label class="input-group-text" for="logoImg">Upload Logo</label>
+                                                <div class="col-12 col-md-6" style="display: none;">
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text" id="basic-addon1">URL Logo</span>
+                                                        <input type="text" class="form-control" placeholder="Sin datos"
+                                                            aria-label="direccion" aria-describedby="basic-addon1"
+                                                            v-model="url_logo" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6" v-if="stateEmpresa == 'crear'">
+                                                    <div class="input-group mb-3">
+                                                        <input type="file" class="form-control" id="logoImg"
+                                                            @change="onSelectImage_s($event)"
+                                                            accept="image/png,  image/jpeg,  image/jpg" />
+                                                        <label class="input-group-text" for="logoImg">Upload
+                                                            Logo</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12 col-md-2">
-                                        <div class="row">
-                                            <div class="col" v-if="stateEmpresa=='crear'">
-                                                <img :src="local_Image" class="img-thumbnail" alt="Imagen para guardar" />
+                                        <div class="col-12 col-md-2">
+                                            <div class="row">
+                                                <div class="col" v-if="stateEmpresa == 'crear'">
+                                                    <img :src="local_Image" class="img-thumbnail"
+                                                        alt="Imagen para guardar" />
 
-                                            </div>
-                                            <div class="col" v-if="stateEmpresa=='editar'">
-                                                <img :src="this.logo" class="img-thumbnail" alt="Imagen para guardar" />
+                                                </div>
+                                                <div class="col" v-if="stateEmpresa == 'editar'">
+                                                    <img :src="this.logo" class="img-thumbnail"
+                                                        alt="Imagen para guardar" />
 
-                                            </div>
+                                                </div>
 
-                                            <div class="col">
-                                                <button type="button" class="btn btn-warning btn-sm" @click="uploadImage_p()" v-if="stateEmpresa=='crear'">
-                                                    Crear
-                                                </button>
-                                                <button type="button" class="btn btn-warning btn-sm" @click="updateEmpresa()" v-if="stateEmpresa=='editar'">
-                                                    Actualizar
-                                                </button>
+                                                <div class="col">
+                                                    <button type="button" class="btn btn-warning btn-sm"
+                                                        @click="uploadImage_p()" v-if="stateEmpresa == 'crear'">
+                                                        Crear
+                                                    </button>
+
+                                                    <button type="button" class="btn btn-warning btn-sm"
+                                                        @click="updateEmpresa()" v-if="stateEmpresa == 'editar'">
+                                                        Actualizar
+                                                    </button>
+                                                </div>
                                             </div>
+                                            <br />
                                         </div>
-                                        <br />
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
-                        Personalizar Informacion de Pagina
-                    </button>
-                </h2>
-                <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
+                <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                            Personalizar Informacion de Pagina
+                        </button>
+                    </h2>
+                    <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
 
-                        <div class="container" v-if="statePagina =='ver'">
+                            <div class="container" v-if="statePagina == 'ver'">
 
-                            <button type="button" class="btn btn-warning btn-sm mb-3" @click="CargarParaActualizarPagina()">
-                                Actualizar Datos Pagina
-                            </button>
-                          
-                            <div class="row" v-for="(item, index) in DataPagina" :key="index">
-                                <div class="col-12 col-md-6">
-                                    <strong>Quienes Somos:</strong><br>
-                                    {{ item.quienessomos }}
+                                <button type="button" class="btn btn-warning btn-sm mb-3"
+                                    @click="CargarParaActualizarPagina()">
+                                    Actualizar Datos Pagina
+                                </button>
+
+                                <div class="row" v-for="(item, index) in DataPagina" :key="index">
+                                    <div class="col-12 col-md-6">
+                                        <strong>Quienes Somos:</strong><br>
+                                        {{ item.quienessomos }}
+                                    </div>
+
+                                    <div class=" col-12 col-md-6"><strong>Mision:</strong> <br> {{ item.mision }} </div>
+                                    <hr>
+
+                                    <div class="col-12 col-md-6"> <strong>Vision:</strong> <br> {{ item.vision }}</div>
+
+                                    <hr>
+                                    <div class="col-12 col-md-6"> <strong>Nuestros servicios:</strong> <br>
+                                        {{ item.nuestrosservicios }}</div>
+
+                                    <hr>
+                                    <div class="col-12 col-md-6"> <strong>Nuestros servicios LM</strong> <br>
+                                        {{ item.nuestrosservicios_lm }}</div>
+
+                                    <hr>
+                                    <div class="col-12 col-md-6"> <strong>Clases y rutinas</strong> <br>
+                                        {{ item.clasesrutinas }}</div>
+
+                                    <hr>
+                                    <div class="col-12 col-md-6"> <strong>Clases y rutinas LM </strong><br>
+                                        {{ item.clasesrutinas_lm }}</div>
+
+                                    <hr>
+                                    <div class="col-12 col-md-6"> <strong>Tienda Online</strong> <br>
+                                        {{ item.tiendaonline }}</div>
+
+                                    <hr>
+                                    <div class="col-12 col-md-6"> <strong>Tienda Online LM</strong> <br>
+                                        {{ item.tiendaonline_lm }}</div>
+                                    <div class="col-12 col-md-6" style="display: none;"> <strong>id</strong> <br>
+                                        {{ item.id }}</div>
                                 </div>
 
-                                <div class=" col-12 col-md-6"><strong>Mision:</strong> <br> {{item.mision }} </div>
-                                <hr>
-
-                                <div class="col-12 col-md-6"> <strong>Vision:</strong> <br> {{item.vision}}</div>
-
-                                <hr><div class="col-12 col-md-6"> <strong>Nuestros servicios:</strong> <br> {{item.nuestrosservicios }}</div>
-
-                                <hr><div class="col-12 col-md-6"> <strong>Nuestros servicios LM</strong> <br> {{item.nuestrosservicios_lm }}</div>
-
-                                <hr><div class="col-12 col-md-6"> <strong>Clases y rutinas</strong> <br> {{item.clasesrutinas }}</div>
-
-                                <hr><div class="col-12 col-md-6"> <strong>Clases y rutinas LM </strong><br> {{item.clasesrutinas_lm }}</div>
-
-                                <hr> <div class="col-12 col-md-6"> <strong>Tienda Online</strong> <br> {{item.tiendaonline }}</div>
-
-                                <hr> <div class="col-12 col-md-6"> <strong>Tienda Online LM</strong> <br> {{item.tiendaonline_lm }}</div>
-                                <div class="col-12 col-md-6" style="display: none;"> <strong>id</strong> <br> {{item.id }}</div>
+                                <br>
+                                <br>
+                                <br>
                             </div>
 
-                            <br>
-                            <br>
-                            <br>
-                        </div>
-
-                        <div class="container" v-if="statePagina =='crear'|| statePagina=='editar'">
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-text">Quienes somos</span>
-                                        <textarea class="form-control" aria-label="With textarea" placeholder="Sin datos" v-model="quienessomos"></textarea>
+                            <div class="container" v-if="statePagina == 'crear' || statePagina == 'editar'">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text">Quienes somos</span>
+                                            <textarea class="form-control" aria-label="With textarea"
+                                                placeholder="Sin datos" v-model="quienessomos"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6">
@@ -486,10 +521,10 @@
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <div class="container">
-                                                    <button type="button" class="btn btn-warning btn-sm" @click="Create_datosPagina()" v-if="stateEmpresa =='crear'">
+                                                    <button type="button" class="btn btn-warning btn-sm" @click="Create_datosPagina()" v-if="stateEmpresa == 'crear'">
                                                         Crear
                                                     </button>
-                                                    <button type="button" class="btn btn-warning btn-sm" @click="Update_datosPagina()" v-if="statePagina =='editar'">
+                                                    <button type="button" class="btn btn-warning btn-sm" @click="Update_datosPagina()" v-if="statePagina == 'editar'">
                                                         Actualizar
                                                     </button>
                                                 </div>
@@ -499,22 +534,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--   <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
-                                    Parametros funcionales
-                                </button>
-                            </h2>
-                            <div id="collapse5" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <nav>parametros</nav>
-                                    <div class="tab-content" id="nav-tabContent">
-                                      //  COMUNICACIONES
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
 
@@ -846,7 +866,7 @@ export default {
                     mutation: "muta_setNewState",
                 })
 
-            console.log("cambiando estado en el store");
+            console.log("cambiando estado en el store", this.ParamschangeState[0].value);
             this.ChangeState(this.ParamschangeState[0]);
             this.obtenerDatosEmpresa();
 

@@ -83,7 +83,7 @@ export default {
         };
     },
     methods: {
-        ...mapActions("Hc", ["SaveDatos7"]),
+        ...mapActions("hc", ["SaveDatos7"]),
 
         /* -------------------inicio guardar datos empresa ----------------------- */
         //1- cargar imagen y generar miniatura

@@ -12,10 +12,7 @@
                     <button class="btn-close btn-close-white" @click="toggleNavbar"></button>
                 </div>
 
-                <!-- @click="toggleNavbarClose" -->
-                <!-- <router-link to="/">
-                    <img :src="`${item.logo}`" class="logobar" />
-                </router-link> -->
+              
             </div>
            
             <ul class="list-unstyled components">

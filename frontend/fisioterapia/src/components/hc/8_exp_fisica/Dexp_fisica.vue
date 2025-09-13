@@ -740,7 +740,7 @@ export default {
      
     }),
     methods: {
-        ...mapActions("Hc", ["SaveDatos8"]),
+        ...mapActions("hc", ["SaveDatos8"]),
         /* ------------------------------------------------------------------------------- */
         AddItemArray1(mov, izq, der) {
             let itemM = {
