@@ -66,29 +66,7 @@
                     </div>
                 </router-link>
             </div>
-            <!--  -->
-            <!--             <div class="col-6 col-md-4">
-                <div class="card mb-3 cardDash">
-                    <div class="row">
-                        <div class="col-3 p-2">
-                            <img src="https://img.icons8.com/ios/50/money--v1.png" class="img_Dashboard" />
-                        </div>
-                        <div class="col-9">
-                            <div class="col-12 p-2">
-                                <div>
-                                    <router-link to="/ventas"><a class="nav-link-menu" aria-current="page">
-                                            <h2>Ventas</h2>
-
-                                        </a></router-link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <strong class="centrarcontenido">Registro de ventas</strong>
-                </div>
-            </div> -->
-            <!--  -->
+    
             <div class="col-12 col-md-6 col-lg-4">
                 <router-link to="/buscar_hc" class="dashboard-link-card">
                     <div class="card mb-4 cardDash dashboard-card">

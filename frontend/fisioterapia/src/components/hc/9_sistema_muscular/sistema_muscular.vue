@@ -386,6 +386,12 @@ export default {
         idhc: "1",
         bd: "hc9_expmuscular",
     }),
+      props: {
+    idpaciente: String,
+    idprofesional: String,
+    idips: String,
+    idfactura: [String, Number]
+  },
     methods: {
 
       ...mapActions("hc", ["SaveDatos9"]),

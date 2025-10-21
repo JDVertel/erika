@@ -135,6 +135,12 @@ export default {
             bd: "hc13_ordenmedica",
         };
     },
+      props: {
+    idpaciente: String,
+    idprofesional: String,
+    idips: String,
+    idfactura: [String, Number]
+  },
     mounted() {
 
 

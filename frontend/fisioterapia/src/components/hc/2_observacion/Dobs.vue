@@ -102,7 +102,7 @@
                         </div>
                     </div>
                     <br />
-            <!--         <button class="btn btn-warning" @click="guardarInfo2">
+                    <!--         <button class="btn btn-warning" @click="guardarInfo2">
                         + Guardar
                     </button> -->
                 </div>
@@ -135,11 +135,14 @@ export default {
         ArraySaveConsulta: [],
         tipoAnt: "",
         /*  */
-        idPaciente: "111",
-        idhc: "1",
         bd: "hc2_datosobservacion",
     }),
-
+    props: {
+        idpaciente: String,
+        idprofesional: String,
+        idips: String,
+        idfactura: [String, Number]
+    },
     methods: {
         ...mapActions("hc", ["SaveDatos2"]),
 
@@ -166,14 +169,17 @@ export default {
 
         /*  */
         async guardarInfo2() {
-            this.datosObservacion = [{
-                idpaciente: this.idPaciente,
+            this.datosObservacion = {
                 bd: this.bd,
-                idhc: this.idhc,
+                idPaciente: this.idPaciente,
+                idprofesional: this.idprofesional,
+                idips: this.idips,
+                idfactura: this.idfactura,
+                //
                 dataObserv: this.NewAntec,
-            }, ];
+            };
 
-            this.SaveDatos2(this.datosObservacion[0]);
+            this.SaveDatos2(this.datosObservacion);
             console.log("Datos de observacion guardados...");
         },
     },

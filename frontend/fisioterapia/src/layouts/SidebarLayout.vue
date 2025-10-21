@@ -1,20 +1,19 @@
 <template>
 <div>
-    <div class="layout-wrapper"  v-for="(item,index) in params" :key="index">
+    <div class="layout-wrapper" v-for="(item,index) in params" :key="index">
         <!-- Overlay -->
         <div v-if="isNavbarOpen" class="sidebar-overlay" @click="toggleNavbar"></div>
 
         <!-- Sidebar -->
         <nav id="sidebar" :class="{ active: isNavbarOpen }">
-            <div class="sidebar-header"   >
+            <div class="sidebar-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h3>FisioApp</h3>
                     <button class="btn-close btn-close-white" @click="toggleNavbar"></button>
                 </div>
 
-              
             </div>
-           
+
             <ul class="list-unstyled components">
                 <li>
                     <router-link to="/" @click="toggleNavbar" class="nav-link">
@@ -40,31 +39,34 @@
                         <span>About</span>
                     </router-link>
                 </li>
-                <li>
-                    <router-link to="/reservas/:id_user" @click="toggleNavbar" class="nav-link">
-                        <img class="icono" width="18" height="18" src="https://img.icons8.com/?size=100&id=78945&format=png&color=000000" alt="profesional" />
-                        <span>Reservas</span>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/ventas" @click="toggleNavbar" class="nav-link">
-                        <img class="icono" width="18" height="18" src="https://img.icons8.com/?size=100&id=100257&format=png&color=000000" alt="profesional" />
-                        <span>Facturar</span>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/profesional" @click="toggleNavbar" class="nav-link">
-                        <img class="icono" width="18" height="18" src="https://img.icons8.com/external-febrian-hidayat-glyph-febrian-hidayat/64/external-11-disaster-febrian-hidayat-glyph-febrian-hidayat.png" alt="profesional" />
-                        <span>Profesional</span>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/dashboard" @click="toggleNavbar" class="nav-link">
-                        <img class="icono" width="18" height="18" src="https://img.icons8.com/ios/50/settings-3--v1.png" alt="settings" />
-                        <span>Admin</span>
-                    </router-link>
-                </li>
 
+                <div v-if="this.rol=='admin'">
+
+                    <li>
+                        <router-link to="/reservas/:id_user" @click="toggleNavbar" class="nav-link">
+                            <img class="icono" width="18" height="18" src="https://img.icons8.com/?size=100&id=78945&format=png&color=000000" alt="profesional" />
+                            <span>Reservas</span>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/ventas" @click="toggleNavbar" class="nav-link">
+                            <img class="icono" width="18" height="18" src="https://img.icons8.com/?size=100&id=100257&format=png&color=000000" alt="profesional" />
+                            <span>Facturar</span>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/profesional" @click="toggleNavbar" class="nav-link">
+                            <img class="icono" width="18" height="18" src="https://img.icons8.com/external-febrian-hidayat-glyph-febrian-hidayat/64/external-11-disaster-febrian-hidayat-glyph-febrian-hidayat.png" alt="profesional" />
+                            <span>Profesional</span>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/dashboard" @click="toggleNavbar" class="nav-link">
+                            <img class="icono" width="18" height="18" src="https://img.icons8.com/ios/50/settings-3--v1.png" alt="settings" />
+                            <span>Admin</span>
+                        </router-link>
+                    </li>
+                </div>
 
             </ul>
 
@@ -74,14 +76,14 @@
         <div id="content">
             <!-- Top Navigation -->
             <nav class="navbar navbar-expand-lg" style="background-color: #34836e">
-                <div class="container-fluid"   >
+                <div class="container-fluid">
                     <button type="button" id="sidebarCollapse" class="btn" @click="toggleNavbar">
                         <span class="navbar-toggler-icon">
                         </span>
                     </button>
-                
-                    <span class="navbar-text"> {{item.nombre}}</span> 
-            
+
+                    <!-- <span class="navbar-text"> {{item.nombre}}</span> -->
+                    <span class="navbar-text">Tu recuperación es nuestro objetivo !</span>
                 </div>
             </nav>
 
@@ -100,19 +102,20 @@
 
 <script>
 import FooterComponent from "../views/footer.vue";
+import {
+    mapState
+} from "vuex";
 
 export default {
+    name: "SidebarLayout",
     components: {
         FooterComponent,
     },
-
-    name: "SidebarLayout",
     props: {
         params: {
-      type: Array,
-      default: () => [] // Valor por defecto si no se pasa nada
-    }
-        
+            type: Array,
+            default: () => [], // Valor por defecto si no se pasa nada
+        },
     },
     data() {
         return {
@@ -121,12 +124,18 @@ export default {
         };
     },
     methods: {
+        mapAction() {
+            // Completar acción según necesidad
+        },
         toggleNavbar() {
             this.isNavbarOpen = !this.isNavbarOpen;
         },
         toggleNavbarCloset() {
             this.isNavbarOpen = false;
         },
+    },
+    computed: {
+        ...mapState("Auth", ["rol", "id_ips", "id_user"]),
     },
 };
 </script>
@@ -147,7 +156,6 @@ export default {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1040;
 }
-
 
 #sidebar {
     min-width: 170px;
@@ -190,10 +198,10 @@ export default {
     list-style: none;
 }
 
-
 #sidebar ul li {
     margin-bottom: 6px;
 }
+
 #sidebar ul li a {
     padding: 13px 18px;
     display: flex;
@@ -207,6 +215,7 @@ export default {
     box-shadow: 0 2px 8px rgba(44, 118, 97, 0.08);
     transition: background 0.2s, box-shadow 0.2s;
 }
+
 #sidebar ul li a:hover {
     background: #2c7661;
     box-shadow: 0 4px 16px rgba(44, 118, 97, 0.18);

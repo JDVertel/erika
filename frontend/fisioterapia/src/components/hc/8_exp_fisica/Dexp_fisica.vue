@@ -739,6 +739,12 @@ export default {
         ArraySaveConsulta: [],
      
     }),
+      props: {
+    idpaciente: String,
+    idprofesional: String,
+    idips: String,
+    idfactura: [String, Number]
+  },
     methods: {
         ...mapActions("hc", ["SaveDatos8"]),
         /* ------------------------------------------------------------------------------- */

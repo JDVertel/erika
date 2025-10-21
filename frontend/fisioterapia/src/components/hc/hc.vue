@@ -47,7 +47,7 @@
 
         <br />
         <div class="container-fluid" v-if="idpaciente && idprofesional && idips && this.StateNumRegHC ">
-            <C_Hc />
+            <C_Hc :idpaciente="idpaciente" :idprofesional="idprofesional" :idips="idips" :idfactura="idfactura" />
         </div>
         <router-link to="/dashboard">Home</router-link>
     </div>
@@ -107,7 +107,7 @@ export default {
             "DataPagina"
         ]),
 
-        idfactura(){
+        idfactura() {
             return this.StateNumRegHC && this.StateNumRegHC[0].idfactura ? this.StateNumRegHC[0].idfactura : null;
         }
 

@@ -1,36 +1,36 @@
 <template>
 <div class="accordion custom-header" id="accordionPanelsStayOpenExample">
-    <D_consulta ref="G_consulta" />
+    <D_consulta ref="G_consulta" :idpaciente="idpaciente" :idprofesional="idprofesional" :idips="idips" :idfactura="idfactura" />
 
-    <D_observacion ref="G_observacion" />
+    <D_observacion ref="G_observacion" :idpaciente="idpaciente" :idprofesional="idprofesional" :idips="idips" :idfactura="idfactura" />
 
-    <D_inspestatica ref="G_inspestatica" />
+    <D_inspestatica ref="G_inspestatica" :idpaciente="idpaciente" :idprofesional="idprofesional" :idips="idips" :idfactura="idfactura" />
 
-    <D_eval_post ref="G_eval_post" />
+    <D_eval_post ref="G_eval_post" :idpaciente="idpaciente" :idprofesional="idprofesional" :idips="idips" :idfactura="idfactura" />
 
-    <D_insp_dinam ref="G_insp_dinam" />
+    <D_insp_dinam ref="G_insp_dinam" :idpaciente="idpaciente" :idprofesional="idprofesional" :idips="idips" :idfactura="idfactura" />
 
-    <D_esc_visual ref="G_esc_visual" />
+    <D_esc_visual ref="G_esc_visual" :idpaciente="idpaciente" :idprofesional="idprofesional" :idips="idips" :idfactura="idfactura" />
 
-    <D_imagenes ref="G_imagenes" />
+    <D_imagenes ref="G_imagenes" :idpaciente="idpaciente" :idprofesional="idprofesional" :idips="idips" :idfactura="idfactura" />
 
-    <D_exp_fisica ref="G_exp_fisica" />
+    <D_exp_fisica ref="G_exp_fisica" :idpaciente="idpaciente" :idprofesional="idprofesional" :idips="idips" :idfactura="idfactura" />
 
-    <D_sis_muscular ref="G_sis_muscular" />
+    <D_sis_muscular ref="G_sis_muscular" :idpaciente="idpaciente" :idprofesional="idprofesional" :idips="idips" :idfactura="idfactura" />
 
-    <D_analisis ref="G_analisis" />
+    <D_analisis ref="G_analisis" :idpaciente="idpaciente" :idprofesional="idprofesional" :idips="idips" :idfactura="idfactura" />
 
-    <D_diagnostico ref="G_diagnostico" />
+    <D_diagnostico ref="G_diagnostico" :idpaciente="idpaciente" :idprofesional="idprofesional" :idips="idips" :idfactura="idfactura" />
 
-    <D_tratamiento ref="G_tratamiento" />
+    <D_tratamiento ref="G_tratamiento" :idpaciente="idpaciente" :idprofesional="idprofesional" :idips="idips" :idfactura="idfactura" />
 
-    <D_ordenmedica ref="G_ordenmedica" />
+    <D_ordenmedica ref="G_ordenmedica" :idpaciente="idpaciente" :idprofesional="idprofesional" :idips="idips" :idfactura="idfactura" />
 
     <br>
-    <div class="row"> 
-     
+    <div class="row">
+
         <button type="button" class="btn btn-warning btn-sm mb-3" @click="guardarTodo">
-           
+
             <i class="bi bi-floppy2"></i> Guardar historia clinica
         </button>
     </div>
@@ -58,7 +58,12 @@ export default {
     data: () => ({
 
     }),
-
+    props: {
+        idpaciente: String,
+        idprofesional: String,
+        idips: String,
+        idfactura: [String, Number]
+    },
     components: {
         D_consulta,
         D_observacion,

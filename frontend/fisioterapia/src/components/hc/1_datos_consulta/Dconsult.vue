@@ -3,7 +3,7 @@
 <div class="accordion-item">
     <h2 class="accordion-header">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse1" aria-expanded="false" aria-controls="panelsStayOpen-collapse1">
-             Datos de Consulta
+            Datos de Consulta
         </button>
     </h2>
     <div id="panelsStayOpen-collapse1" class="accordion-collapse collapse">
@@ -220,7 +220,7 @@
                     </div>
                 </div>
             </div>
-   <!--          <button class="btn btn-warning mt-3" @click="guardarInfo1()">
+            <!--          <button class="btn btn-warning mt-3" @click="guardarInfo1()">
                 + Guardar
             </button> -->
         </div>
@@ -271,11 +271,15 @@ export default {
         NewAntec: [],
         regAnt: {},
         /*  */
-        idPaciente:"111",
-        idhc: "1",
         bd: "hc1_datosconsulta",
-    }),
 
+    }),
+    props: {
+        idpaciente: String,
+        idprofesional: String,
+        idips: String,
+        idfactura: [String, Number]
+    },
     methods: {
         buscar_enfermedad(nombre, array) {
             this.enf = BuscarAntDetallesNombreEnf(nombre, array, "enfermedades");
@@ -305,11 +309,14 @@ export default {
         ...mapActions("hc", ["SaveDatos1"]),
 
         async guardarInfo1() {
-    
+
             this.ArrayDatosConsulta = [{
-                idpaciente: this.idPaciente,
+
                 bd: this.bd,
-                idhc: this.idhc,
+                idPaciente: this.idPaciente,
+                idprofesional: this.idprofesional,
+                idips: this.idips,
+                idfactura: this.idfactura,
                 /*  */
                 motivoConsulta: this.motivoConsulta,
                 Enfermedad: this.Enfermedad,

@@ -65,7 +65,7 @@ export default {
             return;
         },
 
-    /*     name: "Productos", */
+        /*     name: "Productos", */
 
         enviarMensaje(url) {
             this.$emit("mensaje", url);

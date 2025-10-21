@@ -6,6 +6,11 @@ import {
     mapActions,
     mapState
 } from "vuex";
+import {
+    LogOut
+} from "@iconoir/vue";
+import logo from '@/assets/logo.png';
+
 export default {
     components: {
         Servicios: servicios,
@@ -17,14 +22,12 @@ export default {
             mostrarservicios: false,
             mostrarclases: false,
             mostrartienda: false,
-
             paramsPagina: [{
                 bd: "datos_pagina",
                 parametro: "id_ips",
                 valor: "1",
                 mutation: "setStatePagina",
             }],
-
             paramsEmpresa: [{
                 bd: "datos_empresa",
                 parametro: "id_ips",
@@ -32,31 +35,26 @@ export default {
                 mutation: "setStateEmpresa",
             }],
             mensajeRecibido: "",
+            logo
         };
     },
     methods: {
-   
         ...mapActions("Auth", ["getDataIPSbyParam"]),
-
         manejarMensaje(mensaje) {
             // Manejar el mensaje recibido del hijo
             this.mensajeRecibido = mensaje;
             this.celular = this.DataEmpresa[0].wsp;
             const url = `https://wa.me/${this.celular}?text=>>>>%20Hola%20me%20interesa%20reservar%20una%20cita%20de%20( ${this.mensajeRecibido} )%20desde%20tu%20pagina%20web%20<<<<`;
             window.open(url);
-
         },
-
         /*     reservaCitasW(link, celular) {
              const url = `https://wa.me/${celular}?text=>>>>%20Hola%20me%20interesa%20reservar%20una%20cita%20de%20( ${link} )%20desde%20tu%20pagina%20web%20<<<<`;
              window.open(url);
            }, */
     },
-
     created() {
         // Ejecutar en paralelo las que no dependen entre sí
         Promise.all([
-
             this.getDataIPSbyParam(this.paramsPagina),
             this.getDataIPSbyParam(this.paramsEmpresa),
         ])
@@ -67,38 +65,34 @@ export default {
             "DataPagina", "DataEmpresa"
         ])
     },
-
-};
-</script>
+};</script>
 
 <template>
-<div class="container-fluid">
-    <!--     <p>Mensaje recibido: {{ mensajeRecibido }}</p>
-   <p>aca:{{ DataEmpresa[0].wsp }} </p>  -->
-    <!-- sesion informacion -->
+<div class="container">
+
     <div class="container-fluid">
         <div class="row" v-for="(iten, index) in DataEmpresa" :key="index">
 
-            <div class="col-4 col-md-2">
-                <router-link to="/">
-                    <img :src="`${iten.logo}`" class="img-fluid logobar" />
-                </router-link>
+            <div class="col-12 col-md-2">
+                       
+                <img :src="logo" class="img-fluid logobar" />
             </div>
-            <div class="col-8 col-md-6">
-                <p><strong>Bienvenidos a {{iten.nombre}}</strong> </p>
+            <div class="col-12 col-md-5">
+     <p><strong>Bienvenido al {{iten.nombre}}</strong> </p>
+     <hr>
                 <p>{{iten.desc}}</p>
 
             </div>
             <div class="d-none d-sm-none d-md-block col-md-4">
                 <p><strong>Contacto</strong> </p>
-                <p> Direccion: {{iten.direccion}}  <br>  Celular:{{iten.celular}}</p>
-                
+                <p> Direccion: {{iten.direccion}} <br> Celular:{{iten.celular}}</p>
+
             </div>
 
         </div>
     </div>
     <br />
-    <div class="container-fluid">
+    <div class="container">
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -190,3 +184,4 @@ export default {
     </div>
 </div>
 </template>
+

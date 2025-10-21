@@ -1,9 +1,6 @@
 <template>
   <footer>
-    <!--     <br />
-      <a class="navbar-brand" href="#">
-        <router-link to="/dashboard"><i class="bi bi-house-fill"></i></router-link>    <p>&copy; Bitdata Managements 2025</p>
-      </a> -->
+   
 
     <nav class="navbar">
       <div class="container-fluid">
@@ -32,6 +29,11 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 0 20px;  
+  color: #ffffff; 
+  font-size: 10px;
 }
 a {
   text-decoration: none;

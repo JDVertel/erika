@@ -216,7 +216,7 @@
                             </table>
                         </div>
                     </div>
-                 <!--    <button class="btn btn-warning mt-3" @click="guardarInfo5">+ Guardar</button> -->
+                    <!--    <button class="btn btn-warning mt-3" @click="guardarInfo5">+ Guardar</button> -->
                 </div>
             </div>
         </div>
@@ -260,16 +260,22 @@ export default {
         pasoMin_i: "",
         angPie_d: "",
         angPie_i: "",
-        NewAntec:[],
-/*  */
+        NewAntec: [],
+        /*  */
         Acualitativo: [],
         Acualitativo: [],
         dataInspecDinamica: [],
         /*  */
-        idPaciente: "111",
-        idhc: "1",
+   
         bd: "hc5_datos_insp_dinamica",
     }),
+
+    props: {
+        idpaciente: String,
+        idprofesional: String,
+        idips: String,
+        idfactura: [String, Number]
+    },
     methods: {
 
         ...mapActions("hc", ["SaveDatos5"]),
@@ -304,18 +310,6 @@ export default {
             this.clase_adaptaciones = "0";
             this.detalle_adaptaciones = "";
         },
-
-        guardarInfo5() {
-            this.guardaInfo2(),
-                this.dataInspecDinamica = {
-                    idpaciente: this.idPaciente,
-                    idhc: this.idhc,
-                    bd: this.bd,
-                    Acualitativo: this.NewAntec,
-                    Acuantitativo: this.Acuantitativo,
-                };
-            this.SaveDatos5(this.dataInspecDinamica);
-        },
         guardaInfo2() {
             this.Acuantitativo = {
                 longPaso_d: this.longPaso_d,
@@ -333,7 +327,25 @@ export default {
                 angPie_d: this.angPie_d,
                 angPie_i: this.angPie_i,
             };
+        },
+
+        
+        guardarInfo5() {
+            this.guardaInfo2(),
+                this.dataInspecDinamica = {
+
+                    idPaciente: this.idPaciente,
+                    idprofesional: this.idprofesional,
+                    idips: this.idips,
+                    idfactura: this.idfactura,
+                    // Observaciones
+                    bd: this.bd,
+                    Acualitativo: this.NewAntec,
+                    Acuantitativo: this.Acuantitativo,
+                };
+            this.SaveDatos5(this.dataInspecDinamica);
         }
+
     }
 };
 </script>

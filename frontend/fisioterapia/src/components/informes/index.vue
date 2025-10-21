@@ -21,8 +21,18 @@
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
             <!-- -----------------------------------------SERVICIOS--------------------------------------------------------- -->
+            <h4>Seleccione el rango de fechas desde los cuales desee generar el informe</h4>
             <div class="container-fluid mt-2">
                 <div class="row">
+                      <div class="col-3">
+                     <label  class="form-label">Tipo</label>
+                        <select class="form-select form-select" aria-label="Small select example">
+                            <option selected>---Seleccione---</option>
+                            <option value="1">Servicio</option>
+                            <option value="2">Clases</option>
+                            <option value="3">Articulos</option>
+                        </select>
+                    </div>
                     <div class="col-3">
                         <div class="mb-3">
                             <label for="fechainicio" class="form-label">Fecha Inicio</label>
@@ -38,87 +48,12 @@
                     <div class="col-3"><button type="button" class="btn btn-primary btn-sm" @click="generarReporte">Generar</button></div>
                 </div>
 
-                  <!--  {{ StateQueryFacturas }} -->
+                <!--  {{ StateQueryFacturas }} -->
                 <div class="row">
-                    <div class="col-12 col-md-4
+                    <div class="col-12 
 
-                    "> <strong>Clases</strong>
-                        {{ }}
-                        <br>
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>First</th>
-                                    <th>Last</th>
-                                    <th>Handle</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <th>2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <th>1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-12 col-md-4
-                    "> <strong>Servicios</strong>
-                        <br>
-
-                        {{ this.QueryFacturasServicio }}
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>First</th>
-                                    <th>Last</th>
-                                    <th>Handle</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <th>2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <th>1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="col-12 col-md-4
                     ">
 
-                        <strong>Articulos</strong>
-
-                        {{ this.QueryFacturasProductos }}
                         <br>
                         <table class="table table-sm">
                             <thead>
@@ -151,14 +86,25 @@
                             </tbody>
                         </table>
                     </div>
+
                 </div>
             </div>
 
         </div>
         <!-- ----------------------------------------------CLASES-------------------------------------------------------- -->
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-            <div class="container-flid mt-2">
+            <div class="container-fluid mt-2">
+                <h4>Seleccione el rango de fechas y profesional desde los cuales desee generar el informe</h4>
                 <div class="row">
+                    <div class="col-3">
+                     <label  class="form-label">Profesional</label>
+                        <select class="form-select form-select" aria-label="Small select example">
+                            <option selected>---Seleccione---</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
                     <div class="col-3">
                         <div class="mb-3">
                             <label for="fechainicio" class="form-label">Fecha Inicio</label>
@@ -171,10 +117,12 @@
                             <input type="date" class="form-control" id="fechafin">
                         </div>
                     </div>
-                    <div class="col-3"><button type="button" class="btn btn-primary btn-sm">Generar</button></div>
+
+                    <div class="col-3">
+                    <button type="button" class="btn btn-primary btn-sm">Generar</button></div>
                 </div>
                 <div class="row">
-                    <div class="col-12"> <strong>Clases Facturadas</strong>
+                    <div class="col-12"> <strong>informe de eventos agendados </strong>
                         <br>
                         <table class="table table-sm">
                             <thead>
@@ -321,29 +269,28 @@ export default {
             // No es necesario un 'return' aquí si la función solo tiene efectos secundarios
         },
     },
-        computed: {
-            ...mapState("vitrina", ["StateQueryFacturas"]),
+    computed: {
+        ...mapState("vitrina", ["StateQueryFacturas"]),
 
-            DataServicios: {
-                get() {
-                    return this.StateQueryFacturas[0].filter((item) => item.categoria === 'servicio');
-                },
-                set(value) {
-                    this.QueryFacturasServicio = value;
-                }
+        DataServicios: {
+            get() {
+                return this.StateQueryFacturas[0].filter((item) => item.categoria === 'servicio');
             },
-            DataArticulos: {
-                get() {
-                    return this.StateQueryFacturas[0].filter((item) => item.categoria === 'producto');
-                },
-                set(value) {
-                    this.QueryFacturasProductos = value;
-                }
+            set(value) {
+                this.QueryFacturasServicio = value;
+            }
+        },
+        DataArticulos: {
+            get() {
+                return this.StateQueryFacturas[0].filter((item) => item.categoria === 'producto');
             },
+            set(value) {
+                this.QueryFacturasProductos = value;
+            }
+        },
 
-        }
+    }
 
-    
 }
 </script>
 

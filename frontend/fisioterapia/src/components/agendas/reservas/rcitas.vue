@@ -1,7 +1,7 @@
 <template>
 <div>
     <!--  -------------------------------------------->
-    datos del store auth
+    <!--     datos del store auth
     <hr>
     {{ user }}
     <hr>
@@ -9,9 +9,8 @@
     <hr>
     id_ips :{{ id_ips }} - id_user: {{ id_user }}- rol: {{ rol }}- info:{{ info }}
     <hr>
-    <!--     {{ dataAgendas }}
-{{ dataAllCitasPaciente }} -->
-    <hr>
+
+    <hr> -->
 
     <!-- ------------------------------------ -->
 
@@ -156,7 +155,7 @@
                             'btn-warning': clase_agenda === 'consulta',
                         },
                     ]">
-                   {{ clase_agenda }}  ( {{ fecha_agenda }} )   <i class="bi bi-plus-circle"></i> Reservar  ó <i class="bi bi-calendar-x"></i> Eliminar
+                    {{ clase_agenda }} ( {{ fecha_agenda }} ) <i class="bi bi-plus-circle"></i> Reservar ó <i class="bi bi-calendar-x"></i> Eliminar
                 </button>
 
             </div>
@@ -422,7 +421,6 @@ export default {
         dataagenda_fisioterapias: [],
         dataagenda_consultas: [],
         dataagenda_clases: [],
-      
 
     }),
 
@@ -450,7 +448,6 @@ export default {
             "NewgetDataUsersbyParam",
             "getCountDatabyParam",
         ]),
-
 
         /* ---------PACIENTES--------------------------------------------------------------------------- */
 
@@ -686,7 +683,6 @@ export default {
             this.vaciarcamposReservas();
         },
 
-      
     },
     /* ==================================================================================== */
     computed: {

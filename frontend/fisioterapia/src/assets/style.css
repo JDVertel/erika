@@ -200,8 +200,9 @@ table {
   padding: 10px;
   justify-content: center;
   align-content: center;
-  height: 120px;
+  height: 140px;
   overflow: hidden;
+   overflow-y: auto;   
 }
 
 .pie {

@@ -94,30 +94,30 @@
                             </div>
                             <div class="col-12 col-md-4 position-relative">
                                 <div v-if="marcadorSeleccionado" class="marker-info mt-3 p-3 border rounded">
-                                                       <h5>Información del marcador</h5>
-                                                       <div class="mb-3">
-                                                           <label class="form-label">Intensidad del dolor</label>
-                                                           <input type="range" class="form-range" min="1" max="10" v-model="marcadorSeleccionado.intensidad" />
-                                                           <span class="ms-2">{{ marcadorSeleccionado.intensidad }}/10</span>
-                                                       </div>
-                                                       <div class="mb-3">
-                                                           <label class="form-label">Tipo de dolor</label>
-                                                           <select class="form-select" v-model="marcadorSeleccionado.tipoDolor">
-                                                               <option value="agudo">Agudo</option>
-                                                               <option value="cronico">Crónico</option>
-                                                               <option value="punzante">Punzante</option>
-                                                               <option value="quemante">Quemante</option>
-                                                           </select>
-                                                       </div>
-                                                       <button class="btn btn-danger btn-sm" @click="eliminarMarcador(marcadorSeleccionado)">
-                                                           Eliminar marcador
-                                                       </button>
-                                                   </div>
-                                                   </div>
+                                    <h5>Información del marcador</h5>
+                                    <div class="mb-3">
+                                        <label class="form-label">Intensidad del dolor</label>
+                                        <input type="range" class="form-range" min="1" max="10" v-model="marcadorSeleccionado.intensidad" />
+                                        <span class="ms-2">{{ marcadorSeleccionado.intensidad }}/10</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Tipo de dolor</label>
+                                        <select class="form-select" v-model="marcadorSeleccionado.tipoDolor">
+                                            <option value="agudo">Agudo</option>
+                                            <option value="cronico">Crónico</option>
+                                            <option value="punzante">Punzante</option>
+                                            <option value="quemante">Quemante</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-danger btn-sm" @click="eliminarMarcador(marcadorSeleccionado)">
+                                        Eliminar marcador
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                      
+
                         <!-- Panel de información del marcador seleccionado -->
-                   
+
                     </div>
                 </div>
 
@@ -187,7 +187,7 @@
 
                 </div>
             </div>
-       <!--      <button class="btn btn-warning mt-3" @click="guardarInfo6">
+            <!--      <button class="btn btn-warning mt-3" @click="guardarInfo6">
                 + Guardar
             </button> -->
         </div>
@@ -217,8 +217,7 @@ export default {
 
             arrayDataSave: [],
             /*  */
-            idPaciente: "111",
-            idhc: "1",
+
             bd: "hc6_escvisualdolor",
 
             /*  */
@@ -227,17 +226,23 @@ export default {
             datosSemiologia: "",
             /*  */
 
-            Circunstancias:"",
-            Tipo:"",
-            Antiguedad:"",
-            Localización:"",
-            Irradiación:"",
-            Aumento:"",
-            Atenuación:"",
-            Duración:"",
-            Actividader:"",
+            Circunstancias: "",
+            Tipo: "",
+            Antiguedad: "",
+            Localización: "",
+            Irradiación: "",
+            Aumento: "",
+            Atenuación: "",
+            Duración: "",
+            Actividader: "",
         };
 
+    },
+    props: {
+        idpaciente: String,
+        idprofesional: String,
+        idips: String,
+        idfactura: [String, Number]
     },
     methods: {
 
@@ -295,7 +300,7 @@ export default {
 
         borrarMarcadores(imagenId) {
             this.marcadores = this.marcadores.filter((m) => m.imagenId !== imagenId);
-            if (this.marcadorSeleccionado ?.imagenId === imagenId) {
+            if (this.marcadorSeleccionado && this.marcadorSeleccionado.imagenId === imagenId) {
                 this.marcadorSeleccionado = null;
             }
         },
@@ -312,7 +317,7 @@ export default {
             console.log('Valores capturados:', this.valoresCapturados);
         },
 
-        guardarInfo6() {
+        guardarData() {
             this.datosEscala = {
                 escala: this.escala,
             };
@@ -329,32 +334,37 @@ export default {
             };
 
             this.datosSemiologia = {
-                    Circunstancias: this.Circunstancias,
-                    Tipo: this.Tipo,
-                    Antiguedad: this.Antiguedad,
-                    Localización: this.Localización,
-                    Irradiación: this.Irradiación,
-                    Aumento: this.Aumento,
-                    Atenuación: this.Atenuación,
-                    Duración: this.Duración,
-                    Actividades: this.Actividades,
-                },
-
-                this.arrayDataSave = {
-                    idpaciente: this.idPaciente,
-                    bd: this.bd,
-                    idhc: this.idhc,
-                    /*  */
-                    D_escala: this.datosEscala,
-                    D_ubicacion: this.datosUbicacion,
-                    D_semiologia: this.datosSemiologia,
-                },
-
-                this.SaveDatos6(this.arrayDataSave);
+                Circunstancias: this.Circunstancias,
+                Tipo: this.Tipo,
+                Antiguedad: this.Antiguedad,
+                Localización: this.Localización,
+                Irradiación: this.Irradiación,
+                Aumento: this.Aumento,
+                Atenuación: this.Atenuación,
+                Duración: this.Duración,
+                Actividades: this.Actividades,
+            };
 
         },
-    },
-  }
+
+        guardarInfo6() {
+            this.guardarData();
+            this.arrayDataSave = {
+
+                idPaciente: this.idPaciente,
+                idprofesional: this.idprofesional,
+                idips: this.idips,
+                idfactura: this.idfactura,
+                /*  */
+                bd: this.bd,
+                D_escala: this.datosEscala,
+                D_ubicacion: this.datosUbicacion,
+                D_semiologia: this.datosSemiologia,
+            };
+            this.SaveDatos6(this.arrayDataSave);
+        }
+    }
+};
 </script>
 
 <style scoped>

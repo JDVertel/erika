@@ -195,7 +195,7 @@
                             </table>
                         </div>
                     </div>
-                 <!--    <button class="btn btn-warning mt-3" @click="guardarInfo4">
+                    <!--    <button class="btn btn-warning mt-3" @click="guardarInfo4">
                         + Guardar
                     </button> -->
                 </div>
@@ -207,7 +207,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import {
+    mapActions
+} from 'vuex';
 import {
     eval_postural
 } from "./../../../firebase/bd.js";
@@ -235,14 +237,18 @@ export default {
         NewAntec: [],
         datosEvalPostural: [],
         /*  */
-        idPaciente: "111",
-        idhc: "1",
+
         bd: "hc4_datosevalpostural",
     }),
+    props: {
+        idpaciente: String,
+        idprofesional: String,
+        idips: String,
+        idfactura: [String, Number]
+    },
     methods: {
 
-
-      ...mapActions("hc",["SaveDatos4"]),
+        ...mapActions("hc", ["SaveDatos4"]),
 
         buscar_detalle(id, bd) {
             this.detalle_rta = BuscarDetalles(id, bd, "detalle");
@@ -281,13 +287,16 @@ export default {
         },
 
         guardarInfo4() {
-            this.datosEvalPostural = [{
-                idpaciente: this. idPaciente,
-                idhc: this.idhc,
+            this.datosEvalPostural = {
+                idPaciente: this.idPaciente,
+                idprofesional: this.idprofesional,
+                idips: this.idips,
+                idfactura: this.idfactura,
+                // Observaciones
                 bd: this.bd,
                 dataeval: this.NewAntec,
-            }, ];
-            this.SaveDatos4(this.datosEvalPostural[0]);
+            };
+            this.SaveDatos4(this.datosEvalPostural);
         },
     },
 };

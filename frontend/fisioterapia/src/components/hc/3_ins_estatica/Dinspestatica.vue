@@ -150,7 +150,7 @@
                             </tbody>
                         </table>
                     </div>
-             <!--        <button class="btn btn-warning mt-3" @click="guardarInfo3">
+                    <!--        <button class="btn btn-warning mt-3" @click="guardarInfo3">
                         + Guardar
                     </button> -->
                 </div>
@@ -187,11 +187,15 @@ export default {
         ArraySaveConsulta: [],
         tipoAnt: "",
         /*  */
-        idPaciente: "111",
-        idhc: "1",
+    
         bd: "hc3_inspecionestatica",
     }),
-
+    props: {
+        idpaciente: String,
+        idprofesional: String,
+        idips: String,
+        idfactura: [String, Number]
+    },
     methods: {
         ...mapActions("hc", ["SaveDatos3"]),
 
@@ -221,8 +225,11 @@ export default {
         async guardarInfo3() {
             /* this.ArraySaveConsulta = []; */
             this.datosObservacion = [{
-                idpaciente: this.idPaciente,
-                idhc: this.idhc,
+                idPaciente: this.idPaciente,
+                idprofesional: this.idprofesional,
+                idips: this.idips,
+                idfactura: this.idfactura,
+                // Observaciones
                 bd: this.bd,
                 dataeval: this.NewAntec,
             }, ];

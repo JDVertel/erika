@@ -35,6 +35,12 @@ export default {
 
         };
     },
+      props: {
+    idpaciente: String,
+    idprofesional: String,
+    idips: String,
+    idfactura: [String, Number]
+  },
     methods: {
 
         ...mapActions("hc", ["SaveDatos10"]),
