@@ -5,7 +5,7 @@
         <div class="login-logo-circle">
             <img src="https://img.icons8.com/?size=100&id=94&format=png&color=000000" alt="Logo" />
         </div>
-        <h2 class="login-title">Bienvenido a Fisioplus</h2>
+        <h2 class="login-title">Bienvenido a OrtoRehab Vertel</h2>
         <p class="login-subtitle">Accede a tu cuenta</p>
         <div class="login-input-group">
             <label for="user">Usuario</label>
