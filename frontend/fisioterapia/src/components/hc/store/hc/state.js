@@ -1,7 +1,7 @@
 export default()=>({
-    id_paciente:"23",
-    id_ips:"1",
-    id_prof:"2",
+    id_paciente:"xxx",
+    id_ips:"xxx",
+    id_prof:"xxx",
     StateNumRegHC:"",
 
 })

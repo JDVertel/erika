@@ -8,71 +8,65 @@
         <h4>Historia Clinica</h4>
 
         <div class="container">
-            <div class="row">
-                <div class="col-4">
-                    <div class="container">
-                        <h6 class="small">Ingrese la identificacion del paciente a consultar</h6>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <select class="form-select form-select-sm textarea" id="inputGroupSelect01" v-model="B_tipodoc">
-                                    <option selected value="0">Tipo Doc</option>
-                                    <option value="CC">CC</option>
-                                    <option value="TI">TI</option>
-                                    <option value="CE">CE</option>
-                                    <option value="PA">PAS</option>
-                                </select>
-                            </div>
-                            <div class="col-md-12">
-                                <input type="number" class="form-control form-control-sm textarea" id="text_numdoc" placeholder="# Documento" v-model="B_numdoc" />
-                            </div>
-                            <div class="col-12">
-                                <button class="btn btn-success btn-sm mt-2" @click="BTN_Buscar_paciente(B_tipodoc, B_numdoc)">
-                                    Buscar
-                                </button>
-                            </div>
-                        </div>
 
-                        <br />
+            <div class="container" v-if="datapaciente.length < 0 || existepaciente === ''">
+                <h6 class="small">Ingrese la identificacion del paciente a consultar</h6>
+                <div class="row">
+                    <div class="col-4">
+                        <select class="form-select form-select-sm textarea" id="inputGroupSelect01" v-model="B_tipodoc">
+                            <option selected value="">Tipo Doc</option>
+                            <option value="CC">CC</option>
+                            <option value="TI">TI</option>
+                            <option value="CE">CE</option>
+                            <option value="PA">PAS</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <input type="number" class="form-control form-control-sm textarea" id="text_numdoc" placeholder="# Documento" v-model="B_numdoc" />
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-success btn-sm mt-2" @click="BTN_Buscar_paciente(B_tipodoc, B_numdoc)" v-if="B_tipodoc !== '' && B_numdoc !== ''">
+                            Buscar
+                        </button>
                     </div>
                 </div>
-                <div class="col-8" v-if="datapaciente.length > 0">
-                    <p> <strong>Datos del paciente</strong></p>
-                    <div class="row">
-                        <div class="col-10">
-                            <table border="1" cellpadding="4" cellspacing="0">
-                                <tr>
-                                    <th>Nombre</th>
-                                    <td>{{ datapaciente[0].name1 }} {{ datapaciente[0].apell1 }}</td>
-                                </tr>
-                                <tr>
-                                    <th>F Nacimiento</th>
-                                    <td>{{ datapaciente[0].fnacimeinto }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Numero de Documento</th>
-                                    <td>{{ datapaciente[0].numdoc }}</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="col-2">
 
-                            <router-link :to="{ name: 'hc', params: { idpaciente: datapaciente[0].numdoc, idprofesional: '1', idips: '1' } }">
-                                <button class="btn btn-warning btn-sm mt-2" @click="abrirHC(datapaciente[0]['numdoc'])">
-                                    + Adicionar
-                                </button>
-                            </router-link>
+                <br />
 
-                        </div>
-                    </div>
-
-                </div>
             </div>
+            <div class="col-12" v-if="datapaciente.length > 0">
+                <p> <strong>Datos del paciente</strong></p>
+                <div class="row">
+                    <div class="col-1">
+                        <h2>
+                            <i class="bi bi-person-check fs-1"></i>
+                        </h2>
+
+                    </div>
+                    <div class="col-4"><strong>Nombre: <br></strong> {{ datapaciente[0].name1 }} {{ datapaciente[0].apell1 }}
+                    </div>
+                    <div class="col-4"><strong>F Nacimiento:<br></strong> {{ datapaciente[0].fnacimeinto }}</div>
+                    <div class="col-3"><strong>Documento:<br></strong> {{ datapaciente[0].numdoc }}</div>
+
+                    <div class="col-12">
+
+                        <router-link :to="{ name: 'hc', params: { idpaciente: datapaciente[0].numdoc, idprofesional: '1', idips: '1' } }">
+                            <button class="btn btn-warning btn-sm mt-2" @click="abrirHC(datapaciente[0]['numdoc'])">
+                                + Adicionar
+                            </button>
+                        </router-link>
+
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </div>
 
     <!-- **************************************************************************************************** -->
     <div id="register" v-if="existepaciente === 2">
-        <h6 class="display-6 text-center">Paciente no Encontrado !!!</h6>
+        <h6 class="display-6 text-center"> <i class="bi bi-person-x-fill  fs-1"></i> Paciente no Encontrado !!!</h6>
         <Registro />
     </div>
 

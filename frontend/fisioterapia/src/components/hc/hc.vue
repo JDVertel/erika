@@ -4,13 +4,13 @@
 
     <div class="container-fluid Cont_hc">
         <div class="container-fluid">
-            <h6 class="display-6">Registro de consulta del paciente</h6>
+            <h6 class="display-6">Registrar actividades realizadas al paciente</h6>
 
             idpaciente: {{ idpaciente }}
             idprofesional: {{ idprofesional }}
             idips: {{ idips }}
             <hr>
-            idfactura:{{ idfactura }}
+            idfactura: {{ idfactura }}
             <hr>
 
             <div class="row">
@@ -18,12 +18,12 @@
                     <h5>
                         Datos de la Atencion</h5>
                 </div>
-                <div class="col-6 col-md-2"><strong>Ips:</strong> Ips Erika Jasmin</div>
-                <div class="col-6 col-md-2"><strong>Nit:</strong>1234567</div>
+                <div class="col-6 col-md-2"><strong>Ips:</strong> {{ idips }}</div>
+                <div class="col-6 col-md-2"><strong>Nit:</strong></div>
                 <div class="col-6 col-md-2">
-                    <strong>Profesional:</strong> Ramon Vertel
+                    <strong>Profesional:</strong> {{ idprofesional }}
                 </div>
-                <div class="col-6 col-md-2"><strong>Tipo cita:</strong>Control</div>
+                <div class="col-6 col-md-2"><strong>Tipo cita:</strong></div>
             </div>
             <hr>
             <div class="row">
@@ -31,14 +31,14 @@
                     <h5> Datos Personales</h5>
                 </div>
 
-                <div class="col-6 col-md-2"><strong>Nombres:</strong> juan david</div>
+                <div class="col-6 col-md-2"><strong>Nombres:</strong> </div>
                 <div class="col-6 col-md-2">
-                    <strong>Apellidos:</strong> vertel holguin
+                    <strong>Apellidos:</strong> 
                 </div>
 
-                <div class="col-6 col-md-2"><strong>Documento :</strong>13862306</div>
-                <div class="col-3 col-md-1"><strong>Sexo:</strong> M</div>
-                <div class="col-3 col-md-1"><strong>Edad:</strong> 43</div>
+                <div class="col-6 col-md-2"><strong>Documento :</strong></div>
+                <div class="col-3 col-md-1"><strong>Sexo:</strong> </div>
+                <div class="col-3 col-md-1"><strong>Edad:</strong> </div>
             </div>
         </div>
         <div>
@@ -72,7 +72,7 @@ import {
 
 export default {
     data: () => ({
-        registrado: 1,
+      /*   registrado: 1, */
         idpaciente: "",
         idprofesional: "",
         idips: "",
@@ -108,7 +108,7 @@ export default {
         ]),
 
         idfactura() {
-            return this.StateNumRegHC && this.StateNumRegHC[0].idfactura ? this.StateNumRegHC[0].idfactura : null;
+            return this.StateNumRegHC && this.StateNumRegHC[0].idHC ? this.StateNumRegHC[0].idHC : null;
         }
 
     },

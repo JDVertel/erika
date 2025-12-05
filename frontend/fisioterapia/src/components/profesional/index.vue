@@ -1,6 +1,6 @@
 <template>
 <div>
-    {{ dataprofesionales }}
+    <!-- {{ dataprofesionales }} -->
     <div class="container-fluid navbarprof">
         <div class="row">
             <div class="col-5">
@@ -22,15 +22,14 @@
                 <span v-else>
                     ...
                 </span>
-                / <small> {{ this.fechaHoy }}</small> <br>
+                / <small> {{ fechaHoy }}</small> <br>
+                <small>IPS: {{ idIPS }}</small>
 
             </div>
         </div>
     </div>
 
     <div class="container-fluid">
-
- 
 
         <h5 class="card-title">Citas</h5>
 
@@ -49,17 +48,15 @@
                     <td>{{ cita.paciente }}</td>
                     <td>{{ cita.telpaciente }} </td>
                     <td><button type="button" class="btn btn-danger btn-sm" @click="ActualizaEstadoCita('NO', cita)"><i class="bi bi-x-circle"></i> No Asistió</button>
-                        <router-link :to="{ name: 'hc', params: { idpaciente: cita.numdoc, idprofesional: this.dataprofesionales[0].id, idips: this.idIPS } }">
+                        <router-link :to="{ name: 'hc', params: { idpaciente: cita.numdoc, idprofesional: idprofesionalLogueado, idips: idIPS } }">
                             <button type="button" class="btn btn-primary btn-sm" @click="ActualizaEstadoCita('SI', cita)"> <i class="bi bi-check-circle"></i> Asistió</button>
                         </router-link>
-
 
                     </td>
                 </tr>
 
             </tbody>
         </table>
-      
 
         <p class="d-inline-flex gap-1">
             <a class="btn btn-primary btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -131,10 +128,10 @@ export default {
     },
     data: () => ({
 
-        idIPS: "1",
         fechaHoy: "",
         idProfesional: "-OM_G1R4rWmmq1GMZo1H",
         //se reemplaza por el id del profesional logueado
+        //se reemplaza por el idips de la ips logueada
 
         idAgenda: "",
         ParamsActualizarCita: "",
@@ -148,6 +145,7 @@ export default {
     }),
     methods: {
         ...mapActions('Agendas', ['getDatabyParam', 'updateReserva', 'getDatabyKey']),
+
         async GetAllCitasDia() {
             this.paramsGetAllcitas = [{
                 bd: "citas",
@@ -199,13 +197,18 @@ export default {
     },
     computed: {
         ...mapState('Agendas', ['dataCitas', 'dataprofesionales']),
-        /*     ...mapState('Auth', []),
+        ...mapState('Auth', ['id_ips']),
+        idIPS() {
+            return this.id_ips;
+        },
 
- */
         diaformatedfecha() {
             return moment(new Date).format('YYYY-MM-DD');
         },
 
+         idprofesionalLogueado() {
+            return this.dataprofesionales && this.dataprofesionales[0] ? this.dataprofesionales[0].id : '';
+        },
     },
 
     created() {

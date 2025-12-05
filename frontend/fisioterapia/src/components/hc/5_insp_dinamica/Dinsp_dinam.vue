@@ -181,7 +181,7 @@
                                 </tbody>
                             </table>
 
-                            <button class="btn btn-warning" @click="guardaInfo2('Acuantitativo', clase_adaptaciones, detalle_adaptaciones)"> Guardar</button>
+                          <!--   <button class="btn btn-warning" @click="guardaInfo2('Acuantitativo', clase_adaptaciones, detalle_adaptaciones)"> Guardar</button> -->
 
                         </div>
                     </div>

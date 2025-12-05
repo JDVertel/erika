@@ -11,8 +11,8 @@ export const SaveHCcabecera = async ({ commit }, Data) => {
   // 1. Guardar registro inicial
   const { data } = await firebase_api.post(Ruta, DatatoSave);
   const idGenerado = data.name;
-  // 2. Actualizar registro con id e idfactura
-  const updateObj = { idfactura: idGenerado };
+  // 2. Actualizar registro con id e idhc
+  const updateObj = { idHC: idGenerado };
   await firebase_api.patch(`/hc_cabeceras/${idGenerado}.json`, updateObj);
   // 3. Objeto final para el commit
   const registroFinal = { ...DatatoSave, ...updateObj };
