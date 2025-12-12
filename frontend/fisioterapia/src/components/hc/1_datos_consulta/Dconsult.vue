@@ -310,8 +310,7 @@ export default {
 
         async guardarInfo1() {
 
-            this.ArrayDatosConsulta = [{
-
+            this.ArrayDatosConsulta = {
                 bd: this.bd,
                 idPaciente: this.idPaciente,
                 idprofesional: this.idprofesional,
@@ -331,9 +330,9 @@ export default {
                 frespiratoria: this.frespiratoria,
                 tarterial: this.tarterial,
                 antecedentes: this.NewAntec,
-            }, ];
-
-            this.SaveDatos1(this.ArrayDatosConsulta[0]);
+            };
+            
+            this.SaveDatos1(this.ArrayDatosConsulta);
             console.log("Datos de consulta guardados...");
         },
     },
