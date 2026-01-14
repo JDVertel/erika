@@ -48,9 +48,10 @@
                     <td>{{ cita.paciente }}</td>
                     <td>{{ cita.telpaciente }} </td>
                     <td><button type="button" class="btn btn-danger btn-sm" @click="ActualizaEstadoCita('NO', cita)"><i class="bi bi-x-circle"></i> No Asistió</button>
-                        <router-link :to="{ name: 'hc', params: { idpaciente: cita.numdoc, idprofesional: idprofesionalLogueado, idips: idIPS } }">
+                        <router-link v-if="idprofesionalLogueado && idIPS" :to="{ name: 'hc', params: { idpaciente: cita.numdoc, idprofesional: idprofesionalLogueado, idips: idIPS } }">
                             <button type="button" class="btn btn-primary btn-sm" @click="ActualizaEstadoCita('SI', cita)"> <i class="bi bi-check-circle"></i> Asistió</button>
                         </router-link>
+                        <button v-else type="button" class="btn btn-primary btn-sm" disabled @click="ActualizaEstadoCita('SI', cita)"> <i class="bi bi-check-circle"></i> Asistió</button>
 
                     </td>
                 </tr>
@@ -199,7 +200,7 @@ export default {
         ...mapState('Agendas', ['dataCitas', 'dataprofesionales']),
         ...mapState('Auth', ['id_ips']),
         idIPS() {
-            return this.id_ips;
+            return this.id_ips || '1'; // Default to '1' if not available
         },
 
         diaformatedfecha() {
@@ -207,7 +208,10 @@ export default {
         },
 
          idprofesionalLogueado() {
-            return this.dataprofesionales && this.dataprofesionales[0] ? this.dataprofesionales[0].id : '';
+            if (this.dataprofesionales && this.dataprofesionales.length > 0) {
+                return this.dataprofesionales[0].id;
+            }
+            return this.idProfesional; // Fallback to data property
         },
     },
 

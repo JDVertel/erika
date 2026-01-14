@@ -1,9 +1,27 @@
 import { createStore } from "vuex";
-import Auth from "./../components/dashboard/store/auth/index";
-import Agendas from "../components/agendas/store/agendas/index";
-import Hc  from "../components/hc/store/hc";
-import vitrina from './../components/vitrina/store/vitrina/index';
 
+/**
+ * VUEX STORE - Main Configuration
+ * Centralized state management with namespaced modules
+ * 
+ * All modules are registered from the centralized modules directory
+ * 
+ * Modules:
+ * - Auth: Authentication and company/page data management
+ * - Agendas: Appointment scheduling and patient/professional management
+ * - hc: Medical records (Historia Clínica)
+ * - vitrina: E-commerce products, services, and invoicing
+ * 
+ * @see ./modules/index.js - Module registry and exports
+ */
+
+// Import modules from centralized location
+import { Auth, Agendas, Hc, vitrina } from "./modules/index";
+
+/**
+ * Vuex Store Instance
+ * All modules use namespacing for better organization and to avoid naming conflicts
+ */
 const store = createStore({
   modules: {
     Auth,
@@ -11,13 +29,9 @@ const store = createStore({
     hc: Hc,
     vitrina
   },
+
+  // Global error handler can be added here in the future
+  // strict: process.env.NODE_ENV !== 'production'
 });
 
 export default store;
-
-/*   state: {
-    id_ips: "1",
-    id_user:"2",
-    rol:"admin",
- 
-  }, */

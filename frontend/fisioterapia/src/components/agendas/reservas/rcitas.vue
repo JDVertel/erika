@@ -485,9 +485,15 @@ export default {
         /* ----------------PROFESIONALES------------------------------------------------------------------- */
 
         nombreProfesional(dataID) {
+            if (!dataID || !this.dataprofesionales || this.dataprofesionales.length === 0) {
+                return "Profesional no disponible";
+            }
             const nombreProf = this.dataprofesionales.filter((prof) => prof.id == dataID);
             const resp = nombreProf[0];
-            const nameprofesional = `${resp.name1} ${resp.apell1}`;
+            if (!resp || !resp.name1) {
+                return "Profesional no encontrado";
+            }
+            const nameprofesional = `${resp.name1} ${resp.apell1 || ""}`;
             return nameprofesional;
         },
         /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
@@ -651,8 +657,10 @@ export default {
         /* ------------------SISTEMAS---------------------------------------------------------------------------- */
         capturalabeldeselect() {
             const selectElement = document.getElementById("miSelect");
-            this.valorSeleccionadoSelect =
-                selectElement.options[selectElement.selectedIndex].textContent;
+            if (selectElement && selectElement.options && selectElement.selectedIndex >= 0) {
+                this.valorSeleccionadoSelect =
+                    selectElement.options[selectElement.selectedIndex].textContent;
+            }
         },
 
         DeleteStore() {

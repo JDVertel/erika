@@ -133,9 +133,14 @@ export default {
         };
     },
     mounted() {
-        this.modalInstance = new bootstrap.Modal(
-            document.getElementById("modalCIE10")
-        );
+        try {
+            const modalElement = document.getElementById("modalCIE10");
+            if (modalElement) {
+                this.modalInstance = new bootstrap.Modal(modalElement);
+            }
+        } catch (error) {
+            console.warn("Modal element not found or already destroyed", error);
+        }
     },
       props: {
     idpaciente: String,
@@ -147,7 +152,9 @@ export default {
         ...mapActions("hc", ["SaveDatos11"]),
 
         abrirModalCIE10() {
-            this.modalInstance.show();
+            if (this.modalInstance) {
+                this.modalInstance.show();
+            }
         },
         buscarCIE10() {
             if (this.busquedaCIE10.trim() === "") {
@@ -192,7 +199,9 @@ export default {
         },
         seleccionarCIE10(item) {
             this.cie10Seleccionado = item;
-            this.modalInstance.hide();
+            if (this.modalInstance) {
+                this.modalInstance.hide();
+            }
         },
 
         AddAntec(tipoAct, enf, tdiagnostico) {

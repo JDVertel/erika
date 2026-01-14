@@ -142,17 +142,22 @@ export default {
     idfactura: [String, Number]
   },
     mounted() {
-
-
-        this.modalInstance = new bootstrap.Modal(
-            document.getElementById("modalCUPS")
-        );
+        try {
+            const modalElement = document.getElementById("modalCUPS");
+            if (modalElement) {
+                this.modalInstance = new bootstrap.Modal(modalElement);
+            }
+        } catch (error) {
+            console.warn("Modal element not found or already destroyed", error);
+        }
     },
     methods: {
 ...mapActions('hc',["SaveDatos13"]),
 
         abrirModalCUPS() {
-            this.modalInstance.show();
+            if (this.modalInstance) {
+                this.modalInstance.show();
+            }
         },
         buscarCUPS() {
             if (this.busquedaCUPS.trim() === "") {
@@ -193,7 +198,9 @@ export default {
         },
         seleccionarCUPS(item) {
             this.cupsSeleccionado = item;
-            this.modalInstance.hide();
+            if (this.modalInstance) {
+                this.modalInstance.hide();
+            }
         },
         AddAntec(tipo, cups, cantidad, frecuencia) {
             let item = {

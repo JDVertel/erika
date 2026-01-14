@@ -53,7 +53,7 @@
               <div class="col-4 col-md-3">
                 <select
                   class="form-select form-select-sm textarea"
-                  id="inputGroupSelect01"
+                  id="tipodocSelect"
                   v-model="B_tipodoc"
                 >
                   <option selected value="">Tipo Doc</option>
@@ -152,7 +152,7 @@
                     <input
                       type="text"
                       class="form-control form-control-sm textarea"
-                      id="text_direccion"
+                      id="text_email"
                       placeholder="Email"
                       v-model="email"
                     />
@@ -228,10 +228,10 @@
                   <h6>Agregar items</h6>
                   <!-- categoria -->
                   <div class="col-6 col-md-3 mb-2">
-                    <label for="inputGroupSelect01">Categoria</label>
+                    <label for="categoriaSelect">Categoria</label>
                     <select
                       class="form-select form-select-sm textarea"
-                      id="inputGroupSelect01"
+                      id="categoriaSelect"
                       v-model="select_categ"
                       @change="categSeleccionada(select_categ)"
                     >
@@ -293,9 +293,9 @@
                   </div>
 
                   <div class="col-3 col-md-2">
-                    <label for="input01">Cantidad</label>
+                    <label for="cantidadInput">Cantidad</label>
                     <input
-                      id="input01"
+                      id="cantidadInput"
                       type="number"
                       class="form-control form-control-sm"
                       placeholder="#"
@@ -369,11 +369,11 @@
 
             <div class="row">
               <div class="col-6">
-                <label for="input01">Total</label>
+                <label for="totalInput">Total</label>
               </div>
               <div class="col-6">
                 <input
-                  id="input01"
+                  id="totalInput"
                   type="number"
                   class="form-control form-control-sm"
                   placeholder="#"
