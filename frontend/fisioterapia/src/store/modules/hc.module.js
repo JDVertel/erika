@@ -1,16 +1,16 @@
 /**
  * HC MODULE (Medical Records / Historia Clínica) - Consolidated Vuex Module
- * 
+ *
  * Manages medical record data across 13 sections
- * 
+ *
  * Parts consolidated:
  * - state.js: Session tracking state
  * - actions.js: Save operations for each HC section
  * - mutations.js: State mutations
  * - getters.js: State getters (none currently in use)
- * 
+ *
  * Original location: src/components/hc/store/hc/
- * 
+ *
  * HC Sections:
  * 0. Cabecera (Header) - Basic patient and professional info
  * 1. Datos de Consulta - Consultation data and vital signs
@@ -26,7 +26,7 @@
  * 11. Diagnóstico - Diagnosis (ICD-10)
  * 12. Tratamiento - Treatment plan and objectives
  * 13. Orden Médica - Medical orders (CUPS procedures)
- * 
+ *
  * State properties:
  * - id_paciente: Current patient ID
  * - id_ips: Current IPS ID
@@ -41,9 +41,8 @@ import firebase_api from "@/api/firebaseApi";
  * Minimal state for tracking current session information
  */
 const state = () => ({
-
     // Current professional ID
-    StateNumRegHC: "",      // Current medical record registration number
+    StateNumRegHC: "", // Current medical record registration number
 });
 
 /**
@@ -77,10 +76,23 @@ const actions = {
      * Acciones para guardar datos de historia clínica en las diferentes secciones
      * Cada SaveDatos corresponde a una sección específica de la HC
      */
+    // Función auxiliar para validar si un valor tiene contenido significativo
+    _validateData: (valor) => {
+        if (valor === null || valor === undefined) return false;
+        if (typeof valor === "string" && valor.trim() === "") return false;
+        if (Array.isArray(valor) && valor.length === 0) return false;
+        if (valor === 0 || valor === false || valor === "") return false;
 
+        // Validar objetos recursivamente
+        if (typeof valor === "object" && !Array.isArray(valor)) {
+            const keys = Object.keys(valor);
+            if (keys.length === 0) return false;
+            // Verificar si al menos una propiedad tiene valor significativo
+            return keys.some((key) => actions._validateData(valor[key]));
+        }
 
-
-
+        return true;
+    },
 
     /**
      * Save HC Header/Metadata
@@ -99,7 +111,7 @@ const actions = {
         await firebase_api.patch(`/hc_cabeceras/${idGenerado}.json`, updateObj);
         const registroFinal = { ...DatatoSave, ...updateObj };
         if (Object.keys(registroFinal).length > 0) {
-            commit('NumRegHC', registroFinal);
+            commit("NumRegHC", registroFinal);
         }
         return idGenerado;
     },
@@ -112,9 +124,56 @@ const actions = {
      */
     SaveDatos1: async ({ commit, state }, Data) => {
         console.log("Saving HC section 1 (Consultation):", Data);
-        const { idpaciente, idprofesional, idips, fecha, idhc, motivoConsulta, Enfermedad, TratPrevios, MedPrevios, peso, talla, estatura, imc, temp, fcardiaca, frespiratoria, tarterial, bd, ant } = Data;
-        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc, motivoConsulta, Enfermedad, TratPrevios, MedPrevios, peso, talla, estatura, imc, temp, fcardiaca, frespiratoria, tarterial, ant };
-        // Guardar usando idhc como clave del registro en Firebase
+        const {
+            idpaciente,
+            idprofesional,
+            idips,
+            fecha,
+            idhc,
+            motivoConsulta,
+            Enfermedad,
+            TratPrevios,
+            MedPrevios,
+            peso,
+            talla,
+            estatura,
+            imc,
+            temp,
+            fcardiaca,
+            frespiratoria,
+            tarterial,
+            bd,
+            ant,
+        } = Data;
+
+        // Construir DatatoSave solo con campos que tienen datos
+        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc };
+
+        if (actions._validateData(motivoConsulta)) DatatoSave.motivoConsulta = motivoConsulta;
+        if (actions._validateData(Enfermedad)) DatatoSave.Enfermedad = Enfermedad;
+        if (actions._validateData(TratPrevios)) DatatoSave.TratPrevios = TratPrevios;
+        if (actions._validateData(MedPrevios)) DatatoSave.MedPrevios = MedPrevios;
+        if (actions._validateData(peso)) DatatoSave.peso = peso;
+        if (actions._validateData(talla)) DatatoSave.talla = talla;
+        if (actions._validateData(estatura)) DatatoSave.estatura = estatura;
+        if (actions._validateData(imc)) DatatoSave.imc = imc;
+        if (actions._validateData(temp)) DatatoSave.temp = temp;
+        if (actions._validateData(fcardiaca)) DatatoSave.fcardiaca = fcardiaca;
+        if (actions._validateData(frespiratoria)) DatatoSave.frespiratoria = frespiratoria;
+        if (actions._validateData(tarterial)) DatatoSave.tarterial = tarterial;
+        if (actions._validateData(ant)) DatatoSave.ant = ant;
+
+        // Verificar que haya al menos un campo del formulario
+        const camposBase = ["idpaciente", "idprofesional", "idips", "fecha", "idhc"];
+        const camposFormulario = Object.keys(DatatoSave).filter(
+            (key) => !camposBase.includes(key)
+        );
+
+        if (camposFormulario.length === 0) {
+            console.log("No hay datos en el formulario para guardar.");
+            return;
+        }
+
         const RutaConId = `/${bd}/${idhc}.json`;
         await firebase_api.put(RutaConId, DatatoSave);
         DatatoSave.id = idhc;
@@ -129,7 +188,23 @@ const actions = {
     SaveDatos2: async ({ commit, state }, Data) => {
         console.log("Saving HC section 2 (Observation):", Data);
         const { idpaciente, idprofesional, idips, fecha, idhc, dataObserv, bd } = Data;
-        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc, dataObserv };
+
+        // Construir DatatoSave solo con campos que tienen datos
+        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc };
+
+        if (actions._validateData(dataObserv)) DatatoSave.dataObserv = dataObserv;
+
+        // Verificar que haya al menos un campo del formulario
+        const camposBase = ["idpaciente", "idprofesional", "idips", "fecha", "idhc"];
+        const camposFormulario = Object.keys(DatatoSave).filter(
+            (key) => !camposBase.includes(key)
+        );
+
+        if (camposFormulario.length === 0) {
+            console.log("No hay datos en el formulario para guardar.");
+            return;
+        }
+
         const RutaConId = `/${bd}/${idhc}.json`;
         await firebase_api.put(RutaConId, DatatoSave);
         DatatoSave.id = idhc;
@@ -144,7 +219,23 @@ const actions = {
     SaveDatos3: async ({ commit, state }, Data) => {
         console.log("Saving HC section 3 (Static Inspection):", Data);
         const { idpaciente, idprofesional, idips, fecha, idhc, bd, dataeval } = Data;
-        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc, dataeval };
+
+        // Construir DatatoSave solo con campos que tienen datos
+        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc };
+
+        if (actions._validateData(dataeval)) DatatoSave.dataeval = dataeval;
+
+        // Verificar que haya al menos un campo del formulario
+        const camposBase = ["idpaciente", "idprofesional", "idips", "fecha", "idhc"];
+        const camposFormulario = Object.keys(DatatoSave).filter(
+            (key) => !camposBase.includes(key)
+        );
+
+        if (camposFormulario.length === 0) {
+            console.log("No hay datos en el formulario para guardar.");
+            return;
+        }
+
         const RutaConId = `/${bd}/${idhc}.json`;
         await firebase_api.put(RutaConId, DatatoSave);
         DatatoSave.id = idhc;
@@ -159,7 +250,23 @@ const actions = {
     SaveDatos4: async ({ commit, state }, Data) => {
         console.log("Saving HC section 4 (Postural Evaluation):", Data);
         const { idpaciente, idprofesional, idips, fecha, idhc, bd, dataeval } = Data;
-        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc, dataeval };
+
+        // Construir DatatoSave solo con campos que tienen datos
+        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc };
+
+        if (actions._validateData(dataeval)) DatatoSave.dataeval = dataeval;
+
+        // Verificar que haya al menos un campo del formulario
+        const camposBase = ["idpaciente", "idprofesional", "idips", "fecha", "idhc"];
+        const camposFormulario = Object.keys(DatatoSave).filter(
+            (key) => !camposBase.includes(key)
+        );
+
+        if (camposFormulario.length === 0) {
+            console.log("No hay datos en el formulario para guardar.");
+            return;
+        }
+
         const RutaConId = `/${bd}/${idhc}.json`;
         await firebase_api.put(RutaConId, DatatoSave);
         DatatoSave.id = idhc;
@@ -173,8 +280,34 @@ const actions = {
      */
     SaveDatos5: async ({ commit, state }, Data) => {
         console.log("Saving HC section 5 (Dynamic Inspection):", Data);
-        const { idpaciente, idprofesional, idips, fecha, idhc, bd, Acualitativo, Acuantitativo } = Data;
-        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc, Acualitativo, Acuantitativo };
+        const {
+            idpaciente,
+            idprofesional,
+            idips,
+            fecha,
+            idhc,
+            bd,
+            Acualitativo,
+            Acuantitativo,
+        } = Data;
+
+        // Construir DatatoSave solo con campos que tienen datos
+        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc };
+
+        if (actions._validateData(Acualitativo)) DatatoSave.Acualitativo = Acualitativo;
+        if (actions._validateData(Acuantitativo)) DatatoSave.Acuantitativo = Acuantitativo;
+
+        // Verificar que haya al menos un campo del formulario
+        const camposBase = ["idpaciente", "idprofesional", "idips", "fecha", "idhc"];
+        const camposFormulario = Object.keys(DatatoSave).filter(
+            (key) => !camposBase.includes(key)
+        );
+
+        if (camposFormulario.length === 0) {
+            console.log("No hay datos en el formulario para guardar.");
+            return;
+        }
+
         const RutaConId = `/${bd}/${idhc}.json`;
         await firebase_api.put(RutaConId, DatatoSave);
         DatatoSave.id = idhc;
@@ -188,8 +321,36 @@ const actions = {
      */
     SaveDatos6: async ({ commit, state }, Data) => {
         console.log("Saving HC section 6 (Visual Scale):", Data);
-        const { idpaciente, idprofesional, idips, fecha, idhc, bd, D_escala, D_ubicacion, D_semiologia } = Data;
-        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc, D_escala, D_ubicacion, D_semiologia };
+        const {
+            idpaciente,
+            idprofesional,
+            idips,
+            fecha,
+            idhc,
+            bd,
+            D_escala,
+            D_ubicacion,
+            D_semiologia,
+        } = Data;
+
+        // Construir DatatoSave solo con campos que tienen datos
+        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc };
+
+        if (actions._validateData(D_escala)) DatatoSave.D_escala = D_escala;
+        if (actions._validateData(D_ubicacion)) DatatoSave.D_ubicacion = D_ubicacion;
+        if (actions._validateData(D_semiologia)) DatatoSave.D_semiologia = D_semiologia;
+
+        // Verificar que haya al menos un campo del formulario
+        const camposBase = ["idpaciente", "idprofesional", "idips", "fecha", "idhc"];
+        const camposFormulario = Object.keys(DatatoSave).filter(
+            (key) => !camposBase.includes(key)
+        );
+
+        if (camposFormulario.length === 0) {
+            console.log("No hay datos en el formulario para guardar.");
+            return;
+        }
+
         const RutaConId = `/${bd}/${idhc}.json`;
         await firebase_api.put(RutaConId, DatatoSave);
         DatatoSave.id = idhc;
@@ -199,12 +360,57 @@ const actions = {
      * HC7 - Save Images Data
      * Guarda datos de imágenes diagnósticas
      * @param {Object} context - Vuex context
-     * @param {Object} Data - Diagnostic images data
+     * @param {Object} Data - Array de imágenes o imagen individual
      */
     SaveDatos7: async ({ commit, state }, Data) => {
         console.log("Saving HC section 7 (Images):", Data);
-        const { idpaciente, idprofesional, idips, fecha, idhc, bd, imgDiag, tipoimg, descImagen } = Data;
-        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc, imgDiag, tipoimg, descImagen };
+        const { idpaciente, idprofesional, idips, fecha, idhc, bd, imagenesArray } = Data;
+
+        // Si imagenesArray existe, guardar múltiples imágenes
+        if (Array.isArray(imagenesArray) && imagenesArray.length > 0) {
+            const datosImagenes = imagenesArray.filter(
+                (img) => actions._validateData(img.imgDiag) && actions._validateData(img.tipoimg)
+            );
+
+            if (datosImagenes.length === 0) {
+                console.log("No hay imágenes válidas para guardar.");
+                return;
+            }
+
+            const DatatoSave = {
+                idpaciente,
+                idprofesional,
+                idips,
+                fecha,
+                idhc,
+                imagenes: datosImagenes,
+            };
+
+            const RutaConId = `/${bd}/${idhc}.json`;
+            await firebase_api.put(RutaConId, DatatoSave);
+            console.log("Imágenes guardadas exitosamente:", datosImagenes.length);
+            return;
+        }
+
+        // Fallback para imagen individual (compatibilidad hacia atrás)
+        const { imgDiag, tipoimg, descImagen } = Data;
+        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc };
+
+        if (actions._validateData(imgDiag)) DatatoSave.imgDiag = imgDiag;
+        if (actions._validateData(tipoimg)) DatatoSave.tipoimg = tipoimg;
+        if (actions._validateData(descImagen)) DatatoSave.descImagen = descImagen;
+
+        // Verificar que haya al menos un campo del formulario
+        const camposBase = ["idpaciente", "idprofesional", "idips", "fecha", "idhc"];
+        const camposFormulario = Object.keys(DatatoSave).filter(
+            (key) => !camposBase.includes(key)
+        );
+
+        if (camposFormulario.length === 0) {
+            console.log("No hay datos en el formulario para guardar.");
+            return;
+        }
+
         const RutaConId = `/${bd}/${idhc}.json`;
         await firebase_api.put(RutaConId, DatatoSave);
         DatatoSave.id = idhc;
@@ -218,13 +424,46 @@ const actions = {
      */
     SaveDatos8: async ({ commit, state }, Data) => {
         console.log("Saving HC section 8 (Physical Examination):", Data);
-        const { idpaciente, idprofesional, idips, fecha, idhc, bd, Data_observaciones, Data_SOseo, Data_EvalMSuperior, Data_EvalMInferior } = Data;
-        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc, Data_observaciones, Data_SOseo, Data_EvalMSuperior, Data_EvalMInferior };
+        const {
+            idpaciente,
+            idprofesional,
+            idips,
+            fecha,
+            idhc,
+            bd,
+            Data_observaciones,
+            Data_SOseo,
+            Data_EvalMSuperior,
+            Data_EvalMInferior,
+        } = Data;
+
+        // Construir DatatoSave solo con campos que tienen datos
+        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc };
+
+        if (actions._validateData(Data_observaciones))
+            DatatoSave.Data_observaciones = Data_observaciones;
+        if (actions._validateData(Data_SOseo)) DatatoSave.Data_SOseo = Data_SOseo;
+        if (actions._validateData(Data_EvalMSuperior))
+            DatatoSave.Data_EvalMSuperior = Data_EvalMSuperior;
+        if (actions._validateData(Data_EvalMInferior))
+            DatatoSave.Data_EvalMInferior = Data_EvalMInferior;
+
+        // Verificar que haya al menos un campo del formulario
+        const camposBase = ["idpaciente", "idprofesional", "idips", "fecha", "idhc"];
+        const camposFormulario = Object.keys(DatatoSave).filter(
+            (key) => !camposBase.includes(key)
+        );
+
+        if (camposFormulario.length === 0) {
+            console.log("No hay datos en el formulario para guardar.");
+            return; // ← AQUÍ SE DETIENE EL GUARDADO
+        }
+
+        console.log("Datos a guardar (solo campos con valores):", DatatoSave);
         const RutaConId = `/${bd}/${idhc}.json`;
         await firebase_api.put(RutaConId, DatatoSave);
         DatatoSave.id = idhc;
     },
-
     /**
      * HC9 - Save Muscular System Data
      * Guarda datos del sistema muscular (fuerza muscular)
@@ -233,8 +472,39 @@ const actions = {
      */
     SaveDatos9: async ({ commit, state }, Data) => {
         console.log("Saving HC section 9 (Muscular System):", Data);
-        const { idpaciente, idprofesional, idips, fecha, idhc, bd, dataSistMuscular, dataEvalMuscularGeneral, dataEvalMuscDetallada } = Data;
-        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc, dataSistMuscular, dataEvalMuscularGeneral, dataEvalMuscDetallada };
+        const {
+            idpaciente,
+            idprofesional,
+            idips,
+            fecha,
+            idhc,
+            bd,
+            dataSistMuscular,
+            dataEvalMuscularGeneral,
+            dataEvalMuscDetallada,
+        } = Data;
+
+        // Construir DatatoSave solo con campos que tienen datos
+        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc };
+
+        if (actions._validateData(dataSistMuscular))
+            DatatoSave.dataSistMuscular = dataSistMuscular;
+        if (actions._validateData(dataEvalMuscularGeneral))
+            DatatoSave.dataEvalMuscularGeneral = dataEvalMuscularGeneral;
+        if (actions._validateData(dataEvalMuscDetallada))
+            DatatoSave.dataEvalMuscDetallada = dataEvalMuscDetallada;
+
+        // Verificar que haya al menos un campo del formulario
+        const camposBase = ["idpaciente", "idprofesional", "idips", "fecha", "idhc"];
+        const camposFormulario = Object.keys(DatatoSave).filter(
+            (key) => !camposBase.includes(key)
+        );
+
+        if (camposFormulario.length === 0) {
+            console.log("No hay datos en el formulario para guardar.");
+            return;
+        }
+
         const RutaConId = `/${bd}/${idhc}.json`;
         await firebase_api.put(RutaConId, DatatoSave);
         DatatoSave.id = idhc;
@@ -249,7 +519,23 @@ const actions = {
     SaveDatos10: async ({ commit, state }, Data) => {
         console.log("Saving HC section 10 (Analysis):", Data);
         const { idpaciente, idprofesional, idips, fecha, idhc, bd, Data_analisis } = Data;
-        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc, Data_analisis };
+
+        // Construir DatatoSave solo con campos que tienen datos
+        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc };
+
+        if (actions._validateData(Data_analisis)) DatatoSave.Data_analisis = Data_analisis;
+
+        // Verificar que haya al menos un campo del formulario
+        const camposBase = ["idpaciente", "idprofesional", "idips", "fecha", "idhc"];
+        const camposFormulario = Object.keys(DatatoSave).filter(
+            (key) => !camposBase.includes(key)
+        );
+
+        if (camposFormulario.length === 0) {
+            console.log("No hay datos en el formulario para guardar.");
+            return;
+        }
+
         const RutaConId = `/${bd}/${idhc}.json`;
         await firebase_api.put(RutaConId, DatatoSave);
         DatatoSave.id = idhc;
@@ -264,7 +550,23 @@ const actions = {
     SaveDatos11: async ({ commit, state }, Data) => {
         console.log("Saving HC section 11 (Diagnosis):", Data);
         const { idpaciente, idprofesional, idips, fecha, idhc, bd, Data_analisis } = Data;
-        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc, Data_analisis };
+
+        // Construir DatatoSave solo con campos que tienen datos
+        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc };
+
+        if (actions._validateData(Data_analisis)) DatatoSave.Data_analisis = Data_analisis;
+
+        // Verificar que haya al menos un campo del formulario
+        const camposBase = ["idpaciente", "idprofesional", "idips", "fecha", "idhc"];
+        const camposFormulario = Object.keys(DatatoSave).filter(
+            (key) => !camposBase.includes(key)
+        );
+
+        if (camposFormulario.length === 0) {
+            console.log("No hay datos en el formulario para guardar.");
+            return;
+        }
+
         const RutaConId = `/${bd}/${idhc}.json`;
         await firebase_api.put(RutaConId, DatatoSave);
         DatatoSave.id = idhc;
@@ -278,8 +580,35 @@ const actions = {
      */
     SaveDatos12: async ({ commit, state }, Data) => {
         console.log("Saving HC section 12 (Treatment Plan):", Data);
-        const { planTratamiento, objetivos, bd, idpaciente, idprofesional, idips, fecha, idhc, } = Data;
-        const DatatoSave = { planTratamiento, objetivos, idpaciente, idprofesional, idips, fecha, idhc };
+        const {
+            planTratamiento,
+            objetivos,
+            bd,
+            idpaciente,
+            idprofesional,
+            idips,
+            fecha,
+            idhc,
+        } = Data;
+
+        // Construir DatatoSave solo con campos que tienen datos
+        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc };
+
+        if (actions._validateData(planTratamiento))
+            DatatoSave.planTratamiento = planTratamiento;
+        if (actions._validateData(objetivos)) DatatoSave.objetivos = objetivos;
+
+        // Verificar que haya al menos un campo del formulario
+        const camposBase = ["idpaciente", "idprofesional", "idips", "fecha", "idhc"];
+        const camposFormulario = Object.keys(DatatoSave).filter(
+            (key) => !camposBase.includes(key)
+        );
+
+        if (camposFormulario.length === 0) {
+            console.log("No hay datos en el formulario para guardar.");
+            return;
+        }
+
         const RutaConId = `/${bd}/${idhc}.json`;
         await firebase_api.put(RutaConId, DatatoSave);
         DatatoSave.id = idhc;
@@ -294,7 +623,23 @@ const actions = {
     SaveDatos13: async ({ commit, state }, Data) => {
         console.log("Saving HC section 13 (Medical Orders):", Data);
         const { idpaciente, idprofesional, idips, fecha, idhc, bd, DataOMedica } = Data;
-        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc, DataOMedica };
+
+        // Construir DatatoSave solo con campos que tienen datos
+        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc };
+
+        if (actions._validateData(DataOMedica)) DatatoSave.DataOMedica = DataOMedica;
+
+        // Verificar que haya al menos un campo del formulario
+        const camposBase = ["idpaciente", "idprofesional", "idips", "fecha", "idhc"];
+        const camposFormulario = Object.keys(DatatoSave).filter(
+            (key) => !camposBase.includes(key)
+        );
+
+        if (camposFormulario.length === 0) {
+            console.log("No hay datos en el formulario para guardar.");
+            return;
+        }
+
         const RutaConId = `/${bd}/${idhc}.json`;
         await firebase_api.put(RutaConId, DatatoSave);
         DatatoSave.id = idhc;

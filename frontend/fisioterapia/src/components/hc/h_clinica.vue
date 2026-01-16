@@ -50,6 +50,10 @@ export default {
         await this.$refs.G_diagnostico.guardarInfo11();
         await this.$refs.G_tratamiento.guardarInfo12();
         await this.$refs.G_ordenmedica.guardarInfo13();
+
+        console.log("Historia clínica guardada exitosamente");
+        // Navegar a profesionales después de guardar
+        this.$router.push("/profesional");
       } catch (error) {
         console.error("Error al guardar información:", error);
       }
