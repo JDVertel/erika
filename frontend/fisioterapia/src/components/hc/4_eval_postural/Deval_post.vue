@@ -1,4 +1,96 @@
-<!-- hc4_evalpostural -->
+<script>
+import {
+    mapActions,
+    mapState
+} from "vuex";
+import {
+    eval_postural
+} from "./../../../firebase/bd.js";
+import {
+    BuscarDetalles,
+    BuscarDetallesNombre
+} from "./../../backend/rutinas.js";
+export default {
+    data: () => ({
+        data_v_anterior: eval_postural.filter((el) => el.clase == "vista anterior"),
+        data_v_lateral: eval_postural.filter((el) => el.clase == "vista lateral"),
+        data_v_posterior: eval_postural.filter((el) => el.clase == "vista posterior"),
+        detalle_rta: "",
+        v_anterior: "0",
+        v_anterior_org: "0",
+        v_lateral: "0",
+        v_lateral_org: "0",
+        v_posterior: "0",
+        v_posterior_org: "0",
+        detalle_anterior: "",
+        detalle_lateral: "",
+        detalle_posterior: "",
+        NewAntec: [],
+        datosEvalPostural: [],
+        /*  */
+
+        bd: "hc4_datosevalpostural",
+    }),
+
+    methods: {
+        ...mapActions("hc", ["SaveDatos4"]),
+
+        buscar_detalle(id, bd) {
+            this.detalle_rta = BuscarDetalles(id, bd, "detalle");
+        },
+        buscar_detalleN(name, bd) {
+            this.detalle_rta = BuscarDetallesNombre(name, bd, "detalle");
+        },
+
+        AddAntec(tipo, clas, enf, detalle) {
+            let item = {
+                tipo: tipo,
+                clase: clas,
+                enfermedad: enf,
+                detalleenf: detalle,
+            };
+            this.NewAntec = [...this.NewAntec, item];
+            this.limpiarcampos();
+        },
+
+        eliminaritem(index) {
+            console.log(index);
+            this.NewAntec.splice(index, 1);
+        },
+        limpiarcampos() {
+            this.v_anterior = "0";
+            this.v_anterior_org = "0";
+            this.detalle_anterior = "";
+
+            this.v_lateral = "0";
+            this.v_lateral_org = "0";
+            this.detalle_lateral = "";
+
+            this.v_posterior = "0";
+            this.v_posterior_org = "0";
+            this.detalle_posterior = "";
+        },
+
+        guardarInfo4() {
+            this.datosEvalPostural = {
+                idpaciente: this.StateNumRegHC.idpaciente,
+                idprofesional: this.StateNumRegHC.idprofesional,
+                idips: this.StateNumRegHC.idips,
+                idhc: this.StateNumRegHC.idHC,
+                fecha: this.StateNumRegHC.fecha,
+                // Observaciones
+                bd: this.bd,
+                dataeval: this.NewAntec,
+            };
+            this.SaveDatos4(this.datosEvalPostural);
+        },
+    },
+    computed: {
+        ...mapState("hc", ["StateNumRegHC"]),
+    },
+};
+</script>
+
 <template>
 <div class="accordion-item">
     <h2 class="accordion-header">
@@ -35,21 +127,15 @@
                         <div class="tab-pane fade show active" id="vanterior" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                             <p>Seleccione y agregue hallazgos anterior</p>
                             <!-- 1 -->
-                            <select v-on:change="
-                    buscar_detalleN(v_anterior, this.data_v_anterior)
-                  " v-model="v_anterior" class="form-select form-select-sm" aria-label="Small select example">
-                                <option value="0" selected>
-                                    --Seleccione clasificacion--
-                                </option>
+                            <select v-on:change="buscar_detalleN(v_anterior, this.data_v_anterior)" v-model="v_anterior" class="form-select form-select-sm" aria-label="Small select example">
+                                <option value="0" selected>--Seleccione clasificacion--</option>
                                 <option v-for="item in this.data_v_anterior" :key="item" :value="item.organo">
                                     {{ item.organo }}
                                 </option>
                             </select>
                             <!-- 2 -->
                             <select class="form-select form-select-sm" aria-label="Small select example" v-model="v_anterior_org">
-                                <option value="0" selected>
-                                    --Seleccione especificacion--
-                                </option>
+                                <option value="0" selected>--Seleccione especificacion--</option>
                                 <option v-for="(item, index) in this.detalle_rta" :key="index" :value="item">
                                     {{ item }}
                                 </option>
@@ -61,16 +147,9 @@
                             </div>
 
                             <button type="button" class="btn btn-primary btn-sm" v-if="
-                    v_anterior != '0' &&
-                    v_anterior_org != '0' &&
-                    detalle_anterior != ''
+                    v_anterior != '0' && v_anterior_org != '0' && detalle_anterior != ''
                   " @click="
-                    AddAntec(
-                      'anterior',
-                      v_anterior,
-                      v_anterior_org,
-                      detalle_anterior
-                    )
+                    AddAntec('anterior', v_anterior, v_anterior_org, detalle_anterior)
                   ">
                                 + Agregar
                             </button>
@@ -80,18 +159,14 @@
                             <p>Seleccione y agregue hallazgos lateral</p>
                             <!-- 1 -->
                             <select class="form-select form-select-sm" aria-label="Small select example" v-on:change="buscar_detalleN(v_lateral, this.data_v_lateral)" v-model="v_lateral">
-                                <option value="0" selected>
-                                    -- Seleccione clasificacion--
-                                </option>
+                                <option value="0" selected>-- Seleccione clasificacion--</option>
                                 <option v-for="(item, index) in this.data_v_lateral" :key="index" :value="item.organo">
                                     {{ item.organo }}
                                 </option>
                             </select>
                             <!-- 2 -->
                             <select class="form-select form-select-sm" aria-label="Small select example" v-model="v_lateral_org">
-                                <option value="0" selected>
-                                    --Seleccione la especificacion--
-                                </option>
+                                <option value="0" selected>--Seleccione la especificacion--</option>
                                 <option v-for="(it, index) in this.detalle_rta" :key="index" :value="it">
                                     {{ it }}
                                 </option>
@@ -102,18 +177,7 @@
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="detalle_lateral"></textarea>
                             </div>
 
-                            <button type="button" class="btn btn-primary btn-sm" v-if="
-                    v_lateral != '0' &&
-                    v_lateral_org != '0' &&
-                    detalle_lateral != ''
-                  " @click="
-                    AddAntec(
-                      'lateral',
-                      v_lateral,
-                      v_lateral_org,
-                      detalle_lateral
-                    )
-                  ">
+                            <button type="button" class="btn btn-primary btn-sm" v-if="v_lateral != '0' && v_lateral_org != '0' && detalle_lateral != ''" @click="AddAntec('lateral', v_lateral, v_lateral_org, detalle_lateral)">
                                 + Agregar
                             </button>
                         </div>
@@ -122,21 +186,15 @@
                             <p>Seleccione y agregue hallazgos posterior</p>
 
                             <!-- 1 -->
-                            <select class="form-select form-select-sm" aria-label="Small select example" v-on:change="
-                    buscar_detalleN(v_posterior, this.data_v_posterior)
-                  " v-model="v_posterior">
-                                <option value="0" selected>
-                                    -- Seleccione clasificacion--
-                                </option>
+                            <select class="form-select form-select-sm" aria-label="Small select example" v-on:change="buscar_detalleN(v_posterior, this.data_v_posterior)" v-model="v_posterior">
+                                <option value="0" selected>-- Seleccione clasificacion--</option>
                                 <option v-for="item in this.data_v_posterior" :key="item" :value="item.organo">
                                     {{ item.organo }}
                                 </option>
                             </select>
                             <!-- 2 -->
                             <select class="form-select form-select-sm" aria-label="Small select example" v-model="v_posterior_org">
-                                <option value="0" selected>
-                                    --Seleccione la especificacion--
-                                </option>
+                                <option value="0" selected>--Seleccione la especificacion--</option>
                                 <option v-for="(it, index) in this.detalle_rta" :key="index" :value="it">
                                     {{ it }}
                                 </option>
@@ -152,12 +210,7 @@
                     v_posterior_org != '0' &&
                     detalle_posterior != ''
                   " @click="
-                    AddAntec(
-                      'posterior',
-                      v_posterior,
-                      v_posterior_org,
-                      detalle_posterior
-                    )
+                    AddAntec('posterior', v_posterior, v_posterior_org, detalle_posterior)
                   ">
                                 + Agregar
                             </button>
@@ -206,98 +259,4 @@
 </div>
 </template>
 
-<script>
-import {
-    mapActions
-} from 'vuex';
-import {
-    eval_postural
-} from "./../../../firebase/bd.js";
-import {
-    BuscarDetalles,
-    BuscarDetallesNombre,
-} from "./../../backend/rutinas.js";
-export default {
-    data: () => ({
-        data_v_anterior: eval_postural.filter((el) => el.clase == "vista anterior"),
-        data_v_lateral: eval_postural.filter((el) => el.clase == "vista lateral"),
-        data_v_posterior: eval_postural.filter(
-            (el) => el.clase == "vista posterior"
-        ),
-        detalle_rta: "",
-        v_anterior: "0",
-        v_anterior_org: "0",
-        v_lateral: "0",
-        v_lateral_org: "0",
-        v_posterior: "0",
-        v_posterior_org: "0",
-        detalle_anterior: "",
-        detalle_lateral: "",
-        detalle_posterior: "",
-        NewAntec: [],
-        datosEvalPostural: [],
-        /*  */
-
-        bd: "hc4_datosevalpostural",
-    }),
-    props: {
-        idpaciente: String,
-        idprofesional: String,
-        idips: String,
-        idfactura: [String, Number]
-    },
-    methods: {
-
-        ...mapActions("hc", ["SaveDatos4"]),
-
-        buscar_detalle(id, bd) {
-            this.detalle_rta = BuscarDetalles(id, bd, "detalle");
-        },
-        buscar_detalleN(name, bd) {
-            this.detalle_rta = BuscarDetallesNombre(name, bd, "detalle");
-        },
-
-        AddAntec(tipo, clas, enf, detalle) {
-            let item = {
-                tipo: tipo,
-                clase: clas,
-                enfermedad: enf,
-                detalleenf: detalle,
-            };
-            this.NewAntec = [...this.NewAntec, item];
-            this.limpiarcampos();
-        },
-
-        eliminaritem(index) {
-            console.log(index);
-            this.NewAntec.splice(index, 1);
-        },
-        limpiarcampos() {
-            this.v_anterior = "0";
-            this.v_anterior_org = "0";
-            this.detalle_anterior = "";
-
-            this.v_lateral = "0";
-            this.v_lateral_org = "0";
-            this.detalle_lateral = "";
-
-            this.v_posterior = "0";
-            this.v_posterior_org = "0";
-            this.detalle_posterior = "";
-        },
-
-        guardarInfo4() {
-            this.datosEvalPostural = {
-                idPaciente: this.idPaciente,
-                idprofesional: this.idprofesional,
-                idips: this.idips,
-                idfactura: this.idfactura,
-                // Observaciones
-                bd: this.bd,
-                dataeval: this.NewAntec,
-            };
-            this.SaveDatos4(this.datosEvalPostural);
-        },
-    },
-};
-</script>
+<!-- hc4_evalpostural -->

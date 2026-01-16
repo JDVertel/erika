@@ -1,16 +1,16 @@
 /**
  * AUTH MODULE - Consolidated Vuex Module
- * 
+ *
  * Manages authentication, user information, and company/page configuration
- * 
+ *
  * Parts consolidated:
  * - state.js: Initial state structure
  * - actions.js: CRUD operations for company and page data
  * - mutations.js: State mutations
  * - getters.js: State getters (none currently in use)
- * 
+ *
  * Original location: src/components/dashboard/store/auth/
- * 
+ *
  * State properties:
  * - auth: Authentication status
  * - id_ips: IPS identifier
@@ -30,20 +30,25 @@ import firebase_api from "@/api/firebaseApi";
  */
 const state = () => ({
     // Auth state
-    auth: true,
+   /*  auth: true, */
 
     // IPS and User info (used in SidebarLayout, home.vue)
-    id_ips: "1",
-    id_user: "",
+    /* id_ips: "1", */
+    id_profesional: "-OM_G1R4rWmmq1GMZo1H",
+    id_paciente: "",
     rol: "admin",
 
     // Company and Page data
     DataEmpresa: [],
     DataPagina: [],
 
+    // Professionals data
+    dataprofesionales: [],
+    existeprofesionales: "",
+
     // State management for CRUD operations
     stateEmpresa: "crear", // crear, ver, actualizar
-    statePagina: "crear",  // crear, ver, actualizar
+    statePagina: "crear", // crear, ver, actualizar
 });
 
 /**
@@ -86,6 +91,21 @@ const mutations = {
     muta_setNewState: (state, entrada) => {
         state[entrada.state] = entrada.value;
     },
+
+    /**
+     * Set Professionals Data
+     */
+    setStateProfesionales: (state, entryDataProfesionales) => {
+        state.dataprofesionales = [...entryDataProfesionales];
+        state.existeprofesionales = entryDataProfesionales.length;
+    },
+
+    /**
+     * Set Specific Professional Data
+     */
+    setStateDataProfesional: (state, entryDataProfesional) => {
+        state.dataprofesionales = [...entryDataProfesional];
+    },
 };
 
 /**
@@ -118,7 +138,19 @@ const actions = {
      */
     Action_update_Empresa: async ({ commit }, entradasE) => {
         console.log("Updating company:", entradasE);
-        const { id_ips, nombre, nit, desc, direccion, celular, wsp, logo, bd, rta, id } = entradasE;
+        const {
+            id_ips,
+            nombre,
+            nit,
+            desc,
+            direccion,
+            celular,
+            wsp,
+            logo,
+            bd,
+            rta,
+            id,
+        } = entradasE;
         const dataToUpdateE = { id_ips, nombre, nit, desc, direccion, celular, wsp, logo };
         const rutaE = `/${bd}/${id}.json`;
         await firebase_api.put(rutaE, dataToUpdateE);
@@ -137,8 +169,32 @@ const actions = {
      */
     Action_createDataPagina: async ({ commit }, entradasP) => {
         console.log("Creating new page data:", entradasP);
-        const { quienessomos, mision, vision, nuestrosservicios, nuestrosservicios_lm, clasesrutinas, clasesrutinas_lm, tiendaonline, tiendaonline_lm, bd, id_ips } = entradasP;
-        const DataToSaveP = { quienessomos, mision, vision, nuestrosservicios, nuestrosservicios_lm, clasesrutinas, clasesrutinas_lm, tiendaonline, tiendaonline_lm, bd, id_ips };
+        const {
+            quienessomos,
+            mision,
+            vision,
+            nuestrosservicios,
+            nuestrosservicios_lm,
+            clasesrutinas,
+            clasesrutinas_lm,
+            tiendaonline,
+            tiendaonline_lm,
+            bd,
+            id_ips,
+        } = entradasP;
+        const DataToSaveP = {
+            quienessomos,
+            mision,
+            vision,
+            nuestrosservicios,
+            nuestrosservicios_lm,
+            clasesrutinas,
+            clasesrutinas_lm,
+            tiendaonline,
+            tiendaonline_lm,
+            bd,
+            id_ips,
+        };
         const Ruta = `/${bd}.json`;
         await firebase_api.post(Ruta, DataToSaveP);
     },
@@ -150,8 +206,33 @@ const actions = {
      */
     Action_update_Pagina: async ({ commit }, entradasP) => {
         console.log("Updating page data:", entradasP);
-        const { quienessomos, mision, vision, nuestrosservicios, nuestrosservicios_lm, clasesrutinas, clasesrutinas_lm, tiendaonline, tiendaonline_lm, id, id_ips, rta, bd } = entradasP;
-        const dataToUpdateP = { quienessomos, mision, vision, nuestrosservicios, nuestrosservicios_lm, clasesrutinas, clasesrutinas_lm, tiendaonline, tiendaonline_lm, id_ips };
+        const {
+            quienessomos,
+            mision,
+            vision,
+            nuestrosservicios,
+            nuestrosservicios_lm,
+            clasesrutinas,
+            clasesrutinas_lm,
+            tiendaonline,
+            tiendaonline_lm,
+            id,
+            id_ips,
+            rta,
+            bd,
+        } = entradasP;
+        const dataToUpdateP = {
+            quienessomos,
+            mision,
+            vision,
+            nuestrosservicios,
+            nuestrosservicios_lm,
+            clasesrutinas,
+            clasesrutinas_lm,
+            tiendaonline,
+            tiendaonline_lm,
+            id_ips,
+        };
         const rutaP = `/${bd}/${id}.json`;
         await firebase_api.put(rutaP, dataToUpdateP);
         commit(rta, { ...entradasP });
@@ -187,6 +268,55 @@ const actions = {
     /**
      * UTILITY ACTIONS
      */
+
+    /**
+     * Get Data by Parameter
+     * Obtiene datos filtrando por un parámetro específico
+     * Se usa para traer datos de profesionales
+     * @param {Object} context - Vuex context
+     * @param {Array} parametros - [{bd, parametro, valor, rta}]
+     */
+    getDatabyParam: async ({ commit }, parametros) => {
+        const [{ bd, parametro, valor, rta }] = parametros;
+        console.log("Getting data by parameter:", { bd, parametro, valor });
+        const response = await firebase_api.get(`/${bd}.json`, {
+            params: {
+                orderBy: `"${parametro}"`,
+                equalTo: `"${valor}"`,
+            },
+        });
+        const { data } = response;
+        const datasalida = [];
+        for (let id of Object.keys(data)) {
+            datasalida.push({ id, ...data[id] });
+        }
+        if (datasalida.length > 0) {
+            commit(`${rta}`, datasalida);
+        }
+        return datasalida;
+    },
+
+    /**
+     * Get Data by Primary Key
+     * Obtiene un registro específico usando su clave principal
+     * Se usa para traer datos de un profesional específico
+     * @param {Object} context - Vuex context
+     * @param {Object} parametros - {bd, clavePrincipal, rta}
+     */
+    getDatabyKey: async ({ commit }, parametros) => {
+        const { bd, clavePrincipal, rta } = parametros;
+        console.log("Getting data by key:", { bd, clavePrincipal });
+        const response = await firebase_api.get(`/${bd}/${clavePrincipal}.json`);
+        const data = response.data;
+        const datasalida = [];
+        if (data) {
+            datasalida.push({ id: clavePrincipal, ...data });
+        }
+        if (datasalida.length > 0) {
+            commit(rta, datasalida);
+        }
+        return datasalida;
+    },
 
     /**
      * Cambiar estado de un campo en el store

@@ -1,3 +1,13 @@
+<script setup>
+import { ref } from "vue";
+ let variable=ref({
+    origen:"externo",
+    pass:"",
+    pass2:"",
+ })
+
+</script>
+
 <template>
     <div class="container credenciales">
         <div class="row">
@@ -9,7 +19,8 @@
               <input
                 type="password"
                 class="form-control form-control-sm textarea"
-                id="text_imc"
+                id="cred_pass"
+                name="cred_pass"
                 placeholder="Contraseña"
                 v-model="variable.pass"
               />
@@ -20,7 +31,8 @@
               <input
                 type="password"
                 class="form-control form-control-sm textarea"
-                id="text_imc"
+                id="cred_pass2"
+                name="cred_pass2"
                 placeholder="Confirma Contraseña"
                 v-model="variable.pass2"
               />
@@ -29,13 +41,3 @@
         </div>
       </div>
 </template>
-
-<script setup>
-import { ref } from "vue";
- let variable=ref({
-    origen:"externo",
-    pass:"",
-    pass2:"",
- })
-
-</script>

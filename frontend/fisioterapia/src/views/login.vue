@@ -1,3 +1,13 @@
+<script>
+export default {
+    data: () => ({
+        user: "",
+        pass: "",
+    })
+
+}
+</script>
+
 <template>
 <div class="login-bg">
     <form class="login-form" @submit.prevent>
@@ -19,16 +29,6 @@
     </form>
 </div>
 </template>
-
-<script>
-export default {
-    data: () => ({
-        user: "",
-        pass: "",
-    })
-
-}
-</script>
 
 <style>
 .login-bg {

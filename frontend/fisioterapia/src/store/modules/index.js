@@ -30,9 +30,9 @@ export const moduleRegistry = {
         description: "Authentication and company/page data management",
         currentPath: "src/store/modules/auth.module.js",
         legacyPath: "src/components/dashboard/store/auth/",
-        state: ["auth", "id_ips", "id_user", "rol", "DataEmpresa", "DataPagina", "stateEmpresa", "statePagina"],
-        actions: 6,
-        mutations: 3,
+        state: ["auth", "id_ips", "id_user", "rol", "DataEmpresa", "DataPagina", "dataprofesionales", "existeprofesionales", "stateEmpresa", "statePagina"],
+        actions: 8,
+        mutations: 5,
         consolidated: true
     },
 
@@ -40,13 +40,14 @@ export const moduleRegistry = {
         name: "Agendas",
         namespace: "Agendas",
         module: Agendas,
-        description: "Appointment scheduling and patient/professional management",
+        description: "Appointment scheduling and patient management",
         currentPath: "src/store/modules/agendas.module.js",
         legacyPath: "src/components/agendas/store/agendas/",
-        state: ["datapaciente", "dataprofesionales", "datausuarios", "dataCitas", "dataAllCitas", "dataAgendas"],
+        state: ["datapaciente", "datausuarios", "dataCitas", "dataAllCitas", "dataAgendas", "dataAllCitasPaciente", "existepaciente", "existeusuarios"],
         actions: 14,
-        mutations: 11,
-        consolidated: true
+        mutations: 9,
+        consolidated: true,
+        note: "dataprofesionales moved to Auth module"
     },
 
     HC: {

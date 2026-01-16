@@ -1,3 +1,63 @@
+<script>
+import HCdetallada from "./h_clinica.vue";
+
+import Registro from "./registroForm.vue";
+import {
+    mapActions,
+    mapState
+} from "vuex";
+export default {
+    components: {
+        Registro,
+        HCdetallada,
+    },
+    data: () => ({
+        registrado: "",
+        B_tipodoc: "0",
+        B_numdoc: "",
+        iduser: "",
+        response: "",
+        responsetable: "",
+        selectedRegistro: null,
+    }),
+    methods: {
+        ...mapActions("Agendas", ["getDataUsersbyParam"]),
+
+        BTN_Buscar_paciente(tipodoc, numdoc) {
+            let idpaciente = tipodoc + numdoc;
+            let paramsPaciente = [{
+                bd: "pacientes",
+                parametro: "numdoc",
+                valor: idpaciente,
+                rta: "setStatePaciente",
+            }, ];
+            this.getDataUsersbyParam(paramsPaciente);
+        },
+
+        selectRegHcPac(reg) {
+            /* si la respuesta es positiva bucar el historial del paciente */
+            this.selectedRegistro = reg;
+            console.log("registro seleccionado:", reg);
+            // Aquí puedes abrir el detalle o navegar a otra vista según sea necesario
+        },
+
+        abrirHC(numdoc) {
+            console.log(numdoc);
+        },
+    },
+
+    computed: {
+        ...mapState("Agendas", ["datapaciente", "existepaciente"]),
+    },
+    created() {
+        // Recuperar el parámetro 'id' de la ruta
+        this.iduser = this.$route.params.idpaciente || "13862306";
+        this.idips = this.$route.params.idips || "1";
+        this.idprof = this.$route.params.idprof || "2";
+    },
+};
+</script>
+
 <template>
 <div>
     <div class="container mt-3" id="panelbusqueda">
@@ -109,65 +169,5 @@
     </div>
 </div>
 </template>
-
-<script>
-import HCdetallada from "./h_clinica.vue";
-
-import Registro from "./registroForm.vue";
-import {
-    mapActions,
-    mapState
-} from "vuex";
-export default {
-    components: {
-        Registro,
-        HCdetallada,
-    },
-    data: () => ({
-        registrado: "",
-        B_tipodoc: "0",
-        B_numdoc: "",
-        iduser: "",
-        response: "",
-        responsetable: "",
-        selectedRegistro: null,
-    }),
-    methods: {
-        ...mapActions("Agendas", ["getDataUsersbyParam"]),
-
-        BTN_Buscar_paciente(tipodoc, numdoc) {
-            let idpaciente = tipodoc + numdoc;
-            let paramsPaciente = [{
-                bd: "pacientes",
-                parametro: "numdoc",
-                valor: idpaciente,
-                rta: "setStatePaciente",
-            }, ];
-            this.getDataUsersbyParam(paramsPaciente);
-        },
-
-        selectRegHcPac(reg) {
-            /* si la respuesta es positiva bucar el historial del paciente */
-            this.selectedRegistro = reg;
-            console.log("registro seleccionado:", reg);
-            // Aquí puedes abrir el detalle o navegar a otra vista según sea necesario
-        },
-
-        abrirHC(numdoc) {
-            console.log(numdoc);
-        },
-    },
-
-    computed: {
-        ...mapState("Agendas", ["datapaciente", "existepaciente"]),
-    },
-    created() {
-        // Recuperar el parámetro 'id' de la ruta
-        this.iduser = this.$route.params.idpaciente || "13862306";
-        this.idips = this.$route.params.idips || "1";
-        this.idprof = this.$route.params.idprof || "2";
-    },
-};
-</script>
 
 <style></style>

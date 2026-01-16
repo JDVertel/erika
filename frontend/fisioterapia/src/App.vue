@@ -1,11 +1,3 @@
-<template>
-<div id="app">
-    <SidebarLayout :params = DataEmpresa>
-        <router-view></router-view>
-    </SidebarLayout>
-</div>
-</template>
-
 <script>
 import {
   getStorage,
@@ -57,6 +49,13 @@ export default {
 }
 </script>
 
+<template>
+<div id="app">
+    <SidebarLayout :params = DataEmpresa>
+        <router-view></router-view>
+    </SidebarLayout>
+</div>
+</template>
 
 <style>
 #app {

@@ -1,3 +1,7 @@
+<script>
+
+</script>
+
 <template>
 <div>
     <h3>Historia clinica</h3>
@@ -136,10 +140,6 @@
 
 </div>
 </template>
-
-<script>
-
-</script>
 
 <style>
 

@@ -1,3 +1,207 @@
+<script>
+import { mapActions, mapGetters, mapState } from "vuex";
+import moment from "moment";
+import firebase_api from "@/api/firebaseApi";
+export default {
+  /* --------------------------------------------------------------------------------------------------- */
+  data: () => ({
+    t_reserva: "",
+    profactivos: "",
+    paramsgetAllAgendas: [],
+    p_reserva: "",
+    fechasActivas: "",
+    fecha_agenda: "",
+    params_GuardarFechaAgenda: [],
+    params_Agendas_Dia: [],
+    paramsFechasAgendas: [],
+    AgendasOrdenadas: [],
+    FVerAgenda: "",
+    ListVerAgenda: [],
+    CantAgendadDia: "",
+    paramsDelAgendas: [],
+    paramsAgenda: [],
+    // -------------------------------
+    reservadas: "",
+    asistidas: "",
+    noasistidas: "",
+  }),
+  /* --------------------------------------------------------------------------------------------------- */
+
+  methods: {
+    ...mapActions("Agendas", [
+      "getDataUsersbyParam",
+      "getDataByRangoSuperior",
+      "CreateAgendaNueva",
+      "getDatabyParam",
+      "DeleteItem",
+      "GetAgendasSelectAct",
+    ]),
+
+    async BuscarProfesionales() {
+      this.paramsProfesionales = [
+        {
+          bd: "profesionales",
+          parametro: "id_ips",
+          valor: this.id_ips,
+          rta: "setStateProfesionales",
+        },
+      ];
+      this.getDataUsersbyParam(this.paramsProfesionales);
+      await this.GetListadoAgendas();
+      this.fijarfechadia();
+      await this.FiltrarAgendaDia();
+    },
+
+    async GetCitasAgendaSeleccionada(id) {
+      this.paramsAgenda = [
+        {
+          bd: "citas",
+          param: id_agenda,
+          valor: id,
+        },
+      ];
+      await this.getDatabyParam(this.paramsAgenda);
+    },
+
+    async GetListadoAgendas() {
+      const fecha = this.diaformatedfecha;
+      console.log(fecha);
+      this.paramsFechasAgendas = [
+        {
+          bd: "agendas",
+          parametro: "fecha",
+          valor: fecha,
+          rta: "setStateAgendas",
+        },
+      ];
+      await this.getDataByRangoSuperior(this.paramsFechasAgendas);
+      this.filtrarFechasByProf();
+    },
+
+    filtarProf() {
+      console.log(this.t_reserva);
+      this.profactivos = this.dataprofesionales.filter(
+        (profesional) => profesional.tipo == this.t_reserva
+      );
+      console.log(this.profactivos);
+    },
+    /* ---------------------------------------------------------- */
+
+    async filtrarFechasByProf() {
+      this.fechasActivas = this.dataAgendas.filter(
+        (registro) =>
+          registro.id_profesional === this.p_reserva && registro.clase === this.t_reserva
+      );
+      console.log("Fechas Activas:", this.fechasActivas);
+    },
+    /* -------------------------------------------------------------------------------------------------------------------------------------- */
+    async GuardarAgenda() {
+      this.params_GuardarFechaAgenda = [
+        {
+          id_profesional: this.p_reserva,
+          fecha: this.formattedDate,
+          id_ips: this.id_ips,
+          clase: this.t_reserva,
+          bd: "agendas",
+          /*        rta: "UpdateStateCitas" */
+        },
+      ];
+      (this.fecha_agenda = ""),
+        await this.CreateAgendaNueva(this.params_GuardarFechaAgenda[0]);
+      this.GetListadoAgendas();
+    },
+
+    fijarfechadia() {
+      const ListAgendas = this.diaformatedfecha;
+      this.FVerAgenda = ListAgendas;
+      return ListAgendas;
+    },
+
+    FiltrarAgendaDia() {
+      let rta = this.dataAgendas.filter((agenda) => agenda.fecha == this.FVerAgenda);
+      this.ListVerAgenda = rta;
+      console.log("estos son mis datos", this.ListVerAgenda);
+      return rta;
+    },
+
+    nombreProfesional(dataID) {
+      const nombreProf = this.dataprofesionales.filter((prof) => prof.id == dataID);
+      return nombreProf[0].name1 + " " + nombreProf[0].apell1;
+    },
+
+    async BTN_eliminar_ItemAgenda(id) {
+      this.paramsDelAgendas = [
+        {
+          id: id,
+          bd: "agendas",
+        },
+      ];
+      await this.DeleteItem(this.paramsDelAgendas[0]);
+      this.GetListadoAgendas();
+    },
+
+    async GetAgendaSelect(value) {
+      const bd = "citas";
+      const parametro = "id_agenda";
+      const datasalida = [];
+      const response = await firebase_api.get(`/${bd}.json`, {
+        params: {
+          orderBy: `"${parametro}"`,
+          equalTo: `"${value}"`,
+        },
+      });
+
+      const { data } = response;
+
+      for (let id of Object.keys(data)) {
+        datasalida.push({
+          id,
+          ...data[id],
+        });
+      }
+      this.calculos(datasalida);
+    },
+  },
+
+  /* --------------------------------------------------------------------------------------------------- */
+  computed: {
+    ...mapState("Auth", ["user", "id_ips", "rol", "info", "dataprofesionales"]),
+    ...mapState("Agendas", ["dataAgendas"]),
+
+    formattedDate() {
+      return moment(this.fecha_agenda).format("YYYY-MM-DD");
+    },
+
+    diaformatedfecha() {
+      return moment(new Date()).format("YYYY-MM-DD");
+    },
+
+    isButtonDisabled() {
+      return !this.t_reserva || !this.p_reserva || !this.fecha_agenda;
+    },
+    sortedListaAgendasProfesional() {
+      this.fechasActivas.sort((a, b) => new Date(a.date) - new Date(b.date));
+    },
+    cantAgendasDia() {
+      const cant = this.ListVerAgenda.length;
+      return cant;
+    },
+
+    calculos(datasalida) {
+      this.reservadas = datasalida.filter((elemento) => elemento.estado === "0").length;
+      this.asistidos = datasalida.filter((elemento) => elemento.estado === "SI").length;
+      this.noasistidos = datasalida.filter((elemento) => elemento.estado === "NO").length;
+      return reservadas, no_asistidos, si_asistidos;
+    },
+  },
+  /* --------------------------------------------------------------------------------------------------- */
+  created() {
+    this.BuscarProfesionales();
+  },
+  /* --------------------------------------------------------------------------------------------------- */
+};
+</script>
+
 <template>
   <!-- <hr>
     datos de store
@@ -220,210 +424,6 @@ organizar las fechas(reservar cita)  en orden ya que aparecen desordenadas
   </div>
 </template>
 
-<!-- ======================================================================================== -->
-
-<script>
-import { mapActions, mapGetters, mapState } from "vuex";
-import moment from "moment";
-import firebase_api from "@/api/firebaseApi";
-export default {
-  /* --------------------------------------------------------------------------------------------------- */
-  data: () => ({
-    t_reserva: "",
-    profactivos: "",
-    paramsgetAllAgendas: [],
-    p_reserva: "",
-    fechasActivas: "",
-    fecha_agenda: "",
-    params_GuardarFechaAgenda: [],
-    params_Agendas_Dia: [],
-    paramsFechasAgendas: [],
-    AgendasOrdenadas: [],
-    FVerAgenda: "",
-    ListVerAgenda: [],
-    CantAgendadDia: "",
-    paramsDelAgendas: [],
-    paramsAgenda: [],
-    // -------------------------------
-    reservadas: "",
-    asistidas: "",
-    noasistidas: "",
-  }),
-  /* --------------------------------------------------------------------------------------------------- */
-
-  methods: {
-    ...mapActions("Agendas", [
-      "getDataUsersbyParam",
-      "getDataByRangoSuperior",
-      "CreateAgendaNueva",
-      "getDatabyParam",
-      "DeleteItem",
-      "GetAgendasSelectAct",
-    ]),
-
-    async BuscarProfesionales() {
-      this.paramsProfesionales = [
-        {
-          bd: "profesionales",
-          parametro: "id_ips",
-          valor: this.id_ips,
-          rta: "setStateProfesionales",
-        },
-      ];
-      this.getDataUsersbyParam(this.paramsProfesionales);
-      await this.GetListadoAgendas();
-      this.fijarfechadia();
-      await this.FiltrarAgendaDia();
-    },
-
-    async GetCitasAgendaSeleccionada(id) {
-      this.paramsAgenda = [
-        {
-          bd: "citas",
-          param: id_agenda,
-          valor: id,
-        },
-      ];
-      await this.getDatabyParam(this.paramsAgenda);
-    },
-
-    async GetListadoAgendas() {
-      const fecha = this.diaformatedfecha;
-      console.log(fecha);
-      this.paramsFechasAgendas = [
-        {
-          bd: "agendas",
-          parametro: "fecha",
-          valor: fecha,
-          rta: "setStateAgendas",
-        },
-      ];
-      await this.getDataByRangoSuperior(this.paramsFechasAgendas);
-      this.filtrarFechasByProf();
-    },
-
-    filtarProf() {
-      console.log(this.t_reserva);
-      this.profactivos = this.dataprofesionales.filter(
-        (profesional) => profesional.tipo == this.t_reserva
-      );
-      console.log(this.profactivos);
-    },
-    /* ---------------------------------------------------------- */
-
-    async filtrarFechasByProf() {
-      this.fechasActivas = this.dataAgendas.filter(
-        (registro) =>
-          registro.id_profesional === this.p_reserva && registro.clase === this.t_reserva
-      );
-      console.log("Fechas Activas:", this.fechasActivas);
-    },
-    /* -------------------------------------------------------------------------------------------------------------------------------------- */
-    async GuardarAgenda() {
-      this.params_GuardarFechaAgenda = [
-        {
-          id_profesional: this.p_reserva,
-          fecha: this.formattedDate,
-          id_ips: this.id_ips,
-          clase: this.t_reserva,
-          bd: "agendas",
-          /*        rta: "UpdateStateCitas" */
-        },
-      ];
-      (this.fecha_agenda = ""),
-        await this.CreateAgendaNueva(this.params_GuardarFechaAgenda[0]);
-      this.GetListadoAgendas();
-    },
-
-    fijarfechadia() {
-      const ListAgendas = this.diaformatedfecha;
-      this.FVerAgenda = ListAgendas;
-      return ListAgendas;
-    },
-
-    FiltrarAgendaDia() {
-      let rta = this.dataAgendas.filter((agenda) => agenda.fecha == this.FVerAgenda);
-      this.ListVerAgenda = rta;
-      console.log("estos son mis datos", this.ListVerAgenda);
-      return rta;
-    },
-
-    nombreProfesional(dataID) {
-      const nombreProf = this.dataprofesionales.filter((prof) => prof.id == dataID);
-      return nombreProf[0].name1 + " " + nombreProf[0].apell1;
-    },
-
-    async BTN_eliminar_ItemAgenda(id) {
-      this.paramsDelAgendas = [
-        {
-          id: id,
-          bd: "agendas",
-        },
-      ];
-      await this.DeleteItem(this.paramsDelAgendas[0]);
-      this.GetListadoAgendas();
-    },
-
-    async GetAgendaSelect(value) {
-      const bd = "citas";
-      const parametro = "id_agenda";
-      const datasalida = [];
-      const response = await firebase_api.get(`/${bd}.json`, {
-        params: {
-          orderBy: `"${parametro}"`,
-          equalTo: `"${value}"`,
-        },
-      });
-
-      const { data } = response;
-
-      for (let id of Object.keys(data)) {
-        datasalida.push({
-          id,
-          ...data[id],
-        });
-      }
-      this.calculos(datasalida);
-    },
-  },
-
-  /* --------------------------------------------------------------------------------------------------- */
-  computed: {
-    ...mapState("Auth", ["user", "id_ips", "rol", "info"]),
-    ...mapState("Agendas", ["dataprofesionales", "dataAgendas"]),
-
-    formattedDate() {
-      return moment(this.fecha_agenda).format("YYYY-MM-DD");
-    },
-
-    diaformatedfecha() {
-      return moment(new Date()).format("YYYY-MM-DD");
-    },
-
-    isButtonDisabled() {
-      return !this.t_reserva || !this.p_reserva || !this.fecha_agenda;
-    },
-    sortedListaAgendasProfesional() {
-      this.fechasActivas.sort((a, b) => new Date(a.date) - new Date(b.date));
-    },
-    cantAgendasDia() {
-      const cant = this.ListVerAgenda.length;
-      return cant;
-    },
-
-    calculos(datasalida) {
-      this.reservadas = datasalida.filter((elemento) => elemento.estado === "0").length;
-      this.asistidos = datasalida.filter((elemento) => elemento.estado === "SI").length;
-      this.noasistidos = datasalida.filter((elemento) => elemento.estado === "NO").length;
-      return reservadas, no_asistidos, si_asistidos;
-    },
-  },
-  /* --------------------------------------------------------------------------------------------------- */
-  created() {
-    this.BuscarProfesionales();
-  },
-  /* --------------------------------------------------------------------------------------------------- */
-};
-</script>
-
 <style></style>
+
+<!-- ======================================================================================== -->

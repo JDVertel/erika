@@ -1,659 +1,3 @@
-<template>
-  <div class="container config">
-    <div class="container">
-      <br />
-
-      <ul
-        class="nav nav-tabs nav justify-content-end"
-        id="myTab"
-        role="tablist"
-      >
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link active"
-            id="home-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#home-tab-pane"
-            type="button"
-            role="tab"
-            aria-controls="home-tab-pane"
-            aria-selected="true"
-          >
-            Servicios
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="profile-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#profile-tab-pane"
-            type="button"
-            role="tab"
-            aria-controls="profile-tab-pane"
-            aria-selected="false"
-          >
-            Productos
-          </button>
-        </li>
-      </ul>
-      <!-- ====================================================================================== -->
-      <div class="tab-content" id="myTabContent">
-        <div
-          class="tab-pane fade show active"
-          id="home-tab-pane"
-          role="tabpanel"
-          aria-labelledby="home-tab"
-          tabindex="0"
-        >
-          <div class="row mt-3 mb-3">
-            <div class="col-6">
-              <h6><strong>Clases Consultas y Terapias</strong></h6>
-            </div>
-            <div class="col-6">
-              <button
-                type="button"
-                class="btn btn-warning"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal2"
-                @click="B_nuevo()"
-              >
-                + Servicio
-              </button>
-            </div>
-          </div>
-          <div class="container">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo
-            fuga nisi sint recusandae odio tempore vitae, quod placeat non ipsa
-            quibusdam nihil eaque numquam cupiditate quasi in harum illum eum!
-          </div>
-
-          <br />
-          <!--  -->
-          <div class="col-12">
-            <div class="table-responsive">
-              <table class="vitrina-table table-sm">
-                <thead>
-                  <tr>
-                    <th>Imagen</th>
-                    <th>Detalle</th>
-                    <th>Descripcion</th>
-                    <th>Opc</th>
-                    <th>Precios</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="articulo in vitrinaservicios" :key="articulo.id" class="vitrinacard">
-                    <td>
-                        <img
-                          :src="`${articulo.img}`"
-                          alt="imagen producto"
-                          class="imagenservicio"
-                        />
-                    </td>
-
-                    <td>
-                      <small>Tipo: {{ articulo.tipo }}</small
-                      ><br />
-                      <small>Nombre: {{ articulo.nombre }}</small>
-                    </td>
-                    <td>{{ articulo.desc }}</td>
-                    <td>
-                      <div class="container">
-                        <button
-                          class="btn btn-primary m-1 btn-sm"
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModal2"
-                          @click="M_editarservicios(articulo)"
-                        >
-                          <i class="bi bi-pen"></i>
-                        </button>
-                        <button
-                          class="btn btn-danger m-1 btn-sm"
-                          @click="eliminaritem(articulo.id)"
-                        >
-                          <i class="bi bi-trash"></i>
-                        </button>
-                        <button
-                          class="btn btn-warning m-1 btn-sm"
-                          @click="cambiarEstadoItem(articulo)"
-                          v-if="articulo.publicado == false"
-                        >
-                          <i class="bi bi-eye-slash-fill"></i>
-                        </button>
-                        <button
-                          class="btn btn-success m-1 btn-sm"
-                          @click="cambiarEstadoItem(articulo)"
-                          v-if="articulo.publicado == true"
-                        >
-                          <i class="bi bi-eye"></i>
-                        </button>
-                      </div>
-                    </td>
-                    <td class="tablaconfig">
-                      <table
-                        class="vitrina-table table-sm vitrina-table-striped vitrina-table-borderless tablaconfig"
-                      >
-                        <thead>
-                          <tr>
-                            <td>Cant</td>
-                            <td>Valor</td>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr
-                            v-for="(item, index) in articulo.precios"
-                            :key="index"
-                          >
-                            <td>
-                              <small>{{ item.cant }}</small>
-                            </td>
-                            <td>
-                              <small>{{ item.precio }}</small>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <br />
-          <br />
-          <!-- inicio modal 1  servicios-->
-          <div
-            class="modal fade vitrina-modal"
-            id="exampleModal2"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel2"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog">
-              <div class="modal-content vitrina-modal">
-                <div class="modal-header vitrina-modal-header">
-                  <h1
-                    class="modal-title fs-5 vitrina-modal-title"
-                    id="exampleModalLabel2"
-                    v-if="this.modalOption === 'N'"
-                  >
-                    Agregar nuevo item de servicio
-                  </h1>
-                  <h1
-                    class="modal-title fs-5"
-                    id="exampleModalLabel2"
-                    v-if="this.modalOption === 'U'"
-                  >
-                    Editar item de servicio
-                  </h1>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body vitrina-modal-body">
-                  <div class="container">
-                    <h6><strong>Datos del servicio</strong></h6>
-
-                    <div class="row">
-                      <div class="col-8 col-md-9">
-                        <div>
-                          <div class="col mb-1">
-                            <input
-                              type="text"
-                              class="form-control"
-                              placeholder="Nombre"
-                              v-model="s_nombre"
-                            />
-                          </div>
-                        </div>
-                        <div class="col mb-1">
-                          <select
-                            class="form-select form-select-sm"
-                            aria-label="Default select example"
-                            v-model="s_tipo"
-                          >
-                            <option selected value="">Categoria</option>
-                            <option value="terapia">Terapia</option>
-                            <option value="consulta">Consulta</option>
-                            <option value="clase">Clase</option>
-                          </select>
-                        </div>
-                        <div class="col mb-1">
-                          <textarea
-                            class="form-control"
-                            rows="2"
-                            placeholder="Detalle"
-                            v-model="s_detalle"
-                          ></textarea>
-                        </div>
-                      </div>
-                      <div
-                        class="col-4 col-md-3"
-                        v-if="this.modalOption === 'N'"
-                      >
-                        <img
-                          :src="local_Image"
-                          class="img-thumbnail"
-                          alt="..."
-                        />
-                      </div>
-                      <div
-                        class="col-4 col-md-3"
-                        v-if="this.modalOption === 'U'"
-                      >
-                        <img
-                          :src="`${this.s_img}`"
-                          alt="imagen producto"
-                          style="height: 100px"
-                          class="img-thumbnail"
-                        />
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="mb-3">
-                        <input
-                          class="form-control"
-                          type="file"
-                          id="formFile"
-                          @change="onSelectImage_s($event)"
-                          accept="image/png,  image/jpeg,  image/jpg"
-                          v-if="this.modalOption === 'N'"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-6">
-                        <strong>Listado de precios</strong>
-                      </div>
-                      <div class="col-6">
-                        <button
-                          type="button"
-                          class="btn btn-warning btn-sm"
-                          @click="cargarcampositem()"
-                          v-if="!NewModal"
-                        >
-                          + Nuevo
-                        </button>
-                      </div>
-                    </div>
-                    <div class="container" v-if="NewModal">
-                      <div class="row mt-3">
-                        <div class="col-5">
-                          <input
-                            type="number"
-                            class="form-control"
-                            placeholder="Cant"
-                            v-model="cant"
-                          />
-                        </div>
-                        <div class="col-5">
-                          <input
-                            type="number"
-                            class="form-control"
-                            placeholder="Precio"
-                            v-model="precio"
-                          />
-                        </div>
-                        <div class="col-2">
-                          <button
-                            v-if="this.modalOption === 'N'"
-                            type="button"
-                            class="btn btn-warning btn-sm"
-                            @click="agregaritemlistN(cant, precio)"
-                          >
-                            +
-                          </button>
-                          <button
-                            v-if="this.modalOption === 'U'"
-                            type="button"
-                            class="btn btn-warning btn-sm"
-                            @click="agregaritemlistU(cant, precio)"
-                          >
-                            +
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <hr />
-                    <table class="table" v-if="this.modalOption === 'N'">
-                      <thead>
-                        <tr>
-                          <th scope="col">Cant</th>
-                          <th scope="col">Precio</th>
-                          <th scope="col">Opc</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="(itemN, index) in ArrayPrecios" :key="index">
-                          <td>{{ itemN.cant }}</td>
-                          <td>{{ itemN.precio }}</td>
-                          <td>
-                            <button
-                              class="btn btn-sm btn-danger"
-                              @click="eliminaritemArrayN(index)"
-                            >
-                              <i class="bi bi-trash-fill"></i>
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <table class="table" v-if="this.modalOption === 'U'">
-                      <thead>
-                        <tr>
-                          <th scope="col">Cant</th>
-                          <th scope="col">Precio</th>
-                          <th scope="col">Opc</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="(itemU, index) in s_precios" :key="index">
-                          <td>{{ itemU.cant }}</td>
-                          <td>{{ itemU.precio }}</td>
-                          <td>
-                            <button
-                              class="btn btn-sm btn-danger"
-                              @click="eliminaritemArrayU(index)"
-                            >
-                              <i class="bi bi-trash-fill"></i>
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="modal-footer vitrina-modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                    @click="limpiarmodal()"
-                  >
-                    Close
-                  </button>
-
-                  <button
-                    type="button"
-                    v-if="modalOption == 'U'"
-                    class="btn btn-primary"
-                    v-on:click="BM_updateServicios()"
-                    data-bs-dismiss="modal"
-                  >
-                    <!-- SERVICIOS -->
-                    Actualizar
-                  </button>
-
-                  <button
-                    type="submit"
-                    v-if="modalOption == 'N'"
-                    class="btn btn-primary"
-                    v-on:click="crearServicio()"
-                    data-bs-dismiss="modal"
-                  >
-                    Guardar
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- fin modal servicios-->
-        <!-- ============================================================================================================================ -->
-        <!-- ============================================================================================================================ -->
-        <div
-          class="tab-pane fade"
-          id="profile-tab-pane"
-          role="tabpanel"
-          aria-labelledby="profile-tab"
-          tabindex="0"
-        >
-          <!-- Button modal 2  articulos -->
-          <div class="row mt-3 mb-3">
-            <div class="col-6">
-              <h6><strong>Articulos de la tienda</strong></h6>
-            </div>
-            <div class="col-6">
-              <button
-                type="button"
-                class="btn btn-warning"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                @click="B_nuevo()"
-              >
-                + Producto
-              </button>
-            </div>
-          </div>
-          <div class="container mb-3">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo
-            fuga nisi sint recusandae odio tempore vitae, quod placeat non ipsa
-            quibusdam nihil eaque numquam cupiditate quasi in harum illum eum!
-          </div>
-
-          <!--  -->
-          <div class="col-12">
-            <div class="table-responsive">
-              <table class="vitrina-table table-sm">
-                <thead>
-                  <tr>
-                    <th>Imagen</th>
-                    <th>Detalle</th>
-                    <th>Precio</th>
-                    <th>Opciones</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr v-for="item in productosFiltrados" :key="item.id" class="vitrinacard">
-                    <td>
-                      <div class="container centrarcontenido">
-                        <img
-                          :src="`${item.img}`"
-                          alt="imagen producto"
-                          class="imagenservicio"
-                        />
-                      </div>
-                    </td>
-
-                    <td>
-                      Cantidad: {{ item.cant }} <br />
-                      nombre: {{ item.nombre }}
-                      <!--         <br>publicado: {{item.publicado}}
-                                         Id: {{item.id}} -->
-                      <br />
-                    </td>
-                    <td>
-                      {{ item.precio }}
-                    </td>
-                    <td>
-                      <button
-                        class="btn btn-primary btn-sm m-1"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
-                        @click="M_editarproductos(item)"
-                      >
-                        <i class="bi bi-pen"></i>
-                      </button>
-                      <button
-                        class="btn btn-danger btn-sm m-1"
-                        @click="eliminaritem(item.id)"
-                      >
-                        <i class="bi bi-trash"></i>
-                      </button>
-                      <button
-                        class="btn btn-warning btn-sm m-1"
-                        @click="cambiarEstadoItem(item)"
-                        v-if="item.publicado == false"
-                      >
-                        <i class="bi bi-eye-slash-fill"></i>
-                      </button>
-                      <button
-                        class="btn btn-success btn-sm m-1"
-                        @click="cambiarEstadoItem(item)"
-                        v-if="item.publicado == true"
-                      >
-                        <i class="bi bi-eye"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <!--INICIO  Modal 2  productos-->
-          <div
-            class="modal fade vitrina-modal"
-            id="exampleModal"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog">
-              <div class="modal-content vitrina-modal">
-                <div class="modal-header vitrina-modal-header">
-                  <h1 class="modal-title fs-5 vitrina-modal-title" id="exampleModalLabel">
-                    Agregar nuevo articulo a la tienda
-                  </h1>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body vitrina-modal-body">
-                  <div class="container">
-                    <br />
-                    <h6>Ingrese los datos para crear un nuevo articulo</h6>
-                    <br />
-                    <div class="row">
-                      <div class="col-8 col-md-9">
-                        <div class="col">
-                          <div>
-                            <div class="col">
-                              <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Nombre"
-                                v-model="p_nombre"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <textarea
-                            class="form-control"
-                            rows="2"
-                            placeholder="Detalle"
-                            v-model="p_detalle"
-                          ></textarea>
-                        </div>
-
-                        <div class="col">
-                          <input
-                            type="number"
-                            class="form-control"
-                            placeholder="Precio"
-                            v-model="p_precio"
-                          />
-                        </div>
-                        <div class="col">
-                          <input
-                            type="number"
-                            class="form-control"
-                            placeholder="Cantidad"
-                            v-model="p_cant"
-                          />
-                        </div>
-                        <div class="col"></div>
-                      </div>
-                      <div
-                        class="col-4 col-md-3"
-                        v-if="this.modalOption === 'N'"
-                      >
-                        <img
-                          :src="local_Image"
-                          class="img-thumbnail"
-                          alt="..."
-                        />
-                      </div>
-                      <div
-                        class="col-4 col-md-3"
-                        v-if="this.modalOption === 'U'"
-                      >
-                        <img
-                          :src="`${this.p_img}`"
-                          alt="imagen producto"
-                          style="height: 100px"
-                          class="img-thumbnail"
-                        />
-                      </div>
-                      <div class="row">
-                        <div class="mb-3">
-                          <input
-                            class="form-control"
-                            type="file"
-                            id="formFile"
-                            @change="onSelectImage_p"
-                            accept="image/png,  image/jpeg,  image/jpg"
-                            v-if="this.modalOption === 'N'"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer vitrina-modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                    @click="limpiarmodal()"
-                  >
-                    Close
-                  </button>
-                  <!--  -->
-                  <button
-                    type="button"
-                    v-if="modalOption == 'U'"
-                    class="btn btn-primary"
-                    v-on:click="BM_updateProductos()"
-                    data-bs-dismiss="modal"
-                  >
-                    <!-- productos -->
-                    Actualizar
-                  </button>
-                  <!--  -->
-                  <button
-                    type="button"
-                    v-if="modalOption == 'N'"
-                    class="btn btn-primary"
-                    v-on:click="uploadImage_p()"
-                    data-bs-dismiss="modal"
-                  >
-                    Guardar
-                  </button>
-                  <!--  -->
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- fin modal1 productos-->
-        </div>
-      </div>
-
-      <router-link to="/dashboard">Home</router-link>
-    </div>
-  </div>
-</template>
-
 <script>
 import { storage } from "./../../api/fire";
 
@@ -997,4 +341,679 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div class="container config">
+    <div class="container">
+      <br />
+
+      <ul
+        class="nav nav-tabs nav justify-content-end"
+        id="myTab"
+        role="tablist"
+      >
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="home-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#home-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="home-tab-pane"
+            aria-selected="true"
+          >
+            Servicios
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="profile-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#profile-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="profile-tab-pane"
+            aria-selected="false"
+          >
+            Productos
+          </button>
+        </li>
+      </ul>
+      <!-- ====================================================================================== -->
+      <div class="tab-content" id="myTabContent">
+        <div
+          class="tab-pane fade show active"
+          id="home-tab-pane"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+          tabindex="0"
+        >
+          <div class="row mt-3 mb-3">
+            <div class="col-6">
+              <h6><strong>Clases Consultas y Terapias</strong></h6>
+            </div>
+            <div class="col-6">
+              <button
+                type="button"
+                class="btn btn-warning"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal2"
+                @click="B_nuevo()"
+              >
+                + Servicio
+              </button>
+            </div>
+          </div>
+          <div class="container">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo
+            fuga nisi sint recusandae odio tempore vitae, quod placeat non ipsa
+            quibusdam nihil eaque numquam cupiditate quasi in harum illum eum!
+          </div>
+
+          <br />
+          <!--  -->
+          <div class="col-12">
+            <div class="table-responsive">
+              <table class="vitrina-table table-sm">
+                <thead>
+                  <tr>
+                    <th>Imagen</th>
+                    <th>Detalle</th>
+                    <th>Descripcion</th>
+                    <th>Opc</th>
+                    <th>Precios</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="articulo in vitrinaservicios" :key="articulo.id" class="vitrinacard">
+                    <td>
+                        <img
+                          :src="`${articulo.img}`"
+                          alt="imagen producto"
+                          class="imagenservicio"
+                        />
+                    </td>
+
+                    <td>
+                      <small>Tipo: {{ articulo.tipo }}</small
+                      ><br />
+                      <small>Nombre: {{ articulo.nombre }}</small>
+                    </td>
+                    <td>{{ articulo.desc }}</td>
+                    <td>
+                      <div class="container">
+                        <button
+                          class="btn btn-primary m-1 btn-sm"
+                          data-bs-toggle="modal"
+                          data-bs-target="#exampleModal2"
+                          @click="M_editarservicios(articulo)"
+                        >
+                          <i class="bi bi-pen"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger m-1 btn-sm"
+                          @click="eliminaritem(articulo.id)"
+                        >
+                          <i class="bi bi-trash"></i>
+                        </button>
+                        <button
+                          class="btn btn-warning m-1 btn-sm"
+                          @click="cambiarEstadoItem(articulo)"
+                          v-if="articulo.publicado == false"
+                        >
+                          <i class="bi bi-eye-slash-fill"></i>
+                        </button>
+                        <button
+                          class="btn btn-success m-1 btn-sm"
+                          @click="cambiarEstadoItem(articulo)"
+                          v-if="articulo.publicado == true"
+                        >
+                          <i class="bi bi-eye"></i>
+                        </button>
+                      </div>
+                    </td>
+                    <td class="tablaconfig">
+                      <table
+                        class="vitrina-table table-sm vitrina-table-striped vitrina-table-borderless tablaconfig"
+                      >
+                        <thead>
+                          <tr>
+                            <td>Cant</td>
+                            <td>Valor</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            v-for="(item, index) in articulo.precios"
+                            :key="index"
+                          >
+                            <td>
+                              <small>{{ item.cant }}</small>
+                            </td>
+                            <td>
+                              <small>{{ item.precio }}</small>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <br />
+          <br />
+          <!-- inicio modal 1  servicios-->
+          <div
+            class="modal fade vitrina-modal"
+            id="exampleModal2"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel2"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content vitrina-modal">
+                <div class="modal-header vitrina-modal-header">
+                  <h1
+                    class="modal-title fs-5 vitrina-modal-title"
+                    id="exampleModalLabel2"
+                    v-if="this.modalOption === 'N'"
+                  >
+                    Agregar nuevo item de servicio
+                  </h1>
+                  <h1
+                    class="modal-title fs-5"
+                    id="exampleModalLabel2"
+                    v-if="this.modalOption === 'U'"
+                  >
+                    Editar item de servicio
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body vitrina-modal-body">
+                  <div class="container">
+                    <h6><strong>Datos del servicio</strong></h6>
+
+                    <div class="row">
+                      <div class="col-8 col-md-9">
+                        <div>
+                          <div class="col mb-1">
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="Nombre"
+                              id="servicio_nombre"
+                              name="servicio_nombre"
+                              v-model="s_nombre"
+                            />
+                          </div>
+                        </div>
+                        <div class="col mb-1">
+                          <select
+                            class="form-select form-select-sm"
+                            id="servicio_tipo"
+                            name="servicio_tipo"
+                            aria-label="Default select example"
+                            v-model="s_tipo"
+                          >
+                            <option selected value="">Categoria</option>
+                            <option value="terapia">Terapia</option>
+                            <option value="consulta">Consulta</option>
+                            <option value="clase">Clase</option>
+                          </select>
+                        </div>
+                        <div class="col mb-1">
+                          <textarea
+                            class="form-control"
+                            id="servicio_detalle"
+                            name="servicio_detalle"
+                            rows="2"
+                            placeholder="Detalle"
+                            v-model="s_detalle"
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div
+                        class="col-4 col-md-3"
+                        v-if="this.modalOption === 'N'"
+                      >
+                        <img
+                          :src="local_Image"
+                          class="img-thumbnail"
+                          alt="..."
+                        />
+                      </div>
+                      <div
+                        class="col-4 col-md-3"
+                        v-if="this.modalOption === 'U'"
+                      >
+                        <img
+                          :src="`${this.s_img}`"
+                          alt="imagen producto"
+                          style="height: 100px"
+                          class="img-thumbnail"
+                        />
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="mb-3">
+                        <input
+                          class="form-control"
+                          type="file"
+                          id="formFile"
+                          @change="onSelectImage_s($event)"
+                          accept="image/png,  image/jpeg,  image/jpg"
+                          v-if="this.modalOption === 'N'"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-6">
+                        <strong>Listado de precios</strong>
+                      </div>
+                      <div class="col-6">
+                        <button
+                          type="button"
+                          class="btn btn-warning btn-sm"
+                          @click="cargarcampositem()"
+                          v-if="!NewModal"
+                        >
+                          + Nuevo
+                        </button>
+                      </div>
+                    </div>
+                    <div class="container" v-if="NewModal">
+                      <div class="row mt-3">
+                        <div class="col-5">
+                          <input
+                            type="number"
+                            class="form-control"
+                            placeholder="Cant"
+                            id="item_cantidad"
+                            name="item_cantidad"
+                            v-model="cant"
+                          />
+                        </div>
+                        <div class="col-5">
+                          <input
+                            type="number"
+                            class="form-control"
+                            placeholder="Precio"
+                            id="item_precio"
+                            name="item_precio"
+                            v-model="precio"
+                          />
+                        </div>
+                        <div class="col-2">
+                          <button
+                            v-if="this.modalOption === 'N'"
+                            type="button"
+                            class="btn btn-warning btn-sm"
+                            @click="agregaritemlistN(cant, precio)"
+                          >
+                            +
+                          </button>
+                          <button
+                            v-if="this.modalOption === 'U'"
+                            type="button"
+                            class="btn btn-warning btn-sm"
+                            @click="agregaritemlistU(cant, precio)"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <hr />
+                    <table class="table" v-if="this.modalOption === 'N'">
+                      <thead>
+                        <tr>
+                          <th scope="col">Cant</th>
+                          <th scope="col">Precio</th>
+                          <th scope="col">Opc</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(itemN, index) in ArrayPrecios" :key="index">
+                          <td>{{ itemN.cant }}</td>
+                          <td>{{ itemN.precio }}</td>
+                          <td>
+                            <button
+                              class="btn btn-sm btn-danger"
+                              @click="eliminaritemArrayN(index)"
+                            >
+                              <i class="bi bi-trash-fill"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table class="table" v-if="this.modalOption === 'U'">
+                      <thead>
+                        <tr>
+                          <th scope="col">Cant</th>
+                          <th scope="col">Precio</th>
+                          <th scope="col">Opc</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(itemU, index) in s_precios" :key="index">
+                          <td>{{ itemU.cant }}</td>
+                          <td>{{ itemU.precio }}</td>
+                          <td>
+                            <button
+                              class="btn btn-sm btn-danger"
+                              @click="eliminaritemArrayU(index)"
+                            >
+                              <i class="bi bi-trash-fill"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="modal-footer vitrina-modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    @click="limpiarmodal()"
+                  >
+                    Close
+                  </button>
+
+                  <button
+                    type="button"
+                    v-if="modalOption == 'U'"
+                    class="btn btn-primary"
+                    v-on:click="BM_updateServicios()"
+                    data-bs-dismiss="modal"
+                  >
+                    <!-- SERVICIOS -->
+                    Actualizar
+                  </button>
+
+                  <button
+                    type="submit"
+                    v-if="modalOption == 'N'"
+                    class="btn btn-primary"
+                    v-on:click="crearServicio()"
+                    data-bs-dismiss="modal"
+                  >
+                    Guardar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- fin modal servicios-->
+        <!-- ============================================================================================================================ -->
+        <!-- ============================================================================================================================ -->
+        <div
+          class="tab-pane fade"
+          id="profile-tab-pane"
+          role="tabpanel"
+          aria-labelledby="profile-tab"
+          tabindex="0"
+        >
+          <!-- Button modal 2  articulos -->
+          <div class="row mt-3 mb-3">
+            <div class="col-6">
+              <h6><strong>Articulos de la tienda</strong></h6>
+            </div>
+            <div class="col-6">
+              <button
+                type="button"
+                class="btn btn-warning"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                @click="B_nuevo()"
+              >
+                + Producto
+              </button>
+            </div>
+          </div>
+          <div class="container mb-3">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo
+            fuga nisi sint recusandae odio tempore vitae, quod placeat non ipsa
+            quibusdam nihil eaque numquam cupiditate quasi in harum illum eum!
+          </div>
+
+          <!--  -->
+          <div class="col-12">
+            <div class="table-responsive">
+              <table class="vitrina-table table-sm">
+                <thead>
+                  <tr>
+                    <th>Imagen</th>
+                    <th>Detalle</th>
+                    <th>Precio</th>
+                    <th>Opciones</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr v-for="item in productosFiltrados" :key="item.id" class="vitrinacard">
+                    <td>
+                      <div class="container centrarcontenido">
+                        <img
+                          :src="`${item.img}`"
+                          alt="imagen producto"
+                          class="imagenservicio"
+                        />
+                      </div>
+                    </td>
+
+                    <td>
+                      Cantidad: {{ item.cant }} <br />
+                      nombre: {{ item.nombre }}
+                      <!--         <br>publicado: {{item.publicado}}
+                                         Id: {{item.id}} -->
+                      <br />
+                    </td>
+                    <td>
+                      {{ item.precio }}
+                    </td>
+                    <td>
+                      <button
+                        class="btn btn-primary btn-sm m-1"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        @click="M_editarproductos(item)"
+                      >
+                        <i class="bi bi-pen"></i>
+                      </button>
+                      <button
+                        class="btn btn-danger btn-sm m-1"
+                        @click="eliminaritem(item.id)"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                      <button
+                        class="btn btn-warning btn-sm m-1"
+                        @click="cambiarEstadoItem(item)"
+                        v-if="item.publicado == false"
+                      >
+                        <i class="bi bi-eye-slash-fill"></i>
+                      </button>
+                      <button
+                        class="btn btn-success btn-sm m-1"
+                        @click="cambiarEstadoItem(item)"
+                        v-if="item.publicado == true"
+                      >
+                        <i class="bi bi-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!--INICIO  Modal 2  productos-->
+          <div
+            class="modal fade vitrina-modal"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content vitrina-modal">
+                <div class="modal-header vitrina-modal-header">
+                  <h1 class="modal-title fs-5 vitrina-modal-title" id="exampleModalLabel">
+                    Agregar nuevo articulo a la tienda
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body vitrina-modal-body">
+                  <div class="container">
+                    <br />
+                    <h6>Ingrese los datos para crear un nuevo articulo</h6>
+                    <br />
+                    <div class="row">
+                      <div class="col-8 col-md-9">
+                        <div class="col">
+                          <div>
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Nombre"
+                                id="producto_nombre"
+                                name="producto_nombre"
+                                v-model="p_nombre"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <textarea
+                            class="form-control"
+                            id="producto_detalle"
+                            name="producto_detalle"
+                            rows="2"
+                            placeholder="Detalle"
+                            v-model="p_detalle"
+                          ></textarea>
+                        </div>
+
+                        <div class="col">
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="producto_precio"
+                            name="producto_precio"
+                            placeholder="Precio"
+                            v-model="p_precio"
+                          />
+                        </div>
+                        <div class="col">
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="producto_cantidad"
+                            name="producto_cantidad"
+                            placeholder="Cantidad"
+                            v-model="p_cant"
+                          />
+                        </div>
+                        <div class="col"></div>
+                      </div>
+                      <div
+                        class="col-4 col-md-3"
+                        v-if="this.modalOption === 'N'"
+                      >
+                        <img
+                          :src="local_Image"
+                          class="img-thumbnail"
+                          alt="..."
+                        />
+                      </div>
+                      <div
+                        class="col-4 col-md-3"
+                        v-if="this.modalOption === 'U'"
+                      >
+                        <img
+                          :src="`${this.p_img}`"
+                          alt="imagen producto"
+                          style="height: 100px"
+                          class="img-thumbnail"
+                        />
+                      </div>
+                      <div class="row">
+                        <div class="mb-3">
+                          <input
+                            class="form-control"
+                            type="file"
+                            id="formFile"
+                            @change="onSelectImage_p"
+                            accept="image/png,  image/jpeg,  image/jpg"
+                            v-if="this.modalOption === 'N'"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer vitrina-modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    @click="limpiarmodal()"
+                  >
+                    Close
+                  </button>
+                  <!--  -->
+                  <button
+                    type="button"
+                    v-if="modalOption == 'U'"
+                    class="btn btn-primary"
+                    v-on:click="BM_updateProductos()"
+                    data-bs-dismiss="modal"
+                  >
+                    <!-- productos -->
+                    Actualizar
+                  </button>
+                  <!--  -->
+                  <button
+                    type="button"
+                    v-if="modalOption == 'N'"
+                    class="btn btn-primary"
+                    v-on:click="uploadImage_p()"
+                    data-bs-dismiss="modal"
+                  >
+                    Guardar
+                  </button>
+                  <!--  -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- fin modal1 productos-->
+        </div>
+      </div>
+
+      <router-link to="/dashboard">Home</router-link>
+    </div>
+  </div>
+</template>
+
 <!-- -->

@@ -1,4 +1,135 @@
-<!-- hc13_ordenmedica -->
+<script>
+
+import {
+    mapActions,
+    mapGetters,
+    mapState
+} from "vuex";
+export default {
+    data() {
+        return {
+            cupsSeleccionado: null,
+            cantidad: "",
+            frecuencia: "",
+            busquedaCUPS: "",
+            resultadosCUPS: [],
+            modalInstance: null,
+            NewAntec: [],
+            ArraySaveConsulta: [],
+            /*  */
+            idPaciente: "1",
+            idhc: "111",
+            bd: "hc13_ordenmedica",
+        };
+    },
+      props: {
+    idpaciente: String,
+    idprofesional: String,
+    idips: String,
+    idfactura: [String, Number],
+    fecha: String
+  },
+  mounted() {
+    this.idPaciente = this.idpaciente;
+    this.idhc = this.idfactura;
+    try {
+        const modalElement = document.getElementById("modalCUPS");
+        if (modalElement) {
+            this.modalInstance = new bootstrap.Modal(modalElement);
+        }
+    } catch (error) {
+        console.warn("Modal element not found or already destroyed", error);
+    }
+  },
+    methods: {
+...mapActions('hc',["SaveDatos13"]),
+
+        abrirModalCUPS() {
+            if (this.modalInstance) {
+                this.modalInstance.show();
+            }
+        },
+        buscarCUPS() {
+            if (this.busquedaCUPS.trim() === "") {
+                this.resultadosCUPS = [];
+                return;
+            }
+
+            // Datos de ejemplo
+            const datosPrueba = [{
+                    codigo: "890301",
+                    descripcion: "Consulta de primera vez por medicina general",
+                },
+                {
+                    codigo: "890302",
+                    descripcion: "Consulta de control por medicina general",
+                },
+                {
+                    codigo: "890303",
+                    descripcion: "Consulta de primera vez por medicina especializada",
+                },
+                {
+                    codigo: "890304",
+                    descripcion: "Consulta de control por medicina especializada",
+                },
+                {
+                    codigo: "931000",
+                    descripcion: "Terapia física integral SOD"
+                },
+            ];
+
+            this.resultadosCUPS = datosPrueba.filter(
+                (item) =>
+                item.codigo.includes(this.busquedaCUPS) ||
+                item.descripcion
+                .toLowerCase()
+                .includes(this.busquedaCUPS.toLowerCase())
+            );
+        },
+        seleccionarCUPS(item) {
+            this.cupsSeleccionado = item;
+            if (this.modalInstance) {
+                this.modalInstance.hide();
+            }
+        },
+        AddAntec(tipo, cups, cantidad, frecuencia) {
+            let item = {
+                tipo: tipo,
+                cups: cups,
+                cantidad: cantidad,
+                frecuencia: frecuencia,
+            };
+            this.NewAntec = [...this.NewAntec, item];
+            this.limpiarCampos();
+        },
+
+        limpiarCampos(){
+            this.cupsSeleccionado="";
+            this.busquedaCUPS="";
+            this.cantidad="";
+            this.frecuencia="";
+        },
+        eliminarOrden(index) {
+            this.NewAntec.splice(index, 1);
+        },
+          guardarInfo13() {
+            this.ArraySaveConsulta = {
+                idPaciente: this.idPaciente,
+                idhc: this.idhc,
+                bd: this.bd,
+                fecha: this.fecha,
+                DataOMedica: this.NewAntec,
+            };
+
+            this.SaveDatos13(this.ArraySaveConsulta);
+
+            console.log("Datos guardados:", this.ArraySaveConsulta);
+ 
+        },
+    },
+};
+</script>
+
 <template>
 <div class="accordion-item">
     <h2 class="accordion-header">
@@ -111,130 +242,4 @@
 </div>
 </template>
 
-<script>
-
-import {
-    mapActions,
-    mapGetters,
-    mapState
-} from "vuex";
-export default {
-    data() {
-        return {
-            cupsSeleccionado: null,
-            cantidad: "",
-            frecuencia: "",
-            busquedaCUPS: "",
-            resultadosCUPS: [],
-            modalInstance: null,
-            NewAntec: [],
-            ArraySaveConsulta: [],
-            /*  */
-            idPaciente: "1",
-            idhc: "111",
-            bd: "hc13_ordenmedica",
-        };
-    },
-      props: {
-    idpaciente: String,
-    idprofesional: String,
-    idips: String,
-    idfactura: [String, Number]
-  },
-    mounted() {
-        try {
-            const modalElement = document.getElementById("modalCUPS");
-            if (modalElement) {
-                this.modalInstance = new bootstrap.Modal(modalElement);
-            }
-        } catch (error) {
-            console.warn("Modal element not found or already destroyed", error);
-        }
-    },
-    methods: {
-...mapActions('hc',["SaveDatos13"]),
-
-        abrirModalCUPS() {
-            if (this.modalInstance) {
-                this.modalInstance.show();
-            }
-        },
-        buscarCUPS() {
-            if (this.busquedaCUPS.trim() === "") {
-                this.resultadosCUPS = [];
-                return;
-            }
-
-            // Datos de ejemplo
-            const datosPrueba = [{
-                    codigo: "890301",
-                    descripcion: "Consulta de primera vez por medicina general",
-                },
-                {
-                    codigo: "890302",
-                    descripcion: "Consulta de control por medicina general",
-                },
-                {
-                    codigo: "890303",
-                    descripcion: "Consulta de primera vez por medicina especializada",
-                },
-                {
-                    codigo: "890304",
-                    descripcion: "Consulta de control por medicina especializada",
-                },
-                {
-                    codigo: "931000",
-                    descripcion: "Terapia física integral SOD"
-                },
-            ];
-
-            this.resultadosCUPS = datosPrueba.filter(
-                (item) =>
-                item.codigo.includes(this.busquedaCUPS) ||
-                item.descripcion
-                .toLowerCase()
-                .includes(this.busquedaCUPS.toLowerCase())
-            );
-        },
-        seleccionarCUPS(item) {
-            this.cupsSeleccionado = item;
-            if (this.modalInstance) {
-                this.modalInstance.hide();
-            }
-        },
-        AddAntec(tipo, cups, cantidad, frecuencia) {
-            let item = {
-                tipo: tipo,
-                cups: cups,
-                cantidad: cantidad,
-                frecuencia: frecuencia,
-            };
-            this.NewAntec = [...this.NewAntec, item];
-            this.limpiarCampos();
-        },
-
-        limpiarCampos(){
-            this.cupsSeleccionado="";
-            this.busquedaCUPS="";
-            this.cantidad="";
-            this.frecuencia="";
-        },
-        eliminarOrden(index) {
-            this.NewAntec.splice(index, 1);
-        },
-          guardarInfo13() {
-            this.ArraySaveConsulta = {
-                idPaciente: this.idPaciente,
-                idhc: this.idhc,
-                bd: this.bd,
-                DataOMedica: this.NewAntec,
-            };
-
-            this.SaveDatos13(this.ArraySaveConsulta);
-
-            console.log("Datos guardados:", this.ArraySaveConsulta);
- 
-        },
-    },
-};
-</script>
+<!-- hc13_ordenmedica -->

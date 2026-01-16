@@ -2,12 +2,12 @@
 
 ## Quick Reference
 
-| Module      | Purpose                               | Key State                                        | Main Actions                                                                  |
-| ----------- | ------------------------------------- | ------------------------------------------------ | ----------------------------------------------------------------------------- |
-| **Auth**    | Authentication & company/page config  | `id_ips`, `DataEmpresa`, `DataPagina`            | `getDataIPSbyParam`, `Action_update_Empresa`                                  |
-| **Agendas** | Appointments, patients, professionals | `dataCitas`, `datapaciente`, `dataprofesionales` | `getDatabyParam`, `createEntradaCitaNueva`, `updateReserva`                   |
-| **HC**      | Medical records (13 sections)         | `id_paciente`, `StateNumRegHC`                   | `SaveHCcabecera`, `SaveDatos1-13`                                             |
-| **Vitrina** | E-commerce & invoicing                | `entry`, `StateFacturasDiarias`                  | `load_Vitrina`, `createEntradaFacturaCabecera`, `createEntradaFacturaDetalle` |
+| Module      | Purpose                              | Key State                                                  | Main Actions                                                                   |
+| ----------- | ------------------------------------ | ---------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| **Auth**    | Authentication & company/page config | `id_ips`, `DataEmpresa`, `DataPagina`, `dataprofesionales` | `getDataIPSbyParam`, `getDatabyParam`, `getDatabyKey`, `Action_update_Empresa` |
+| **Agendas** | Appointments, patients               | `dataCitas`, `datapaciente`                                | `getDatabyParam`, `createEntradaCitaNueva`, `updateReserva`                    |
+| **HC**      | Medical records (13 sections)        | `id_paciente`, `StateNumRegHC`                             | `SaveHCcabecera`, `SaveDatos1-13`                                              |
+| **Vitrina** | E-commerce & invoicing               | `entry`, `StateFacturasDiarias`                            | `load_Vitrina`, `createEntradaFacturaCabecera`, `createEntradaFacturaDetalle`  |
 
 ---
 
@@ -27,8 +27,8 @@
 - `README.md` - Detailed documentation
 
 **State**: 8 properties (auth, id_ips, id_user, rol, DataEmpresa[], DataPagina[], stateEmpresa, statePagina)
-**Actions**: 6 functions
-**Mutations**: 3 functions
+**Actions**: 8 functions
+**Mutations**: 5 functions
 
 ---
 
@@ -40,15 +40,17 @@
 
 - `state.js` - Appointment data state
 - `actions.js` - Data retrieval, creation, modification
-- `mutations.js` - State updates (cleaned, 9 mutations)
+- `mutations.js` - State updates (cleaned, 7 mutations)
 - `getters.js` - (empty, use mapState)
 - `index.js` - Module export
 - `README.md` - Detailed documentation
 - `mutations_clean.js` - Backup/reference file
 
-**State**: 11 properties (datapaciente[], dataCitas[], dataprofesionales[], etc.)
+**State**: 9 properties (datapaciente[], dataCitas[], datausuarios[], etc.)
 **Actions**: 14 functions
-**Mutations**: 11 functions
+**Mutations**: 9 functions
+
+NOTE: `dataprofesionales[]` and `existeprofesionales` moved to Auth module
 
 ---
 

@@ -1,3 +1,9 @@
+<script>
+export default {
+
+}
+</script>
+
 <template lang="">
 <div>
     <div class="container" id="agendas">
@@ -521,12 +527,6 @@
     </div>
 </div>
 </template>
-
-<script>
-export default {
-
-}
-</script>
 
 <style lang="">
 

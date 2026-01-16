@@ -1,3 +1,346 @@
+<script>
+import { mapActions, mapState } from "vuex";
+import moment from "moment";
+
+export default {
+  data: () => ({
+    B_tipodoc: "",
+    B_numdoc: "",
+    selec_prod: "",
+    select_categ: "",
+    cant: "",
+    DataFactura: [],
+    /*  */
+    idfactura: "",
+    idpaciente: "",
+    /*  */
+    idips: "1",
+    /*  */
+    paramsInventario: {},
+    /* crear pacientte */
+    name1: "",
+    name2: "",
+    apell1: "",
+    apell2: "",
+    celular: "",
+    email: "",
+    dir: "",
+    fnacimiento: "",
+    email: "",
+    dir: "",
+    f_nacimiento: "",
+    paramsPaciente: [],
+    Guardar_p_isButtonDisabled: false,
+    datapacientenuevo: [],
+    filtro: [],
+    combos: [],
+    selectcombo: [],
+    selec_combo: "",
+    cantFact: "",
+    FacturasDiarias: [],
+  }),
+  methods: {
+    ...mapActions("Agendas", [
+      "getDatabyParam",
+      "getDataUsersbyParam",
+      "DeleteItem",
+      "clearDataStoreA",
+      "clearStorePaciente",
+      "NewgetDataUsersbyParam",
+      "createEntradanewPaciente",
+    ]),
+    ...mapActions("vitrina", [
+      "getDatosVitrinabyParams",
+      "createEntradaFacturaDetalle",
+      "createEntradaFacturaCabecera",
+      "getListFacturasDia",
+      "getCurrentIdFactura",
+      "UpdateNewIdFactura",
+    ]),
+
+    /* ----------------------------------------------------------------------------------------------------------- */
+    BTN_Buscar_paciente() {
+      this.idpaciente = this.B_tipodoc + this.B_numdoc;
+      this.paramsPaciente = [
+        {
+          bd: "pacientes",
+          parametro: "numdoc",
+          valor: this.idpaciente,
+          rta: "setStatePaciente",
+        },
+      ];
+      this.getDataUsersbyParam(this.paramsPaciente);
+    },
+    /* ----------------------------------------------------------------------------------------------------------- */
+    async BTN_registar_Paciente() {
+      this.idpaciente = this.B_tipodoc + this.B_numdoc;
+      this.paramsGuardarPaciente = [
+        {
+          numdoc: this.idpaciente,
+          name1: this.name1,
+          name2: this.name2,
+          apell1: this.apell1,
+          apell2: this.apell2,
+          celular: this.celular,
+          email: this.email,
+          dir: this.dir,
+          fnacimiento: this.fnacimento,
+          bd: "pacientes",
+        },
+      ];
+      await this.createEntradanewPaciente(this.paramsGuardarPaciente[0]);
+      this.BTN_Buscar_paciente();
+    },
+    AddArticulo() {
+      let itemA = {
+        idpac: this.idpaciente,
+        idfact: this.idfactura,
+        idips: this.idips,
+        /*  */
+
+        categoria: this.select_categ,
+        nombre: this.selec_prod.nombre,
+        combo: 1,
+        precio: this.selec_prod.precio,
+        cant: Number(this.cantFact),
+        subt: Number(this.selec_prod.precio * this.cantFact),
+        /*  */
+        fecha: moment().format("YYYY-MM-DD"),
+      };
+      this.DataFactura = [...this.DataFactura, itemA];
+      this.clearCampos();
+    },
+
+    AddServicio() {
+      let itemS = {
+        idpac: this.idpaciente,
+        idfact: this.idfactura,
+        idips: this.idips,
+        /*  */
+        categoria: this.select_categ,
+        nombre: this.selec_prod.nombre,
+        combo: this.selec_combo.cant,
+        precio: this.selec_combo.precio,
+        cant: Number(this.cantFact),
+        subt: Number(this.cantFact * this.selec_combo.precio),
+        /*  */
+        fecha: moment().format("YYYY-MM-DD"),
+      };
+      this.DataFactura = [...this.DataFactura, itemS];
+      this.clearCampos();
+    },
+    clearCampos() {
+      this.selec_prod = "";
+      this.select_categ = "";
+      this.selec_combo = "";
+      this.cantFact = "";
+    },
+    eliminaritem(index) {
+      console.log(index);
+      this.DataFactura.splice(index, 1);
+    },
+
+    categSeleccionada(categoria) {
+      console.log("Categoría seleccionada:", categoria);
+      console.log("leyendo desde", this.StateInventario[0]);
+      this.filtro = this.StateInventario[0].filter(
+        (producto) => producto.tipo === categoria
+      );
+      this.selec_prod = "";
+      this.selec_combo = "";
+      return;
+    },
+
+    FiltrarCombos(opc, id) {
+      if (opc !== "producto") {
+        console.log("dato consulta combo:", id);
+        this.combos = this.StateInventario[0].filter((combo) => combo.nombre === id);
+        this.selec_combo = "";
+        this.selectcombo = this.combos[0].precios;
+        console.log(this.selectcombo);
+      }
+    },
+
+    cancelar_cerrarmodal() {
+      this.name1 = "";
+      this.name2 = "";
+      this.apell1 = "";
+      this.apell2 = "";
+      this.celular = "";
+      this.email = "";
+      this.dir = "";
+      this.fnacimiento = "";
+      this.B_tipodoc = "";
+      this.B_numdoc = "";
+
+      this.vaciarStorePaciente();
+    },
+
+    async crearNuevoRegistroFactura() {
+      try {
+        // 1. Traer y actualizar el ID de factura de forma atómica
+        const {
+          idFactura: currentIdFactura,
+          id: counterId,
+        } = await this.CurrentIdFactura();
+        const newIdFactura = currentIdFactura + 1;
+
+        // 2. Guardar el nuevo ID en la tabla de contadores
+        await this.saveNewIdFactura(newIdFactura, counterId);
+
+        // 3. Asignar el nuevo ID a cada elemento en DataFactura
+        this.actualizarIdFactura(newIdFactura);
+
+        // 4. Guardar la factura
+        await this.GuardarFactura();
+
+        // 5. Limpiar la información
+        this.vaciarStorePaciente();
+        this.Alerta_ok();
+        this.vaciarformulario();
+      } catch (error) {
+        console.error("Error al crear el nuevo registro de factura:", error);
+        // Aquí puedes añadir lógica para revertir cambios si es necesario
+        // y mostrar un mensaje de error al usuario
+      }
+    },
+
+    actualizarIdFactura(newIdFactura) {
+      this.DataFactura = this.DataFactura.map((item) => ({
+        ...item,
+        idfact: newIdFactura,
+      }));
+      this.idfactura = newIdFactura;
+      console.log(this.DataFactura);
+    },
+
+    async GuardarFactura() {
+      try {
+        // Guardar cabecera
+        const Datacabecera = {
+          idpac: this.idpaciente,
+          idips: this.idips,
+          idfact: this.idfactura,
+          fecha: moment().format("YYYY-MM-DD"),
+        };
+        await this.createEntradaFacturaCabecera(Datacabecera);
+
+        // Guardar detalle
+        await this.createEntradaFacturaDetalle(this.DataFactura);
+      } catch (error) {
+        console.error("Error al guardar la factura:", error);
+        // Aquí puedes agregar lógica adicional, como mostrar un mensaje al usuario
+      }
+    },
+
+    Alerta_ok() {
+      // Simula un proceso largo
+      Swal.fire({
+        title: "¡Proceso finalizado!",
+        text: "Venta facturada exitosamente.",
+        icon: "success",
+        confirmButtonText: "Aceptar",
+      });
+    },
+
+    vaciarformulario() {
+      this.B_tipodoc = "";
+      this.B_numdoc = "";
+      this.selec_prod = "";
+      this.select_categ = "";
+      this.cant = "";
+      this.DataFactura = [];
+      /*  */
+      this.idfactura = "";
+      this.idpaciente = "";
+      /*  */
+      this.idips = "1";
+      /*  */
+      this.paramsInventario = {};
+      /* crear pacientte */
+      this.name1 = "";
+      this.name2 = "";
+      this.apell1 = "";
+      this.apell2 = "";
+      this.celular = "";
+      this.email = "";
+      this.dir = "";
+      this.fnacimiento = "";
+      this.email = "";
+    },
+
+    vaciarStorePaciente() {
+      this.clearStorePaciente();
+    },
+
+    ventasDiarias() {
+      let parametros = {
+        bd: "facturas",
+        parametro: "fecha",
+        valor: moment().format("YYYY-MM-DD"),
+        mutation: "setStateFacturasDiarias",
+      };
+      this.getListFacturasDia(parametros);
+    },
+
+    async CurrentIdFactura() {
+      const params = {
+        bd: "counters",
+        parametro: "idIps",
+        valor: 1,
+      };
+      try {
+        const result = await this.getCurrentIdFactura(params);
+        //   console.log("ID Factura:", result);
+        return result;
+      } catch (err) {
+        console.error(err);
+        return null; // O puedes lanzar el error si prefieres
+      }
+    },
+
+    saveNewIdFactura(fact, id) {
+      const params = {
+        bd: "counters",
+        id: id,
+        idFact: fact,
+      };
+      return this.UpdateNewIdFactura(params);
+    },
+  },
+  computed: {
+    ...mapState("Agendas", ["existepaciente", "datapaciente"]),
+
+    ...mapState("vitrina", ["StateInventario", "StateFacturasDiarias"]),
+
+    categoriasUnicas() {
+      if (!this.StateInventario) return [];
+      return [...new Set(this.StateInventario[0].map((item) => item.tipo))];
+    },
+
+    totalFactura() {
+      return this.DataFactura.reduce((acc, item) => acc + item.subt, 0);
+    },
+
+    fechaHoy() {
+      return moment().format("YYYY-MM-DD");
+    },
+  },
+  /* cargar estado de inventario */
+  created() {
+    Promise.all([
+      (this.paramsInventario = {
+        bd: "vitrina",
+        parametro: "id_ips",
+        valor: this.idips,
+        mutation: "setStateInventario",
+      }),
+      this.getDatosVitrinabyParams(this.paramsInventario),
+    ]);
+  },
+};
+</script>
+
 <template>
   <div class="container mt-4">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -451,348 +794,5 @@
 
   <!-- ---------------------------------------------------------------------------------------- -->
 </template>
-
-<script>
-import { mapActions, mapState } from "vuex";
-import moment from "moment";
-
-export default {
-  data: () => ({
-    B_tipodoc: "",
-    B_numdoc: "",
-    selec_prod: "",
-    select_categ: "",
-    cant: "",
-    DataFactura: [],
-    /*  */
-    idfactura: "",
-    idpaciente: "",
-    /*  */
-    idips: "1",
-    /*  */
-    paramsInventario: {},
-    /* crear pacientte */
-    name1: "",
-    name2: "",
-    apell1: "",
-    apell2: "",
-    celular: "",
-    email: "",
-    dir: "",
-    fnacimiento: "",
-    email: "",
-    dir: "",
-    f_nacimiento: "",
-    paramsPaciente: [],
-    Guardar_p_isButtonDisabled: false,
-    datapacientenuevo: [],
-    filtro: [],
-    combos: [],
-    selectcombo: [],
-    selec_combo: "",
-    cantFact: "",
-    FacturasDiarias: [],
-  }),
-  methods: {
-    ...mapActions("Agendas", [
-      "getDatabyParam",
-      "getDataUsersbyParam",
-      "DeleteItem",
-      "clearDataStoreA",
-      "clearStorePaciente",
-      "NewgetDataUsersbyParam",
-      "createEntradanewPaciente",
-    ]),
-    ...mapActions("vitrina", [
-      "getDatosVitrinabyParams",
-      "createEntradaFacturaDetalle",
-      "createEntradaFacturaCabecera",
-      "getListFacturasDia",
-      "getCurrentIdFactura",
-      "UpdateNewIdFactura",
-    ]),
-
-    /* ----------------------------------------------------------------------------------------------------------- */
-    BTN_Buscar_paciente() {
-      this.idpaciente = this.B_tipodoc + this.B_numdoc;
-      this.paramsPaciente = [
-        {
-          bd: "pacientes",
-          parametro: "numdoc",
-          valor: this.idpaciente,
-          rta: "setStatePaciente",
-        },
-      ];
-      this.getDataUsersbyParam(this.paramsPaciente);
-    },
-    /* ----------------------------------------------------------------------------------------------------------- */
-    async BTN_registar_Paciente() {
-      this.idpaciente = this.B_tipodoc + this.B_numdoc;
-      this.paramsGuardarPaciente = [
-        {
-          numdoc: this.idpaciente,
-          name1: this.name1,
-          name2: this.name2,
-          apell1: this.apell1,
-          apell2: this.apell2,
-          celular: this.celular,
-          email: this.email,
-          dir: this.dir,
-          fnacimiento: this.fnacimento,
-          bd: "pacientes",
-        },
-      ];
-      await this.createEntradanewPaciente(this.paramsGuardarPaciente[0]);
-      this.BTN_Buscar_paciente();
-    },
-    AddArticulo() {
-      let itemA = {
-        idpac: this.idpaciente,
-        idfact: this.idfactura,
-        idips: this.idips,
-        /*  */
-
-        categoria: this.select_categ,
-        nombre: this.selec_prod.nombre,
-        combo: 1,
-        precio: this.selec_prod.precio,
-        cant: Number(this.cantFact),
-        subt: Number(this.selec_prod.precio * this.cantFact),
-        /*  */
-        fecha: moment().format("YYYY-MM-DD"),
-      };
-      this.DataFactura = [...this.DataFactura, itemA];
-      this.clearCampos();
-    },
-
-    AddServicio() {
-      let itemS = {
-        idpac: this.idpaciente,
-        idfact: this.idfactura,
-        idips: this.idips,
-        /*  */
-        categoria: this.select_categ,
-        nombre: this.selec_prod.nombre,
-        combo: this.selec_combo.cant,
-        precio: this.selec_combo.precio,
-        cant: Number(this.cantFact),
-        subt: Number(this.cantFact * this.selec_combo.precio),
-        /*  */
-        fecha: moment().format("YYYY-MM-DD"),
-      };
-      this.DataFactura = [...this.DataFactura, itemS];
-      this.clearCampos();
-    },
-    clearCampos() {
-      this.selec_prod = "";
-      this.select_categ = "";
-      this.selec_combo = "";
-      this.cantFact = "";
-    },
-    eliminaritem(index) {
-      console.log(index);
-      this.DataFactura.splice(index, 1);
-    },
-
-    categSeleccionada(categoria) {
-      console.log("Categoría seleccionada:", categoria);
-      console.log("leyendo desde", this.StateInventario[0]);
-      this.filtro = this.StateInventario[0].filter(
-        (producto) => producto.tipo === categoria
-      );
-      this.selec_prod = "";
-      this.selec_combo = "";
-      return;
-    },
-
-    FiltrarCombos(opc, id) {
-      if (opc !== "producto") {
-        console.log("dato consulta combo:", id);
-        this.combos = this.StateInventario[0].filter((combo) => combo.nombre === id);
-        this.selec_combo = "";
-        this.selectcombo = this.combos[0].precios;
-        console.log(this.selectcombo);
-      }
-    },
-
-    cancelar_cerrarmodal() {
-      this.name1 = "";
-      this.name2 = "";
-      this.apell1 = "";
-      this.apell2 = "";
-      this.celular = "";
-      this.email = "";
-      this.dir = "";
-      this.fnacimiento = "";
-      this.B_tipodoc = "";
-      this.B_numdoc = "";
-
-      this.vaciarStorePaciente();
-    },
-
-    async crearNuevoRegistroFactura() {
-      try {
-        // 1. Traer y actualizar el ID de factura de forma atómica
-        const {
-          idFactura: currentIdFactura,
-          id: counterId,
-        } = await this.CurrentIdFactura();
-        const newIdFactura = currentIdFactura + 1;
-
-        // 2. Guardar el nuevo ID en la tabla de contadores
-        await this.saveNewIdFactura(newIdFactura, counterId);
-
-        // 3. Asignar el nuevo ID a cada elemento en DataFactura
-        this.actualizarIdFactura(newIdFactura);
-
-        // 4. Guardar la factura
-        await this.GuardarFactura();
-
-        // 5. Limpiar la información
-        this.vaciarStorePaciente();
-        this.Alerta_ok();
-        this.vaciarformulario();
-      } catch (error) {
-        console.error("Error al crear el nuevo registro de factura:", error);
-        // Aquí puedes añadir lógica para revertir cambios si es necesario
-        // y mostrar un mensaje de error al usuario
-      }
-    },
-
-    actualizarIdFactura(newIdFactura) {
-      this.DataFactura = this.DataFactura.map((item) => ({
-        ...item,
-        idfact: newIdFactura,
-      }));
-      this.idfactura = newIdFactura;
-      console.log(this.DataFactura);
-    },
-
-    async GuardarFactura() {
-      try {
-        // Guardar cabecera
-        const Datacabecera = {
-          idpac: this.idpaciente,
-          idips: this.idips,
-          idfact: this.idfactura,
-          fecha: moment().format("YYYY-MM-DD"),
-        };
-        await this.createEntradaFacturaCabecera(Datacabecera);
-
-        // Guardar detalle
-        await this.createEntradaFacturaDetalle(this.DataFactura);
-      } catch (error) {
-        console.error("Error al guardar la factura:", error);
-        // Aquí puedes agregar lógica adicional, como mostrar un mensaje al usuario
-      }
-    },
-
-    Alerta_ok() {
-      // Simula un proceso largo
-      Swal.fire({
-        title: "¡Proceso finalizado!",
-        text: "Venta facturada exitosamente.",
-        icon: "success",
-        confirmButtonText: "Aceptar",
-      });
-    },
-
-    vaciarformulario() {
-      this.B_tipodoc = "";
-      this.B_numdoc = "";
-      this.selec_prod = "";
-      this.select_categ = "";
-      this.cant = "";
-      this.DataFactura = [];
-      /*  */
-      this.idfactura = "";
-      this.idpaciente = "";
-      /*  */
-      this.idips = "1";
-      /*  */
-      this.paramsInventario = {};
-      /* crear pacientte */
-      this.name1 = "";
-      this.name2 = "";
-      this.apell1 = "";
-      this.apell2 = "";
-      this.celular = "";
-      this.email = "";
-      this.dir = "";
-      this.fnacimiento = "";
-      this.email = "";
-    },
-
-    vaciarStorePaciente() {
-      this.clearStorePaciente();
-    },
-
-    ventasDiarias() {
-      let parametros = {
-        bd: "facturas",
-        parametro: "fecha",
-        valor: moment().format("YYYY-MM-DD"),
-        mutation: "setStateFacturasDiarias",
-      };
-      this.getListFacturasDia(parametros);
-    },
-
-    async CurrentIdFactura() {
-      const params = {
-        bd: "counters",
-        parametro: "idIps",
-        valor: 1,
-      };
-      try {
-        const result = await this.getCurrentIdFactura(params);
-        //   console.log("ID Factura:", result);
-        return result;
-      } catch (err) {
-        console.error(err);
-        return null; // O puedes lanzar el error si prefieres
-      }
-    },
-
-    saveNewIdFactura(fact, id) {
-      const params = {
-        bd: "counters",
-        id: id,
-        idFact: fact,
-      };
-      return this.UpdateNewIdFactura(params);
-    },
-  },
-  computed: {
-    ...mapState("Agendas", ["existepaciente", "datapaciente"]),
-
-    ...mapState("vitrina", ["StateInventario", "StateFacturasDiarias"]),
-
-    categoriasUnicas() {
-      if (!this.StateInventario) return [];
-      return [...new Set(this.StateInventario[0].map((item) => item.tipo))];
-    },
-
-    totalFactura() {
-      return this.DataFactura.reduce((acc, item) => acc + item.subt, 0);
-    },
-
-    fechaHoy() {
-      return moment().format("YYYY-MM-DD");
-    },
-  },
-  /* cargar estado de inventario */
-  created() {
-    Promise.all([
-      (this.paramsInventario = {
-        bd: "vitrina",
-        parametro: "id_ips",
-        valor: this.idips,
-        mutation: "setStateInventario",
-      }),
-      this.getDatosVitrinabyParams(this.paramsInventario),
-    ]);
-  },
-};
-</script>
 
 <style></style>

@@ -1,7 +1,7 @@
 /**
  * AGENDAS MODULE - Consolidated Vuex Module
  * 
- * Manages appointments, patients, professionals, and schedules
+ * Manages appointments, patients, and schedules
  * 
  * Parts consolidated:
  * - state.js: Initial state structure
@@ -13,15 +13,15 @@
  * 
  * State properties:
  * - datapaciente[]: Patient data array
- * - dataprofesionales[]: Professionals data array
  * - datausuarios[]: Users data array
  * - dataCitas[]: Appointments data array
  * - dataAllCitas[]: All appointments data array
  * - dataAllCitasPaciente[]: All appointments for specific patient
  * - dataAgendas[]: Agendas/schedules array
  * - existepaciente: Patient existence flag
- * - existeprofesionales: Professionals existence flag
  * - existeusuarios: Users existence flag
+ * 
+ * NOTE: dataprofesionales[] and existeprofesionales moved to Auth module
  */
 
 import firebase_api from "@/api/firebaseApi";
@@ -35,13 +35,13 @@ const state = () => ({
     datapaciente: [],
     existepaciente: "",
 
-    // Professionals data
-    dataprofesionales: [],
-    existeprofesionales: "",
-
     // Users data
     datausuarios: [],
     existeusuarios: "",
+
+    // Professionals data (compatibility - primary storage in Auth module)
+    dataprofesionales: [],
+    existeprofesionales: "",
 
     // Appointments data
     dataCitas: [],
@@ -109,8 +109,6 @@ const mutations = {
         state.dataAgendas = [];
         state.datapaciente = [];
         state.existepaciente = "";
-        state.dataprofesionales = [];
-        state.existeprofesionales = "";
     },
 
     /**
@@ -120,14 +118,6 @@ const mutations = {
         state.dataAllCitasPaciente = [];
         state.datapaciente = [];
         state.existepaciente = "";
-    },
-
-    /**
-     * Set Professionals Data
-     */
-    setStateProfesionales: (state, entryDataProfesionales) => {
-        state.dataprofesionales = [...entryDataProfesionales];
-        state.existeprofesionales = entryDataProfesionales.length;
     },
 
     /**
@@ -146,10 +136,23 @@ const mutations = {
     },
 
     /**
+     * Set Professionals Data
+     * NOTA: Compatibilidad - profesionales ahora se guardan también en Auth
+     * pero se mantiene aquí para retrocompatibilidad
+     */
+    setStateProfesionales: (state, entryDataProfesionales) => {
+        // Almacenar también localmente para compatibilidad
+        // (el estado principal está en Auth module)
+        state.dataprofesionales = entryDataProfesionales;
+        state.existeprofesionales = entryDataProfesionales.length;
+    },
+
+    /**
      * Set Specific Professional Data
+     * NOTA: Compatibilidad - para cargas específicas de profesional
      */
     setStateDataProfesional: (state, entryDataProfesional) => {
-        state.dataprofesionales = [...entryDataProfesional];
+        state.dataprofesionales = entryDataProfesional;
     },
 };
 
@@ -279,9 +282,9 @@ const actions = {
     },
 
     /**
-     * Get Users by Parameter (Alias - Flexible payload)
-     * Permite consumir el mismo flujo que `getDataUsersbyParam` pero aceptando
-     * estructuras de parámetros con llaves `parametro1`/`valor1` usadas en componentes antiguos.
+     * Get Users by Parameter (Flexible payload)
+     * Permite consumir datos de usuarios/pacientes con parámetros flexibles
+     * Usa llaves `parametro1`/`valor1` usadas en componentes antiguos.
      * @param {Object} context - Vuex context
      * @param {Array} parametros - [{bd, parametro|parametro1, valor|valor1, rta}]
      */

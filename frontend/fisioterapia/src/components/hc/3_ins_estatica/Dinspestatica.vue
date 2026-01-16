@@ -1,4 +1,83 @@
-<!-- hc3_inspestatica-->
+<script>
+import {
+    insp_estatica
+} from "./../../../firebase/bd.js";
+import {
+    mapActions,
+    mapGetters,
+    mapState
+} from "vuex";
+export default {
+    data: () => ({
+        data_ie_piel: insp_estatica.filter((el) => el.clas === "piel")[0],
+        data_ie_lesiones: insp_estatica.filter((el) => el.clas === "lesiones")[0],
+        data_ie_biotipo: insp_estatica.filter((el) => el.clas === "biotipo")[0],
+        data_ie_postura: insp_estatica.filter((el) => el.clas === "postura")[0],
+        i_est_piel: "0",
+        i_est_lesiones: "0",
+        i_e_biotipo: "0",
+        i_e_postura: "0",
+        detalle_piel: "",
+        detalle_lesiones: "",
+        detalle_biotipo: "",
+        detalle_postura: "",
+        NewAntec: [],
+        ArraySaveConsulta: [],
+        tipoAnt: "",
+        /*  */
+
+        bd: "hc3_inspecionestatica",
+    }),
+
+    methods: {
+        ...mapActions("hc", ["SaveDatos3"]),
+
+        AddAntec(tipo, enf, detalle) {
+            let item = {
+                tipo: tipo,
+                enfermedad: enf,
+                detalleenf: detalle,
+            };
+            this.NewAntec = [...this.NewAntec, item];
+            this.limpiarcampos();
+        },
+        eliminaritem(index) {
+            console.log(index);
+            this.NewAntec.splice(index, 1);
+        },
+        limpiarcampos() {
+            this.i_est_piel = "0";
+            this.detalle_piel = "";
+            this.i_est_lesiones = "0";
+            this.detalle_lesiones = "";
+            this.i_e_biotipo = "0";
+            this.detalle_biotipo = "";
+            this.i_e_postura = "0";
+            this.detalle_postura = "";
+        },
+        async guardarInfo3() {
+            /* this.ArraySaveConsulta = []; */
+            this.datosObservacion = [{
+                bd: this.bd,
+                idpaciente: this.StateNumRegHC.idpaciente,
+                idprofesional: this.StateNumRegHC.idprofesional,
+                idips: this.StateNumRegHC.idips,
+                idhc: this.StateNumRegHC.idHC,
+                fecha: this.StateNumRegHC.fecha,
+                // Observaciones
+                bd: this.bd,
+                dataeval: this.NewAntec,
+            }, ];
+            this.SaveDatos3(this.datosObservacion[0]);
+        },
+    },
+    computed: {
+        ...mapState("hc", ["StateNumRegHC"]),
+    },
+    created() {},
+};
+</script>
+
 <template>
 <div class="accordion-item">
     <h2 class="accordion-header">
@@ -160,87 +239,6 @@
 </div>
 </template>
 
-<script>
-import {
-    insp_estatica
-} from "./../../../firebase/bd.js";
-import {
-    mapActions,
-    mapGetters,
-    mapState
-} from "vuex";
-export default {
-    data: () => ({
-        data_ie_piel: insp_estatica.filter((el) => el.clas === "piel")[0],
-        data_ie_lesiones: insp_estatica.filter((el) => el.clas === "lesiones")[0],
-        data_ie_biotipo: insp_estatica.filter((el) => el.clas === "biotipo")[0],
-        data_ie_postura: insp_estatica.filter((el) => el.clas === "postura")[0],
-        i_est_piel: "0",
-        i_est_lesiones: "0",
-        i_e_biotipo: "0",
-        i_e_postura: "0",
-        detalle_piel: "",
-        detalle_lesiones: "",
-        detalle_biotipo: "",
-        detalle_postura: "",
-        NewAntec: [],
-        ArraySaveConsulta: [],
-        tipoAnt: "",
-        /*  */
-    
-        bd: "hc3_inspecionestatica",
-    }),
-    props: {
-        idpaciente: String,
-        idprofesional: String,
-        idips: String,
-        idfactura: [String, Number]
-    },
-    methods: {
-        ...mapActions("hc", ["SaveDatos3"]),
-
-        AddAntec(tipo, enf, detalle) {
-            let item = {
-                tipo: tipo,
-                enfermedad: enf,
-                detalleenf: detalle,
-            };
-            this.NewAntec = [...this.NewAntec, item];
-            this.limpiarcampos();
-        },
-        eliminaritem(index) {
-            console.log(index);
-            this.NewAntec.splice(index, 1);
-        },
-        limpiarcampos() {
-            this.i_est_piel = "0";
-            this.detalle_piel = "";
-            this.i_est_lesiones = "0";
-            this.detalle_lesiones = "";
-            this.i_e_biotipo = "0";
-            this.detalle_biotipo = "";
-            this.i_e_postura = "0";
-            this.detalle_postura = "";
-        },
-        async guardarInfo3() {
-            /* this.ArraySaveConsulta = []; */
-            this.datosObservacion = [{
-                idPaciente: this.idPaciente,
-                idprofesional: this.idprofesional,
-                idips: this.idips,
-                idfactura: this.idfactura,
-                // Observaciones
-                bd: this.bd,
-                dataeval: this.NewAntec,
-            }, ];
-            this.SaveDatos3(this.datosObservacion[0]);
-        },
-    },
-    computed: {},
-    created() {},
-};
-</script>
-
 <style scoped>
 .img-container {
     max-width: 100%;
@@ -260,3 +258,5 @@ export default {
     }
 }
 </style>
+
+<!-- hc3_inspestatica-->

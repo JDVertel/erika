@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: "Footer",
+};
+</script>
+
 <template>
   <footer>
    
@@ -10,12 +16,6 @@
     </nav>
   </footer>
 </template>
-
-<script>
-export default {
-  name: "Footer",
-};
-</script>
 
 <style scoped>
 .navbar {

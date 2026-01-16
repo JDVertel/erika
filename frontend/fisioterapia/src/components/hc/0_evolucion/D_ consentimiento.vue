@@ -1,3 +1,9 @@
+<script>
+export default {
+    
+}
+</script>
+
 <template>
     <div class="accordion-item">
     <h2 class="accordion-header">
@@ -13,11 +19,7 @@
     </div>
 </div>
 </template>
-<script>
-export default {
-    
-}
-</script>
+
 <style lang="">
     
 </style>

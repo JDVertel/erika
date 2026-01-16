@@ -1,3 +1,65 @@
+<script>
+/* import {
+    servicios
+} from "../../firebase/bd"; */
+
+import {
+    mapActions,
+    mapState
+} from "vuex";
+
+export default {
+    data: () => ({
+        /*   dataservicios: servicios, */
+
+        t_nombre: "",
+        t_img: "",
+        t_desc: "",
+        t_precios: {},
+        data: {},
+        /*  */
+
+    }),
+
+    methods: {
+        ...mapActions("vitrina", [
+            "load_Vitrina",
+            "updateVitrinaP",
+            "updateVitrinaS",
+            "createEntradaVitrina",
+            "DeleteItemVitrina",
+            "CambiarEstadoVitrina",
+        ]),
+
+        ModalServicios(data) {
+            this.t_nombre = data.nombre;
+            this.t_img = data.img;
+            this.t_desc = data.desc;
+            this.t_precios = data.precios;
+        },
+
+        enviarMensaje(url) {
+            this.$emit("mensaje", url);
+        },
+
+    },
+
+    computed: {
+        ...mapState({
+            serviciosFiltrados: (state) =>
+                state.vitrina.entry.filter(
+                    (v) =>
+                    (v.tipo == "terapia" || v.tipo == "consulta") && v.publicado == true
+                ),
+        }),
+    },
+
+    created() {
+        this.load_Vitrina();
+    },
+};
+</script>
+
 <template>
 <div class="row row-cols-2 row-cols-md-4 row-cols-xl-6 g-4">
     <div class="col" v-for="servicio in serviciosFiltrados" :key="servicio.nombre">
@@ -76,65 +138,3 @@
     </div>
 </div>
 </template>
-
-<script>
-/* import {
-    servicios
-} from "../../firebase/bd"; */
-
-import {
-    mapActions,
-    mapState
-} from "vuex";
-
-export default {
-    data: () => ({
-        /*   dataservicios: servicios, */
-
-        t_nombre: "",
-        t_img: "",
-        t_desc: "",
-        t_precios: {},
-        data: {},
-        /*  */
-
-    }),
-
-    methods: {
-        ...mapActions("vitrina", [
-            "load_Vitrina",
-            "updateVitrinaP",
-            "updateVitrinaS",
-            "createEntradaVitrina",
-            "DeleteItemVitrina",
-            "CambiarEstadoVitrina",
-        ]),
-
-        ModalServicios(data) {
-            this.t_nombre = data.nombre;
-            this.t_img = data.img;
-            this.t_desc = data.desc;
-            this.t_precios = data.precios;
-        },
-
-        enviarMensaje(url) {
-            this.$emit("mensaje", url);
-        },
-
-    },
-
-    computed: {
-        ...mapState({
-            serviciosFiltrados: (state) =>
-                state.vitrina.entry.filter(
-                    (v) =>
-                    (v.tipo == "terapia" || v.tipo == "consulta") && v.publicado == true
-                ),
-        }),
-    },
-
-    created() {
-        this.load_Vitrina();
-    },
-};
-</script>

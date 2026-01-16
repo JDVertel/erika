@@ -45,7 +45,7 @@ const routes = [
   { path: '/buscar_hc', component: buscar_hc, name: "buscar_hc" },
 
   //hc
-  { path: "/hc/:idpaciente/:idprofesional/:idips", component: hc, name: "hc" },
+  { path: "/hc/:idpaciente/:idprofesional/:idips/:tipoC", component: hc, name: "hc" },
 
   /* -------------------------------------------------------------------------------- */
   { path: "/informes", component: Informes, name: "informes" },

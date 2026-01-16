@@ -16,14 +16,14 @@ fisioterapia/
 │   │   │   │   └── Individual Module Exports
 │   │   │   │
 │   │   │   ├── auth.module.js                🔐 CONSOLIDADO
-│   │   │   │   ├── state (8 properties)
-│   │   │   │   ├── mutations (3)
-│   │   │   │   ├── actions (6)
+│   │   │   │   ├── state (10 properties)
+│   │   │   │   ├── mutations (5)
+│   │   │   │   ├── actions (8)
 │   │   │   │   └── getters (none)
 │   │   │   │
 │   │   │   ├── agendas.module.js             📅 CONSOLIDADO
-│   │   │   │   ├── state (11 properties)
-│   │   │   │   ├── mutations (11)
+│   │   │   │   ├── state (9 properties)
+│   │   │   │   ├── mutations (9)
 │   │   │   │   ├── actions (14)
 │   │   │   │   └── getters (none)
 │   │   │   │

@@ -1,4 +1,157 @@
-<!-- hc9_expmuscular -->
+<script>
+import {
+    evaluacion_muscular,
+    sistema_muscular,
+    evalmuscular,
+} from "./../../../firebase/bd.js";
+import {
+    BuscarExpMuscularDetalleNombre,
+    BuscarExpFisicaDetalleNombre,
+    BuscarEvalMuscularDetalleNombre,
+} from "./../../backend/rutinas.js";
+import {
+    mapActions,
+    mapGetters,
+    mapState
+} from "vuex";
+export default {
+    data: () => ({
+        data_smuscular: sistema_muscular,
+        data_emuscular: evaluacion_muscular,
+        data_evalmuscular: evalmuscular,
+        emuscular: "0",
+        emusc_organo: "0",
+        tipoevaluacionM: "0",
+        caracteristicaM: "0",
+        musculo: "0",
+        movimiento: "0",
+        eDerecho: "",
+        eIzquierdo: "",
+        consultamusc: [],
+        evalmusc: [],
+        evalmuscD: [],
+        eval_grado: "0",
+        detalleM: "",
+        NewAntec: [],
+        NewAntec2: [],
+        NewAntec3: [],
+        datosObservacion: [],
+        /*  */
+ 
+        bd: "hc9_expmuscular",
+    }),
+
+    mounted() {
+        this.idPaciente = this.idpaciente;
+        this.idhc = this.idfactura;
+    },
+    methods: {
+
+        ...mapActions("hc", ["SaveDatos9"]),
+
+        busquedamuscular(x, y, z) {
+            this.consultamusc = BuscarExpFisicaDetalleNombre(x, y, z);
+        },
+
+        evalmuscular(x, y, z) {
+            this.evalmusc = BuscarExpMuscularDetalleNombre(x, y, z);
+        },
+
+        evalmuscularD(x, y, z) {
+            this.evalmuscD = BuscarEvalMuscularDetalleNombre(x, y, z);
+        },
+        /* -------------- */
+        AddAntec() {
+            let item = {
+                sistema: "sistema muscular",
+                tipoEvaluacion: this.tipoevaluacionM,
+                caracteristica: this.caracteristicaM,
+                detalleenf: this.detalleM,
+            };
+            this.NewAntec = [...this.NewAntec, item];
+            console.log(this.NewAntec);
+            this.limpiarcampos();
+        },
+
+        eliminaritem(index) {
+            console.log(index);
+            this.NewAntec.splice(index, 1);
+        },
+        limpiarcampos() {
+            this.tipoevaluacionM = "0";
+            this.caracteristicaM = "0";
+            this.detalleM = "";
+        },
+        /* ------------------------------ */
+        Addevalcuacion() {
+            let item = {
+                sistema: "Evaluacion Muscular General",
+                clase: this.emuscular,
+                musculo: this.musculo,
+                grado: this.eval_grado,
+            };
+            this.NewAntec2 = [...this.NewAntec2, item];
+            console.log(this.NewAntec2);
+            this.limpiarcamposeval();
+        },
+
+        eliminaritemeval(index) {
+            console.log(index);
+            this.NewAntec2.splice(index, 1);
+        },
+        limpiarcamposeval() {
+            this.emuscular = "0";
+            this.musculo = "0";
+            this.eval_grado = "0";
+        },
+
+        /* -------------------- */
+
+        AddevalcuacionDetallada() {
+            let item = {
+                sistema: "Evaluacion Muscular Detallada",
+                organo: this.emusc_organo,
+                movimiento: this.movimiento,
+                derecho: this.eDerecho,
+                izquierdo: this.eIzquierdo,
+            };
+            this.NewAntec3 = [...this.NewAntec3, item];
+            console.log(this.NewAntec3);
+            this.limpiarcamposeval3();
+        },
+
+        eliminaritemevaldeta(index) {
+            console.log(index);
+            this.NewAntec3.splice(index, 1);
+        },
+        limpiarcamposeval3() {
+            this.movimiento = "0";
+            this.eIzquierdo = "0";
+            this.eDerecho = "0";
+        },
+        /*----------------------------  */
+        guardarInfo9() {
+            this.datosObservacion = {
+                idpaciente: this.StateNumRegHC.idpaciente,
+                idprofesional: this.StateNumRegHC.idprofesional,
+                idips: this.StateNumRegHC.idips,
+                idhc: this.StateNumRegHC.idHC,
+                fecha: this.StateNumRegHC.fecha,
+                bd: this.bd,
+                dataSistMuscular: this.NewAntec,
+                dataEvalMuscularGeneral: this.NewAntec2,
+                dataEvalMuscDetallada: this.NewAntec3,
+            };
+
+            this.SaveDatos9(this.datosObservacion);
+        },
+    },
+    computed: {
+        ...mapState("hc", ["StateNumRegHC"]),
+    },
+};
+</script>
+
 <template>
 <div class="accordion-item">
     <h2 class="accordion-header">
@@ -220,7 +373,7 @@
                                         <div class="card">
                                             <div class="card-header">Registro 2</div>
                                             <table class="table table-sm table-warning">
-                                                <thead >
+                                                <thead>
                                                     <tr>
                                                         <th>Eval</th>
                                                         <th>Clase</th>
@@ -335,7 +488,7 @@
                 </div>
             </div>
             <!-- Botón Guardar -->
-         <!--    <button class="btn btn-warning mt-3" @click="guardarInfo9">
+            <!--    <button class="btn btn-warning mt-3" @click="guardarInfo9">
                 + Guardar
             </button> -->
         </div>
@@ -343,154 +496,4 @@
 </div>
 </template>
 
-<script>
-import {
-    evaluacion_muscular,
-    sistema_muscular,
-    evalmuscular,
-} from "./../../../firebase/bd.js";
-import {
-    BuscarExpMuscularDetalleNombre,
-    BuscarExpFisicaDetalleNombre,
-    BuscarEvalMuscularDetalleNombre,
-} from "./../../backend/rutinas.js";
-import {
-    mapActions,
-    mapGetters,
-    mapState
-} from "vuex";
-export default {
-    data: () => ({
-        data_smuscular: sistema_muscular,
-        data_emuscular: evaluacion_muscular,
-        data_evalmuscular: evalmuscular,
-        emuscular: "0",
-        emusc_organo: "0",
-        tipoevaluacionM: "0",
-        caracteristicaM: "0",
-        musculo: "0",
-        movimiento: "0",
-        eDerecho: "",
-        eIzquierdo: "",
-        consultamusc: [],
-        evalmusc: [],
-        evalmuscD: [],
-        eval_grado: "0",
-        detalleM: "",
-        NewAntec: [],
-        NewAntec2: [],
-        NewAntec3: [],
-        datosObservacion:[],
-        /*  */
-        idPaciente: "111",
-        idhc: "1",
-        bd: "hc9_expmuscular",
-    }),
-      props: {
-    idpaciente: String,
-    idprofesional: String,
-    idips: String,
-    idfactura: [String, Number]
-  },
-    methods: {
-
-      ...mapActions("hc", ["SaveDatos9"]),
-
-
-        busquedamuscular(x, y, z) {
-            this.consultamusc = BuscarExpFisicaDetalleNombre(x, y, z);
-        },
-
-        evalmuscular(x, y, z) {
-            this.evalmusc = BuscarExpMuscularDetalleNombre(x, y, z);
-        },
-
-        evalmuscularD(x, y, z) {
-            this.evalmuscD = BuscarEvalMuscularDetalleNombre(x, y, z);
-        },
-        /* -------------- */
-        AddAntec() {
-            let item = {
-                sistema: "sistema muscular",
-                tipoEvaluacion: this.tipoevaluacionM,
-                caracteristica: this.caracteristicaM,
-                detalleenf: this.detalleM,
-            };
-            this.NewAntec = [...this.NewAntec, item];
-            console.log(this.NewAntec);
-            this.limpiarcampos();
-        },
-
-        eliminaritem(index) {
-            console.log(index);
-            this.NewAntec.splice(index, 1);
-        },
-        limpiarcampos() {
-            this.tipoevaluacionM = "0";
-            this.caracteristicaM = "0";
-            this.detalleM = "";
-        },
-        /* ------------------------------ */
-        Addevalcuacion() {
-            let item = {
-                sistema: "Evaluacion Muscular General",
-                clase: this.emuscular,
-                musculo: this.musculo,
-                grado: this.eval_grado,
-            };
-            this.NewAntec2 = [...this.NewAntec2, item];
-            console.log(this.NewAntec2);
-            this.limpiarcamposeval();
-        },
-
-        eliminaritemeval(index) {
-            console.log(index);
-            this.NewAntec2.splice(index, 1);
-        },
-        limpiarcamposeval() {
-            this.emuscular = "0";
-            this.musculo = "0";
-            this.eval_grado = "0";
-        },
-
-        /* -------------------- */
-
-        AddevalcuacionDetallada() {
-            let item = {
-                sistema: "Evaluacion Muscular Detallada",
-                organo: this.emusc_organo,
-                movimiento: this.movimiento,
-                derecho: this.eDerecho,
-                izquierdo: this.eIzquierdo,
-            };
-            this.NewAntec3 = [...this.NewAntec3, item];
-            console.log(this.NewAntec3);
-            this.limpiarcamposeval3();
-        },
-
-        eliminaritemevaldeta(index) {
-            console.log(index);
-            this.NewAntec3.splice(index, 1);
-        },
-        limpiarcamposeval3() {
-            this.movimiento = "0";
-            this.eIzquierdo = "0";
-            this.eDerecho = "0";
-        },
-        /*----------------------------  */
-        guardarInfo9() {
-          this.datosObservacion = {
-                idpaciente: this.idPaciente,
-                idhc: this.idhc,
-                bd: this.bd,
-                dataSistMuscular: this.NewAntec,
-                dataEvalMuscularGeneral: this.NewAntec2,
-                dataEvalMuscDetallada: this.NewAntec3,
-            };
-
-            this.SaveDatos9(this.datosObservacion);
-        },
-    },
-};
-</script>
-
+<!-- hc9_expmuscular -->

@@ -1,4 +1,127 @@
-<!-- hc5_inspdinamica -->
+<script>
+import {
+    mapActions, mapState
+} from "vuex";
+import {
+    insp_dinamica
+} from "./../../../firebase/bd.js";
+import {
+    BuscarIsnpDinamicaDetalleNombre
+} from "./../../backend/rutinas.js";
+export default {
+    data: () => ({
+        data_evaluacion: "0",
+        eval_select: "0",
+        detalle_eval: "0",
+        data_apoyo: insp_dinamica.filter((el) => el.class === "apoyo")[0],
+        data_balanceo: insp_dinamica.filter((el) => el.class === "balanceo")[0],
+        data_marcha: insp_dinamica.filter((el) => el.class === "marcha"),
+        data_adaptaciones: insp_dinamica.filter((el) => el.class === "adaptaciones")[0],
+        clase_apoyo: "",
+        detalle_apoyo: "",
+        clase_balanceo: "",
+        detalle_balanceo: "",
+        clase_adaptaciones: "0",
+        detalle_adaptaciones: "",
+        /*  */
+        longPaso_d: "",
+        longPaso_i: "",
+        longZanc_d: "",
+        longZanc_i: "",
+        anchPaso_d: "",
+        anchPaso_i: "",
+        pasoMin_d: "",
+        pasoMin_i: "",
+        angPie_d: "",
+        angPie_i: "",
+        NewAntec: [],
+        /*  */
+        Acualitativo: [],
+        Acualitativo: [],
+        dataInspecDinamica: [],
+        /*  */
+
+        bd: "hc5_datos_insp_dinamica",
+    }),
+
+    mounted() {
+        this.idPaciente = this.idpaciente;
+        this.idhc = this.idfactura;
+    },
+    methods: {
+        ...mapActions("hc", ["SaveDatos5"]),
+
+        b_evaluacion(x, y, z) {
+            this.data_evaluacion = BuscarIsnpDinamicaDetalleNombre(x, y, z);
+        },
+        AddAntec(tipo, enf, detalle) {
+            let item = {
+                tipo: tipo,
+                enfermedad: enf,
+                detalleenf: detalle,
+            };
+            this.NewAntec = [...this.NewAntec, item];
+            this.limpiarcampos();
+        },
+
+        eliminaritem(index) {
+            console.log(index);
+            this.NewAntec.splice(index, 1);
+        },
+        limpiarcampos() {
+            this.clase_apoyo = "0";
+            this.detalle_apoyo = "";
+
+            this.clase_balanceo = "0";
+            this.detalle_balanceo = "";
+
+            this.eval_select = "0";
+            this.detalle_eval = "0";
+
+            this.clase_adaptaciones = "0";
+            this.detalle_adaptaciones = "";
+        },
+        guardaInfo2() {
+            this.Acuantitativo = {
+                longPaso_d: this.longPaso_d,
+                longPaso_i: this.longPaso_i,
+                /*  */
+                longZanc_d: this.longZanc_d,
+                longZanc_i: this.longZanc_i,
+                /*  */
+                anchPaso_d: this.anchPaso_d,
+                anchPaso_i: this.anchPaso_i,
+                /*  */
+                pasoMin_d: this.pasoMin_d,
+                pasoMin_i: this.pasoMin_i,
+                /*  */
+                angPie_d: this.angPie_d,
+                angPie_i: this.angPie_i,
+            };
+        },
+
+        guardarInfo5() {
+            this.guardaInfo2(),
+                (this.dataInspecDinamica = {
+                    idpaciente: this.StateNumRegHC.idpaciente,
+                    idprofesional: this.StateNumRegHC.idprofesional,
+                    idips: this.StateNumRegHC.idips,
+                    idhc: this.StateNumRegHC.idHC,
+                    fecha: this.StateNumRegHC.fecha,
+                    // Observaciones
+                    bd: this.bd,
+                    Acualitativo: this.NewAntec,
+                    Acuantitativo: this.Acuantitativo,
+                });
+            this.SaveDatos5(this.dataInspecDinamica);
+        },
+    },
+    computed: {
+        ...mapState("hc", ["StateNumRegHC"])
+    }
+};
+</script>
+
 <template>
 <div class="accordion-item">
     <h2 class="accordion-header">
@@ -181,11 +304,10 @@
                                 </tbody>
                             </table>
 
-                          <!--   <button class="btn btn-warning" @click="guardaInfo2('Acuantitativo', clase_adaptaciones, detalle_adaptaciones)"> Guardar</button> -->
-
+                            <!--   <button class="btn btn-warning" @click="guardaInfo2('Acuantitativo', clase_adaptaciones, detalle_adaptaciones)"> Guardar</button> -->
                         </div>
                     </div>
-                    <br>
+                    <br />
                 </div>
                 <div class="col-12 col-md-6">
                     <div class="card">
@@ -223,132 +345,6 @@
     </div>
 </div>
 </template>
-
-<script>
-import {
-    mapActions
-} from 'vuex';
-import {
-    insp_dinamica
-} from "./../../../firebase/bd.js";
-import {
-    BuscarIsnpDinamicaDetalleNombre
-} from "./../../backend/rutinas.js";
-export default {
-    data: () => ({
-        data_evaluacion: "0",
-        eval_select: "0",
-        detalle_eval: "0",
-        data_apoyo: insp_dinamica.filter((el) => el.class === "apoyo")[0],
-        data_balanceo: insp_dinamica.filter((el) => el.class === "balanceo")[0],
-        data_marcha: insp_dinamica.filter((el) => el.class === "marcha"),
-        data_adaptaciones: insp_dinamica.filter((el) => el.class === "adaptaciones")[0],
-        clase_apoyo: "",
-        detalle_apoyo: "",
-        clase_balanceo: "",
-        detalle_balanceo: "",
-        clase_adaptaciones: "0",
-        detalle_adaptaciones: "",
-        /*  */
-        longPaso_d: "",
-        longPaso_i: "",
-        longZanc_d: "",
-        longZanc_i: "",
-        anchPaso_d: "",
-        anchPaso_i: "",
-        pasoMin_d: "",
-        pasoMin_i: "",
-        angPie_d: "",
-        angPie_i: "",
-        NewAntec: [],
-        /*  */
-        Acualitativo: [],
-        Acualitativo: [],
-        dataInspecDinamica: [],
-        /*  */
-   
-        bd: "hc5_datos_insp_dinamica",
-    }),
-
-    props: {
-        idpaciente: String,
-        idprofesional: String,
-        idips: String,
-        idfactura: [String, Number]
-    },
-    methods: {
-
-        ...mapActions("hc", ["SaveDatos5"]),
-
-        b_evaluacion(x, y, z) {
-            this.data_evaluacion = BuscarIsnpDinamicaDetalleNombre(x, y, z);
-        },
-        AddAntec(tipo, enf, detalle) {
-            let item = {
-                tipo: tipo,
-                enfermedad: enf,
-                detalleenf: detalle,
-            };
-            this.NewAntec = [...this.NewAntec, item];
-            this.limpiarcampos();
-        },
-
-        eliminaritem(index) {
-            console.log(index);
-            this.NewAntec.splice(index, 1);
-        },
-        limpiarcampos() {
-            this.clase_apoyo = "0";
-            this.detalle_apoyo = "";
-
-            this.clase_balanceo = "0";
-            this.detalle_balanceo = "";
-
-            this.eval_select = "0";
-            this.detalle_eval = "0";
-
-            this.clase_adaptaciones = "0";
-            this.detalle_adaptaciones = "";
-        },
-        guardaInfo2() {
-            this.Acuantitativo = {
-                longPaso_d: this.longPaso_d,
-                longPaso_i: this.longPaso_i,
-                /*  */
-                longZanc_d: this.longZanc_d,
-                longZanc_i: this.longZanc_i,
-                /*  */
-                anchPaso_d: this.anchPaso_d,
-                anchPaso_i: this.anchPaso_i,
-                /*  */
-                pasoMin_d: this.pasoMin_d,
-                pasoMin_i: this.pasoMin_i,
-                /*  */
-                angPie_d: this.angPie_d,
-                angPie_i: this.angPie_i,
-            };
-        },
-
-        
-        guardarInfo5() {
-            this.guardaInfo2(),
-                this.dataInspecDinamica = {
-
-                    idPaciente: this.idPaciente,
-                    idprofesional: this.idprofesional,
-                    idips: this.idips,
-                    idfactura: this.idfactura,
-                    // Observaciones
-                    bd: this.bd,
-                    Acualitativo: this.NewAntec,
-                    Acuantitativo: this.Acuantitativo,
-                };
-            this.SaveDatos5(this.dataInspecDinamica);
-        }
-
-    }
-};
-</script>
 
 <style scoped>
 .img-container {
@@ -389,3 +385,5 @@ export default {
     padding: 1rem 0;
 }
 </style>
+
+<!-- hc5_inspdinamica -->

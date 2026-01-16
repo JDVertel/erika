@@ -1,3 +1,69 @@
+<script>
+import {
+    mapGetters,
+    mapState,
+    mapActions
+} from "vuex";
+
+export default {
+    components: {},
+    data: () => ({}),
+
+    computed: {
+        ...mapState("vitrina", ["cant"]),
+        ...mapState("Auth", ["auth", "id_ips", "id_user", "rol", "info"]),
+        /*         ...mapState('Agendas',['dataprofesionales','dataCitas']) */
+    },
+
+    methods: {
+        ...mapActions("vitrina", ["load_Vitrina"]),
+        /*         ...mapActions('Agendas', ['getDatabyParam', 'loadProfesionales', 'getDataByRangoSuperior', 'createEntradaCitaNueva', 'getDatarCitasFecha', 'getDataUsersbyParam', 'DeleteItem']), */
+
+        /*     BuscarProfesionales() {
+                        this.paramsProfesionales = [{
+                            bd: "profesionales",
+                            parametro: "id_ips",
+                            valor: this.id_ips,
+                            rta: "setStateProfesionales"
+                        }]
+                        this.getDataUsersbyParam(this.paramsProfesionales);
+
+                    },
+
+                    filtarFechas() {
+                        const fecha = this.fechahoy()
+                        this.paramsFechasCitas = [{
+                            bd: "agendas",
+                            parametro: "fecha",
+                            valor: fecha,
+                            rta: "setStateCitas"
+                        }]
+                        this.getDataByRangoSuperior(this.paramsFechasCitas);
+
+                    },
+
+                    fechahoy() {
+                        const date = new Date();
+                        const options = {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit'
+                        };
+                        const formatter = new Intl.DateTimeFormat('es-ES', options);
+                        const formattedDate = formatter.format(date);
+                        return formattedDate
+                    }, */
+    },
+
+    created() {
+        this.load_Vitrina();
+        /*         this.BuscarProfesionales()
+                        this.filtarFechas() */
+    },
+    // ...sin mounted ni Chart.js...
+};
+</script>
+
 <template>
 <div class="dashboard-bg">
     <!-- ...sin tarjetas resumen ni gráfico... -->
@@ -113,72 +179,6 @@
     </div>
 </div>
 </template>
-
-<script>
-import {
-    mapGetters,
-    mapState,
-    mapActions
-} from "vuex";
-
-export default {
-    components: {},
-    data: () => ({}),
-
-    computed: {
-        ...mapState("vitrina", ["cant"]),
-        ...mapState("Auth", ["auth", "id_ips", "id_user", "rol", "info"]),
-        /*         ...mapState('Agendas',['dataprofesionales','dataCitas']) */
-    },
-
-    methods: {
-        ...mapActions("vitrina", ["load_Vitrina"]),
-        /*         ...mapActions('Agendas', ['getDatabyParam', 'loadProfesionales', 'getDataByRangoSuperior', 'createEntradaCitaNueva', 'getDatarCitasFecha', 'getDataUsersbyParam', 'DeleteItem']), */
-
-        /*     BuscarProfesionales() {
-                        this.paramsProfesionales = [{
-                            bd: "profesionales",
-                            parametro: "id_ips",
-                            valor: this.id_ips,
-                            rta: "setStateProfesionales"
-                        }]
-                        this.getDataUsersbyParam(this.paramsProfesionales);
-
-                    },
-
-                    filtarFechas() {
-                        const fecha = this.fechahoy()
-                        this.paramsFechasCitas = [{
-                            bd: "agendas",
-                            parametro: "fecha",
-                            valor: fecha,
-                            rta: "setStateCitas"
-                        }]
-                        this.getDataByRangoSuperior(this.paramsFechasCitas);
-
-                    },
-
-                    fechahoy() {
-                        const date = new Date();
-                        const options = {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit'
-                        };
-                        const formatter = new Intl.DateTimeFormat('es-ES', options);
-                        const formattedDate = formatter.format(date);
-                        return formattedDate
-                    }, */
-    },
-
-    created() {
-        this.load_Vitrina();
-        /*         this.BuscarProfesionales()
-                        this.filtarFechas() */
-    },
-    // ...sin mounted ni Chart.js...
-};
-</script>
 
 <style scoped>
 .dashboard-bg {

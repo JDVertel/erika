@@ -101,17 +101,21 @@ export default {
   - `Action_createDataPagina` - Crear página
   - `Action_update_Pagina` - Actualizar página
   - `getDataIPSbyParam` - Obtener datos por parámetro
+  - `getDatabyParam` - Obtener datos por parámetro (ahora también en Auth para profesionales)
+  - `getDatabyKey` - Obtener datos por clave primaria (ahora también en Auth para profesionales)
   - `ChangeState` - Cambiar estado genérico
-- **Mutaciones:** 3 funciones
+- **Mutaciones:** 5 funciones
   - `setStateEmpresa` - Actualizar datos empresa
   - `setStatePagina` - Actualizar datos página
+  - `setStateProfesionales` - Actualizar datos profesionales
+  - `setStateDataProfesional` - Actualizar datos de profesional específico
   - `muta_setNewState` - Actualizar estado genérico
 
 ### 2. AGENDAS Module
 
-**Propósito:** Gestión de citas, pacientes y profesionales
+**Propósito:** Gestión de citas y pacientes
 
-- **Estado:** 11 propiedades (datapaciente[], dataprofesionales[], dataCitas[], etc)
+- **Estado:** 9 propiedades (datapaciente[], dataCitas[], dataAgendas[], etc)
 - **Acciones:** 14 funciones
   - Consultas: `getDatabyParam`, `getDatabyKey`, `getDataByRangoSuperior`
   - Citas: `createEntradaCitaNueva`, `updateReserva`
@@ -120,7 +124,9 @@ export default {
   - Profesionales: `createEntradaProf`
   - Agenda: `CreateAgendaNueva`, `DeleteItem`
   - Limpieza: `clearDataStoreA`, `clearStorePaciente`
-- **Mutaciones:** 11 funciones
+- **Mutaciones:** 9 funciones
+
+**Note:** `dataprofesionales[]` y `existeprofesionales` se han movido al módulo Auth
 
 ### 3. HC Module (Historia Clínica / Medical Records)
 

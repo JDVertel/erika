@@ -1,3 +1,76 @@
+<script>
+import {
+    mapActions,
+    mapState
+} from 'vuex';
+export default {
+    data() {
+        return {
+            fechainicio: null,
+            fechafin: null,
+            QueryFacturasClase: [],
+            QueryFacturasServicio: [],
+            QueryFacturasProductos: [],
+        };
+
+    },
+    methods: {
+        ...mapActions("vitrina", ['getDatosVitrinabyParamsDate']),
+        async generarReporte() {
+            const params = {
+                bd: 'facturas',
+                parametro: "fecha",
+                fechaInicio: this.fechainicio,
+                fechaFin: this.fechafin,
+                mutation: 'setStateQueryFacturas',
+            };
+
+            // Asegúrate de esperar a que getDatosVitrinabyParamsDate termine
+            await this.getDatosVitrinabyParamsDate(params);
+            this.procesarDatosClases();
+        },
+
+        procesarDatosClases() {
+            // Verifica si this.StateQueryFacturas tiene datos antes de intentar acceder al primer elemento
+            if (this.StateQueryFacturas && this.StateQueryFacturas.length > 0 && Array.isArray(this.StateQueryFacturas[0])) {
+                const registrosInternos = this.StateQueryFacturas[0];
+                const registrosFiltrados = registrosInternos.filter(registro => {
+                    return Array.isArray(registro.detalle) && registro.detalle.some(item => item && item.categoria === 'clase');
+                });
+                this.QueryFacturasClase = [registrosFiltrados];
+                console.log(JSON.stringify(this.QueryFacturasClase, null, 2));
+            } else {
+                console.warn("No se encontraron datos en StateQueryFacturas o el formato es incorrecto.");
+                this.QueryFacturasClase = []; // Inicializa para evitar errores posteriores
+            }
+            // No es necesario un 'return' aquí si la función solo tiene efectos secundarios
+        },
+    },
+    computed: {
+        ...mapState("vitrina", ["StateQueryFacturas"]),
+
+        DataServicios: {
+            get() {
+                return this.StateQueryFacturas[0].filter((item) => item.categoria === 'servicio');
+            },
+            set(value) {
+                this.QueryFacturasServicio = value;
+            }
+        },
+        DataArticulos: {
+            get() {
+                return this.StateQueryFacturas[0].filter((item) => item.categoria === 'producto');
+            },
+            set(value) {
+                this.QueryFacturasProductos = value;
+            }
+        },
+
+    }
+
+}
+</script>
+
 <template>
 <div>
     <br>
@@ -26,7 +99,7 @@
                 <div class="row">
                       <div class="col-3">
                      <label  class="form-label">Tipo</label>
-                        <select class="form-select form-select" aria-label="Small select example">
+                        <select class="form-select form-select" id="tipoSelect" name="tipoSelect" aria-label="Small select example">
                             <option selected>---Seleccione---</option>
                             <option value="1">Servicio</option>
                             <option value="2">Clases</option>
@@ -98,7 +171,7 @@
                 <div class="row">
                     <div class="col-3">
                      <label  class="form-label">Profesional</label>
-                        <select class="form-select form-select" aria-label="Small select example">
+                        <select class="form-select form-select" id="profesionalSelect" name="profesionalSelect" aria-label="Small select example">
                             <option selected>---Seleccione---</option>
                             <option value="1">One</option>
                             <option value="2">Two</option>
@@ -220,79 +293,6 @@
 
 </div>
 </template>
-
-<script>
-import {
-    mapActions,
-    mapState
-} from 'vuex';
-export default {
-    data() {
-        return {
-            fechainicio: null,
-            fechafin: null,
-            QueryFacturasClase: [],
-            QueryFacturasServicio: [],
-            QueryFacturasProductos: [],
-        };
-
-    },
-    methods: {
-        ...mapActions("vitrina", ['getDatosVitrinabyParamsDate']),
-        async generarReporte() {
-            const params = {
-                bd: 'facturas',
-                parametro: "fecha",
-                fechaInicio: this.fechainicio,
-                fechaFin: this.fechafin,
-                mutation: 'setStateQueryFacturas',
-            };
-
-            // Asegúrate de esperar a que getDatosVitrinabyParamsDate termine
-            await this.getDatosVitrinabyParamsDate(params);
-            this.procesarDatosClases();
-        },
-
-        procesarDatosClases() {
-            // Verifica si this.StateQueryFacturas tiene datos antes de intentar acceder al primer elemento
-            if (this.StateQueryFacturas && this.StateQueryFacturas.length > 0 && Array.isArray(this.StateQueryFacturas[0])) {
-                const registrosInternos = this.StateQueryFacturas[0];
-                const registrosFiltrados = registrosInternos.filter(registro => {
-                    return Array.isArray(registro.detalle) && registro.detalle.some(item => item && item.categoria === 'clase');
-                });
-                this.QueryFacturasClase = [registrosFiltrados];
-                console.log(JSON.stringify(this.QueryFacturasClase, null, 2));
-            } else {
-                console.warn("No se encontraron datos en StateQueryFacturas o el formato es incorrecto.");
-                this.QueryFacturasClase = []; // Inicializa para evitar errores posteriores
-            }
-            // No es necesario un 'return' aquí si la función solo tiene efectos secundarios
-        },
-    },
-    computed: {
-        ...mapState("vitrina", ["StateQueryFacturas"]),
-
-        DataServicios: {
-            get() {
-                return this.StateQueryFacturas[0].filter((item) => item.categoria === 'servicio');
-            },
-            set(value) {
-                this.QueryFacturasServicio = value;
-            }
-        },
-        DataArticulos: {
-            get() {
-                return this.StateQueryFacturas[0].filter((item) => item.categoria === 'producto');
-            },
-            set(value) {
-                this.QueryFacturasProductos = value;
-            }
-        },
-
-    }
-
-}
-</script>
 
 <style>
 

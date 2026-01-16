@@ -1,52 +1,3 @@
-<!-- hc7_pimagenexamencomp -->
-<template>
-<div class="accordion-item">
-    <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse7" aria-expanded="false" aria-controls="panelsStayOpen-collapse7">
-            Pruebas de Imagen o Examenes Complementarios ok
-        </button>
-    </h2>
-    <div id="panelsStayOpen-collapse7" class="accordion-collapse collapse">
-        <div class="accordion-body">
-            <!--  -->
-
-            <h5>Seleccione el tipo de Imagen</h5>
-            <select class="form-select" aria-label="Default select example" v-model="tipoImagenD">
-                <option selected>--Seleccione--</option>
-                <option value="Radiografia">Radiografia</option>
-                <option value="Ecografia">Ecografia</option>
-                <option value="Resonancia">Resonancia</option>
-                <option value="Tag">TAG</option>
-                <option value="Otros">Otros</option>
-            </select>
-
-            <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Breve descripcion</label>
-                <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" v-model="imgDescripcion"></textarea>
-            </div>
-            <div class="row">
-                <div class="col-8 mb-3">
-                    <div class="input-group mb-3">
-                        <input type="file" class="form-control" id="ImgDiag" @change="onSelectImage_s($event)" accept="image/png,  image/jpeg,  image/jpg " />
-                        <label class="input-group-text" for="logoImg">Imagen Diagnostica</label>
-                    </div>
-
-                </div>
-                <div class="col-4">
-                    <img :src="local_Image" class="img-thumbnail" alt="Imagen para guardar" />
-                </div>
-            </div>
-
-            <!--  -->
-
-         <!--    <button class="btn btn-warning mt-3" @click="uploadImage_p7">
-                + Guardar
-            </button> -->
-        </div>
-    </div>
-</div>
-</template>
-
 <script>
 import {
     getStorage,
@@ -86,7 +37,12 @@ export default {
     idpaciente: String,
     idprofesional: String,
     idips: String,
-    idfactura: [String, Number]
+    idfactura: [String, Number],
+    fecha: String
+  },
+  mounted() {
+    this.idPaciente = this.idpaciente;
+    this.idhc = this.idfactura;
   },
     methods: {
         ...mapActions("hc", ["SaveDatos7"]),
@@ -144,3 +100,53 @@ export default {
     },
 }
 </script>
+
+<template>
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse7" aria-expanded="false" aria-controls="panelsStayOpen-collapse7">
+            Pruebas de Imagen o Examenes Complementarios ok
+        </button>
+    </h2>
+    <div id="panelsStayOpen-collapse7" class="accordion-collapse collapse">
+        <div class="accordion-body">
+            <!--  -->
+
+            <h5>Seleccione el tipo de Imagen</h5>
+            <select class="form-select" aria-label="Default select example" v-model="tipoImagenD">
+                <option selected>--Seleccione--</option>
+                <option value="Radiografia">Radiografia</option>
+                <option value="Ecografia">Ecografia</option>
+                <option value="Resonancia">Resonancia</option>
+                <option value="Tag">TAG</option>
+                <option value="Otros">Otros</option>
+            </select>
+
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Breve descripcion</label>
+                <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" v-model="imgDescripcion"></textarea>
+            </div>
+            <div class="row">
+                <div class="col-8 mb-3">
+                    <div class="input-group mb-3">
+                        <input type="file" class="form-control" id="ImgDiag" @change="onSelectImage_s($event)" accept="image/png,  image/jpeg,  image/jpg " />
+                        <label class="input-group-text" for="logoImg">Imagen Diagnostica</label>
+                    </div>
+
+                </div>
+                <div class="col-4">
+                    <img :src="local_Image" class="img-thumbnail" alt="Imagen para guardar" />
+                </div>
+            </div>
+
+            <!--  -->
+
+         <!--    <button class="btn btn-warning mt-3" @click="uploadImage_p7">
+                + Guardar
+            </button> -->
+        </div>
+    </div>
+</div>
+</template>
+
+<!-- hc7_pimagenexamencomp -->

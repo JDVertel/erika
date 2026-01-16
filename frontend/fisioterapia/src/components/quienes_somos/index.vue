@@ -1,29 +1,4 @@
-<template>
-    <div class="contanier about">
-        <br>
-        <div class="container mb-3" v-for="(item, index) in DataPagina" :key="index">
-            <h4>¿Quienes Somos?</h4>
-            <p class="jz">
-                {{item.quienessomos}}
-            </p>
-    
-            <br>
-            <h4>Mision</h4>
-            <p class="jz">
-                {{item.mision}}
-            </p>
-            <br>
-            <h4>Vision</h4>
-            <p class=" jz">
-                {{item.vision}}
-            </p>
-        </div>
-        <br>
-        <br>
-    </div>
-    </template>
-    
-    <script>
+<script>
     import {
         mapActions,
         mapState
@@ -51,4 +26,28 @@
         },
     }
     </script>
+
+<template>
+    <div class="contanier about">
+        <br>
+        <div class="container mb-3" v-for="(item, index) in DataPagina" :key="index">
+            <h4>¿Quienes Somos?</h4>
+            <p class="jz">
+                {{item.quienessomos}}
+            </p>
     
+            <br>
+            <h4>Mision</h4>
+            <p class="jz">
+                {{item.mision}}
+            </p>
+            <br>
+            <h4>Vision</h4>
+            <p class=" jz">
+                {{item.vision}}
+            </p>
+        </div>
+        <br>
+        <br>
+    </div>
+    </template>

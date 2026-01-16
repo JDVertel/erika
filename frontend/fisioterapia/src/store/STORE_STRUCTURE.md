@@ -28,7 +28,7 @@ The Vuex store is organized into modular, namespaced modules for better maintain
 
 **Mutations**:
 
-- `setStateEmpresa`, `setStatePagina` - Load data
+- `setStateEmpresa`, `setStatePagina`, `setStateProfesionales`, `setStateDataProfesional` - Load data
 - `muta_setNewState` - Generic state updater
 
 **Getters**: None (components use mapState directly)
@@ -37,16 +37,17 @@ The Vuex store is organized into modular, namespaced modules for better maintain
 
 ### 2. **Agendas Module** (`components/agendas/store/agendas/`)
 
-**Purpose**: Appointment scheduling, patients, professionals management
+**Purpose**: Appointment scheduling, patients management
 **State**:
 
 - `datapaciente[]`: Patient data
-- `dataprofesionales[]`: Professional data
 - `datausuarios[]`: User data
 - `dataCitas[]`: Appointments
 - `dataAllCitas[]`: All appointments
 - `dataAgendas[]`: Schedules
-- Existence flags: `existepaciente`, `existeprofesionales`, `existeusuarios`
+- Existence flags: `existepaciente`, `existeusuarios`
+
+**Note**: `dataprofesionales[]` and `existeprofesionales` moved to Auth module
 
 **Actions**:
 
@@ -67,7 +68,7 @@ The Vuex store is organized into modular, namespaced modules for better maintain
 **Mutations** (9 total):
 
 - `setStatePaciente`, `setStateAgendas`, `setStateCitas`, `setStateAllCitas`
-- `setStateProfesionales`, `setStateUsuarios`, `setStateDataProfesional`
+- `setStateUsuarios`
 - `ClearStoreM`, `ClearStorePaciente`, `ClosetModalP`
 
 **Getters**: None (components use mapState directly)

@@ -1,4 +1,76 @@
-<!-- hc2_observacion -->
+<script>
+import {
+    mapActions,
+    mapGetters,
+    mapState
+} from "vuex";
+import {
+    observacion_marcha,
+    observacion_movilidad,
+} from "./../../../firebase/bd.js";
+
+export default {
+    data: () => ({
+        data_marcha: observacion_marcha,
+        data_movilidad: observacion_movilidad,
+        obs_marcha: "0",
+        obs_tipo: "0",
+        detalle_marcha: "",
+        detalle_movilidad: "",
+        NewAntec: [],
+        ArraySaveConsulta: [],
+        tipoAnt: "",
+        /*  */
+        bd: "hc2_datosobservacion",
+    }),
+
+    methods: {
+        ...mapActions("hc", ["SaveDatos2"]),
+
+        /*  */
+        AddOb(tipo, obs, detalle) {
+            let item = {
+                tipo: tipo,
+                observacion: obs,
+                detalleobs: detalle,
+            };
+            this.NewAntec = [...this.NewAntec, item];
+            this.limpiarcampos();
+        },
+        limpiarcampos() {
+            this.obs_marcha = "0";
+            this.detalle_marcha = "";
+            this.obs_tipo = "0";
+            this.detalle_movilidad = "";
+        },
+        eliminaritem(index) {
+            console.log(index);
+            this.NewAntec.splice(index, 1);
+        },
+
+        /*  */
+        async guardarInfo2() {
+            this.datosObservacion = {
+                bd: this.bd,
+                idpaciente: this.StateNumRegHC.idpaciente,
+                idprofesional: this.StateNumRegHC.idprofesional,
+                idips: this.StateNumRegHC.idips,
+                idhc: this.StateNumRegHC.idHC,
+                fecha: this.StateNumRegHC.fecha,
+                //
+                dataObserv: this.NewAntec,
+            };
+
+            this.SaveDatos2(this.datosObservacion);
+            console.log("Datos de observacion guardados...");
+        },
+    },
+    computed: {
+        ...mapState("hc", ["StateNumRegHC"]),
+    },
+};
+</script>
+
 <template>
 <div class="accordion-item">
     <h2 class="accordion-header">
@@ -31,7 +103,7 @@
                             <div class="container">
                                 <br />
 
-                                <select v-model="obs_marcha" class="form-select form-select-sm textarea" aria-label="Default select example">
+                                <select v-model="obs_marcha" class="form-select form-select-sm textarea" id="obs_marcha" name="obs_marcha" aria-label="Default select example">
                                     <option value="0">--Seleccione marcha--</option>
                                     <option v-for="item in this.data_marcha" :key="item.id" :value="item">
                                         {{ item.nombre }}
@@ -39,7 +111,7 @@
                                 </select>
 
                                 <div class="mb-1">
-                                    <textarea class="form-control form-control-sm textarea" id="exampleFormControlTextarea1" placeholder="Detalle" v-model="detalle_marcha" rows="2"></textarea>
+                                    <textarea class="form-control form-control-sm textarea" id="obs_detalle_marcha" name="obs_detalle_marcha" placeholder="Detalle" v-model="detalle_marcha" rows="2"></textarea>
                                 </div>
 
                                 <button type="button" class="btn btn-primary" @click="AddOb('marcha', obs_marcha, detalle_marcha)" v-if="obs_marcha !== '0' && detalle_marcha !== ''">
@@ -52,7 +124,7 @@
                             <div class="container">
                                 <br />
 
-                                <select v-model="obs_tipo" class="form-select form-select-sm textarea" aria-label="Default select example">
+                                <select v-model="obs_tipo" class="form-select form-select-sm textarea" id="obs_tipo" name="obs_tipo" aria-label="Default select example">
                                     <option value="0">--Seleccione tipo--</option>
                                     <option v-for="item in this.data_movilidad" :key="item.id" :value="item">
                                         {{ item.nombre }}
@@ -60,7 +132,7 @@
                                 </select>
 
                                 <div class="mb-1">
-                                    <textarea class="form-control form-control-sm textarea" id="exampleFormControlTextarea1" placeholder="Detalle" v-model="detalle_movilidad" rows="2"></textarea>
+                                    <textarea class="form-control form-control-sm textarea" id="obs_detalle_movilidad" name="obs_detalle_movilidad" placeholder="Detalle" v-model="detalle_movilidad" rows="2"></textarea>
                                 </div>
 
                                 <button type="button" class="btn btn-primary" @click="AddOb('movilidad', obs_tipo, detalle_movilidad)" v-if="obs_tipo !== '0' && detalle_movilidad !== ''">
@@ -112,76 +184,4 @@
 </div>
 </template>
 
-<script>
-import {
-    mapActions,
-    mapGetters,
-    mapState
-} from "vuex";
-import {
-    observacion_marcha,
-    observacion_movilidad,
-} from "./../../../firebase/bd.js";
-
-export default {
-    data: () => ({
-        data_marcha: observacion_marcha,
-        data_movilidad: observacion_movilidad,
-        obs_marcha: "0",
-        obs_tipo: "0",
-        detalle_marcha: "",
-        detalle_movilidad: "",
-        NewAntec: [],
-        ArraySaveConsulta: [],
-        tipoAnt: "",
-        /*  */
-        bd: "hc2_datosobservacion",
-    }),
-    props: {
-        idpaciente: String,
-        idprofesional: String,
-        idips: String,
-        idfactura: [String, Number]
-    },
-    methods: {
-        ...mapActions("hc", ["SaveDatos2"]),
-
-        /*  */
-        AddOb(tipo, obs, detalle) {
-            let item = {
-                tipo: tipo,
-                observacion: obs,
-                detalleobs: detalle,
-            };
-            this.NewAntec = [...this.NewAntec, item];
-            this.limpiarcampos();
-        },
-        limpiarcampos() {
-            this.obs_marcha = "0";
-            this.detalle_marcha = "";
-            this.obs_tipo = "0";
-            this.detalle_movilidad = "";
-        },
-        eliminaritem(index) {
-            console.log(index);
-            this.NewAntec.splice(index, 1);
-        },
-
-        /*  */
-        async guardarInfo2() {
-            this.datosObservacion = {
-                bd: this.bd,
-                idPaciente: this.idPaciente,
-                idprofesional: this.idprofesional,
-                idips: this.idips,
-                idfactura: this.idfactura,
-                //
-                dataObserv: this.NewAntec,
-            };
-
-            this.SaveDatos2(this.datosObservacion);
-            console.log("Datos de observacion guardados...");
-        },
-    },
-};
-</script>
+<!-- hc2_observacion -->

@@ -1,22 +1,3 @@
-<!-- hc10_analisis -->
-<template>
-<div class="accordion-item">
-    <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse10" aria-expanded="false" aria-controls="panelsStayOpen-collapse10">
-            Analisis
-        </button>
-    </h2>
-    <div id="panelsStayOpen-collapse10" class="accordion-collapse collapse">
-        <div class="accordion-body">
-            <div class="mb-3">
-                <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" v-model="Data_analisis" placeholder="Detalle el analisis de la consulta"></textarea>
-            </div>
-    <!--         <button class="btn btn-warning" @click="guardarInfo10">+ Guardar</button> -->
-        </div>
-    </div>
-</div>
-</template>
-
 <script>
 import {
     mapActions,
@@ -35,20 +16,22 @@ export default {
 
         };
     },
-      props: {
-    idpaciente: String,
-    idprofesional: String,
-    idips: String,
-    idfactura: [String, Number]
-  },
+
+    mounted() {
+        this.idPaciente = this.idpaciente;
+        this.idhc = this.idfactura;
+    },
     methods: {
 
         ...mapActions("hc", ["SaveDatos10"]),
         async guardarInfo10() {
 
             this.arrayDatosConsulta = [{
-                idpaciente: this.idPaciente,
-                idhc: this.idhc,
+                idpaciente: this.StateNumRegHC.idpaciente,
+                idprofesional: this.StateNumRegHC.idprofesional,
+                idips: this.StateNumRegHC.idips,
+                idhc: this.StateNumRegHC.idHC,
+                fecha: this.StateNumRegHC.fecha,
                 bd: this.bd,
                 Data_analisis: this.Data_analisis,
             }, ];
@@ -56,5 +39,28 @@ export default {
             console.log("Datos guardados:", this.arrayDatosConsulta);
         },
     },
+    computed:{
+        ...mapState("hc",["StateNumRegHC"])
+    }
 };
 </script>
+
+<template>
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse10" aria-expanded="false" aria-controls="panelsStayOpen-collapse10">
+            Analisis
+        </button>
+    </h2>
+    <div id="panelsStayOpen-collapse10" class="accordion-collapse collapse">
+        <div class="accordion-body">
+            <div class="mb-3">
+                <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" v-model="Data_analisis" placeholder="Detalle el analisis de la consulta"></textarea>
+            </div>
+            <!--         <button class="btn btn-warning" @click="guardarInfo10">+ Guardar</button> -->
+        </div>
+    </div>
+</div>
+</template>
+
+<!-- hc10_analisis -->

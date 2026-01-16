@@ -22,18 +22,7 @@ export default {
             mostrarservicios: false,
             mostrarclases: false,
             mostrartienda: false,
-            paramsPagina: [{
-                bd: "datos_pagina",
-                parametro: "id_ips",
-                valor: "1",
-                mutation: "setStatePagina",
-            }],
-            paramsEmpresa: [{
-                bd: "datos_empresa",
-                parametro: "id_ips",
-                valor: "1",
-                mutation: "setStateEmpresa",
-            }],
+            idIPS: "1", /* variable vinculado+++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
             mensajeRecibido: "",
             logo
         };
@@ -47,10 +36,7 @@ export default {
             const url = `https://wa.me/${this.celular}?text=>>>>%20Hola%20me%20interesa%20reservar%20una%20cita%20de%20( ${this.mensajeRecibido} )%20desde%20tu%20pagina%20web%20<<<<`;
             window.open(url);
         },
-        /*     reservaCitasW(link, celular) {
-             const url = `https://wa.me/${celular}?text=>>>>%20Hola%20me%20interesa%20reservar%20una%20cita%20de%20( ${link} )%20desde%20tu%20pagina%20web%20<<<<`;
-             window.open(url);
-           }, */
+
     },
     created() {
         // Ejecutar en paralelo las que no dependen entre sí
@@ -63,9 +49,26 @@ export default {
         /*  mapstates */
         ...mapState("Auth", [
             "DataPagina", "DataEmpresa"
-        ])
+        ]),
+        paramsPagina() {
+            return [{
+                bd: "datos_pagina",
+                parametro: "id_ips",
+                valor: this.idIPS,
+                mutation: "setStatePagina",
+            }];
+        },
+        paramsEmpresa() {
+            return [{
+                bd: "datos_empresa",
+                parametro: "id_ips",
+                valor: this.idIPS,
+                mutation: "setStateEmpresa",
+            }];
+        },
     },
-};</script>
+};
+</script>
 
 <template>
 <div class="container">
@@ -74,12 +77,12 @@ export default {
         <div class="row" v-for="(iten, index) in DataEmpresa" :key="index">
 
             <div class="col-12 col-md-2">
-                       
+
                 <img :src="logo" class="img-fluid logobar" />
             </div>
             <div class="col-12 col-md-5">
-     <p><strong>Bienvenido al {{iten.nombre}}</strong> </p>
-     <hr>
+                <p><strong>Bienvenido a {{iten.nombre}}</strong> </p>
+                <hr>
                 <p>{{iten.desc}}</p>
 
             </div>
@@ -184,4 +187,3 @@ export default {
     </div>
 </div>
 </template>
-

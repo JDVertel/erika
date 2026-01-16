@@ -1,3 +1,38 @@
+<script>
+export default {
+    data: () => ({
+        PacienteData: [],
+        //datos pacientes
+        name1: "",
+        name2: "",
+        apell1: "",
+        apell2: "",
+        direcc: "",
+        tel_cel: "",
+        numdoc: "",
+        tipodoc: "",
+
+    }),
+    methods: {
+        RegistrarPaciente() {
+            this.PacienteData.push({
+                name1: this.name1,
+                name2: this.name2,
+                apell1: this.apell1,
+                apell2: this.apell2,
+                direcc: this.direcc,
+                tel_cel: this.tel_cel,
+                numdoc: this.numdoc,
+                tipodoc: this.tipodoc,
+
+            })
+            console.log("registro de paciente", this.PacienteData[0]);
+        }
+    },
+
+}
+</script>
+
 <template>
 <div>
     <!--  inicio registro de usuario -->
@@ -62,41 +97,6 @@
     <!-- ------------------------------fin registro usuario -->
 </div>
 </template>
-
-<script>
-export default {
-    data: () => ({
-        PacienteData: [],
-        //datos pacientes
-        name1: "",
-        name2: "",
-        apell1: "",
-        apell2: "",
-        direcc: "",
-        tel_cel: "",
-        numdoc: "",
-        tipodoc: "",
-
-    }),
-    methods: {
-        RegistrarPaciente() {
-            this.PacienteData.push({
-                name1: this.name1,
-                name2: this.name2,
-                apell1: this.apell1,
-                apell2: this.apell2,
-                direcc: this.direcc,
-                tel_cel: this.tel_cel,
-                numdoc: this.numdoc,
-                tipodoc: this.tipodoc,
-
-            })
-            console.log("registro de paciente", this.PacienteData[0]);
-        }
-    },
-
-}
-</script>
 
 <style lang="">
 

@@ -1,3 +1,41 @@
+<script>
+import FooterComponent from "../views/footer.vue";
+import { mapState } from "vuex";
+
+export default {
+  name: "SidebarLayout",
+  components: {
+    FooterComponent,
+  },
+  props: {
+    params: {
+      type: Array,
+      default: () => [], // Valor por defecto si no se pasa nada
+    },
+  },
+  data() {
+    return {
+      isNavbarOpen: false,
+      imagenlogo: "./../assets/logo.png",
+    };
+  },
+  methods: {
+    mapAction() {
+      // Completar acción según necesidad
+    },
+    toggleNavbar() {
+      this.isNavbarOpen = !this.isNavbarOpen;
+    },
+    toggleNavbarCloset() {
+      this.isNavbarOpen = false;
+    },
+  },
+  computed: {
+    ...mapState("Auth", ["rol", "id_ips", "id_user"]),
+  },
+};
+</script>
+
 <template>
   <div>
     <div class="layout-wrapper">
@@ -141,44 +179,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import FooterComponent from "../views/footer.vue";
-import { mapState } from "vuex";
-
-export default {
-  name: "SidebarLayout",
-  components: {
-    FooterComponent,
-  },
-  props: {
-    params: {
-      type: Array,
-      default: () => [], // Valor por defecto si no se pasa nada
-    },
-  },
-  data() {
-    return {
-      isNavbarOpen: false,
-      imagenlogo: "./../assets/logo.png",
-    };
-  },
-  methods: {
-    mapAction() {
-      // Completar acción según necesidad
-    },
-    toggleNavbar() {
-      this.isNavbarOpen = !this.isNavbarOpen;
-    },
-    toggleNavbarCloset() {
-      this.isNavbarOpen = false;
-    },
-  },
-  computed: {
-    ...mapState("Auth", ["rol", "id_ips", "id_user"]),
-  },
-};
-</script>
 
 <style scoped>
 .layout-wrapper {
