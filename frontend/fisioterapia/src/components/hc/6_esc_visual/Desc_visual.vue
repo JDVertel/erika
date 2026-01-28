@@ -57,6 +57,7 @@ export default {
         imagenId,
         x,
         y,
+        elemento: "",
         intensidad: 5,
         tipoDolor: "agudo",
         timestamp: new Date().toISOString(),
@@ -125,6 +126,7 @@ export default {
           imagen: m.imagenId,
           posicionX: m.x,
           posicionY: m.y,
+          elemento: m.elemento,
           intensidad: m.intensidad,
           tipoDolor: m.tipoDolor,
           timestamp: m.timestamp,
@@ -351,7 +353,7 @@ export default {
                     v-if="marcadorSeleccionado"
                     class="marker-info mt-3 p-3 border rounded"
                   >
-                    <h5>Información del marcador</h5>
+                    <h5>Información detallada del marcador</h5>
                     <div class="mb-3">
                       <label class="form-label">Intensidad del dolor</label>
                       <input
@@ -362,6 +364,15 @@ export default {
                         v-model="marcadorSeleccionado.intensidad"
                       />
                       <span class="ms-2">{{ marcadorSeleccionado.intensidad }}/10</span>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Elemento/Zona</label>
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        placeholder="p. ej., rodilla derecha"
+                        v-model="marcadorSeleccionado.elemento"
+                      />
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Tipo de dolor</label>
@@ -386,6 +397,80 @@ export default {
               </div>
 
               <!-- Panel de información del marcador seleccionado -->
+              <div class="row mt-4">
+                <div class="col-12">
+                  <h6>Marcadores registrados</h6>
+                  <table class="table table-sm table-striped align-middle">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Imagen</th>
+                        <th>Elemento/Zona</th>
+                        <th style="min-width: 140px">Intensidad</th>
+                        <th>Tipo de dolor</th>
+                        <th>X (%)</th>
+                        <th>Y (%)</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="(m, idx) in marcadores"
+                        :key="m.id"
+                        @click="seleccionarMarcador(m)"
+                        :class="{
+                          'table-active':
+                            marcadorSeleccionado && marcadorSeleccionado.id === m.id,
+                        }"
+                      >
+                        <td>{{ idx + 1 }}</td>
+                        <td>{{ m.imagenId === "imagen1" ? "Frontal" : "Posterior" }}</td>
+                        <td>
+                          <input
+                            type="text"
+                            class="form-control form-control-sm"
+                            v-model="m.elemento"
+                            placeholder="describa la zona"
+                          />
+                        </td>
+                        <td>
+                          <div class="d-flex align-items-center gap-2">
+                            <input
+                              type="range"
+                              class="form-range"
+                              min="1"
+                              max="10"
+                              v-model.number="m.intensidad"
+                            />
+                            <span>{{ m.intensidad }}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <select
+                            class="form-select form-select-sm"
+                            v-model="m.tipoDolor"
+                          >
+                            <option value="agudo">Agudo</option>
+                            <option value="cronico">Crónico</option>
+                            <option value="punzante">Punzante</option>
+                            <option value="quemante">Quemante</option>
+                          </select>
+                        </td>
+                        <td>{{ m.x.toFixed(1) }}</td>
+                        <td>{{ m.y.toFixed(1) }}</td>
+                        <td>
+                          <button
+                            class="btn btn-outline-danger btn-sm"
+                            @click.stop="eliminarMarcador(m)"
+                          >
+                            Eliminar
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
 

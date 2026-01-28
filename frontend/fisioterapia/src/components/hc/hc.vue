@@ -25,7 +25,7 @@ export default {
         this.tipoC = this.$route.params.tipoC;
     },
     methods: {
-        ...mapActions("hc", ["SaveHCcabecera"]),
+        ...mapActions("hc", ["SaveHCcabecera","loadCIE10","loadCUPS"]),
 
         crearNuevoRegistro() {
             const datos = {
@@ -42,7 +42,7 @@ export default {
     },
     computed: {
         ...mapState("hc", ["StateNumRegHC"]),
-        ...mapState("Auth", ["DataPagina"]),
+        ...mapState("Auth", ["DataPagina","cie10","Cups"]),
 
         idfactura() {
             const reg = this.StateNumRegHC;
@@ -54,7 +54,10 @@ export default {
         },
     },
 
-    created() {},
+    created() {
+        this.loadCIE10();
+        this.loadCUPS();
+    },
 };
 </script>
 

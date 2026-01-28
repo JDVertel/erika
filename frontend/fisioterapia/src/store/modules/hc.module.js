@@ -43,6 +43,8 @@ import firebase_api from "@/api/firebaseApi";
 const state = () => ({
     // Current professional ID
     StateNumRegHC: "", // Current medical record registration number
+    Cie10: [],
+    Cups: [],
 });
 
 /**
@@ -56,11 +58,22 @@ const getters = {
 /**
  * MUTATIONS
  * Synchronous state modifications
+ *
  */
+
 const mutations = {
     /**
      * Set Medical Record Registration Number
      */
+
+    SetStateCie10: (state, cie10List) => {
+        state.Cie10 = cie10List;
+    },
+
+    SetStateCUPS: (state, cupsList) => {
+        state.Cups = cupsList;
+    },
+
     NumRegHC: (state, entradas) => {
         state.StateNumRegHC = entradas;
     },
@@ -77,6 +90,32 @@ const actions = {
      * Cada SaveDatos corresponde a una sección específica de la HC
      */
     // Función auxiliar para validar si un valor tiene contenido significativo
+
+    loadCIE10: async ({ commit }) => {
+        try {
+            console.log("Iniciando carga de CIE10...");
+            const { data } = await firebase_api.get("/cie10.json");
+            const cie10List = Object.values(data || {}); // Convierte objeto a array
+            console.log("CIE10 cargado, registros:", cie10List.length);
+            commit("SetStateCie10", cie10List); // Actualiza el estado
+            return cie10List;
+        } catch (error) {
+            console.error("Error cargando CIE-10:", error);
+            commit("SetStateCie10", []); // Asegurarse de que sea un array vacío, no un mensaje de error
+            return [];
+        }
+    },
+    loadCUPS: async ({ commit }) => {
+        try {
+            const { data } = await firebase_api.get("/Fcups.json");
+            const cupsList = Object.values(data || {}); // Convierte objeto a array
+            commit("SetStateCUPS", cupsList); // Actualiza el estado
+            return cupsList;
+        } catch (error) {
+            console.error("Error cargando CUPS:", error);
+            commit("SetStateCUPS", error.message);
+        }
+    },
     _validateData: (valor) => {
         if (valor === null || valor === undefined) return false;
         if (typeof valor === "string" && valor.trim() === "") return false;
@@ -88,7 +127,8 @@ const actions = {
             const keys = Object.keys(valor);
             if (keys.length === 0) return false;
             // Verificar si al menos una propiedad tiene valor significativo
-            return keys.some((key) => actions._validateData(valor[key]));
+            const tieneValor = keys.some((key) => actions._validateData(valor[key]));
+            return tieneValor;
         }
 
         return true;
@@ -437,9 +477,17 @@ const actions = {
             Data_EvalMInferior,
         } = Data;
 
-        // Construir DatatoSave solo con campos que tienen datos
-        const DatatoSave = { idpaciente, idprofesional, idips, fecha, idhc };
+        // Construir DatatoSave validando TODOS los campos (base + formulario)
+        const DatatoSave = {};
 
+        // Validar y agregar campos base solo si tienen datos
+        if (actions._validateData(idpaciente)) DatatoSave.idpaciente = idpaciente;
+        if (actions._validateData(idprofesional)) DatatoSave.idprofesional = idprofesional;
+        if (actions._validateData(idips)) DatatoSave.idips = idips;
+        if (actions._validateData(fecha)) DatatoSave.fecha = fecha;
+        if (actions._validateData(idhc)) DatatoSave.idhc = idhc;
+
+        // Validar y agregar campos del formulario solo si tienen datos
         if (actions._validateData(Data_observaciones))
             DatatoSave.Data_observaciones = Data_observaciones;
         if (actions._validateData(Data_SOseo)) DatatoSave.Data_SOseo = Data_SOseo;
@@ -448,18 +496,19 @@ const actions = {
         if (actions._validateData(Data_EvalMInferior))
             DatatoSave.Data_EvalMInferior = Data_EvalMInferior;
 
-        // Verificar que haya al menos un campo del formulario
+        // Verificar que haya AL MENOS UN campo del formulario con datos válidos
         const camposBase = ["idpaciente", "idprofesional", "idips", "fecha", "idhc"];
         const camposFormulario = Object.keys(DatatoSave).filter(
             (key) => !camposBase.includes(key)
         );
 
+        // Si no hay datos del formulario, no guardar nada
         if (camposFormulario.length === 0) {
             console.log("No hay datos en el formulario para guardar.");
-            return; // ← AQUÍ SE DETIENE EL GUARDADO
+            return;
         }
 
-        console.log("Datos a guardar (solo campos con valores):", DatatoSave);
+        // Si hay datos, guardar
         const RutaConId = `/${bd}/${idhc}.json`;
         await firebase_api.put(RutaConId, DatatoSave);
         DatatoSave.id = idhc;
