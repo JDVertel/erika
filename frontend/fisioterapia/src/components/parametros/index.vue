@@ -16,20 +16,7 @@ import {
 } from "vuex";
 export default {
     data: () => ({
-        form_user: false,
-        form_prof: false,
         logo: "",
-        Datanewuser: [],
-        DataDeleteU: [],
-        /*  */
-        Datanewprof: [],
-        DataDeleteP: [],
-        user_tipodoc: "",
-        user_rol: "",
-        pro_tipodoc: "",
-        pro_tipo: "",
-        formularioValidoU: false,
-        formularioValidoP: false,
 
         /* ---------- */
         dataempresa: [],
@@ -69,20 +56,6 @@ export default {
         tiendaonline_lm: "",
 
         /* ---------valores quemados para consultas iniciales estos alimentan el store GET------- */
-        paramsProfesionales: [{
-            bd: "profesionales",
-            parametro: "id_ips",
-            valor: 1,
-            rta: "setStateProfesionales",
-        }, ],
-
-        paramsUsuarios: [{
-            bd: "usuarios",
-            parametro: "id_ips",
-            valor: "1",
-            rta: "setStateUsuarios",
-        }, ],
-
         paramsEmpresa: [{
             bd: "datos_empresa",
             parametro: "id_ips",
@@ -110,137 +83,8 @@ export default {
             "Action_updateDataPagina",
             /*  */
             "getDataIPSbyParam",
-            "getDatabyParam",
             "ChangeState",
         ]),
-
-        ...mapActions("Agendas", [
-            "createEntradaUser",
-            "createEntradaProf",
-            "DeleteItem",
-        ]),
-
-        clearform_user() {
-            this.user_tipodoc = "";
-            this.user_numdoc = "";
-            this.user_nombre = "";
-            this.user_rol = "";
-        },
-        clearform_prof() {
-            this.pro_numdoc = "";
-            this.pro_apell1 = "";
-            this.pro_apell2 = "";
-            this.pro_name1 = "";
-            this.pro_name2 = "";
-            this.pro_reg_medico = "";
-            this.pro_celular = "";
-            this.pro_correo = "";
-            this.pro_tipo = "";
-        },
-
-        btn_adduser() {
-            this.form_user = !this.form_user;
-            console.log("ejecutandometodo add user", this.form_user);
-            this.clearform_user();
-        },
-
-        btn_addprof() {
-            this.form_prof = !this.form_prof;
-            console.log("ejecutandometodo add prof", this.form_prof);
-            this.clearform_prof();
-        },
-        btn_addtipocita() {
-            this.form_tipocita = !this.form_tipocita;
-
-            /*  this.clearform_user(); */
-        },
-
-        async adduser() {
-            this.Datanewuser.push({
-                estado: true,
-                id_ips: "1",
-                doc: this.user_tipodoc + this.user_numdoc,
-                nombre: this.user_nombre,
-                pass: "12345",
-                rol: this.user_rol,
-                bd: "usuarios",
-            });
-            try {
-                this.btn_adduser();
-                await this.createEntradaUser(this.Datanewuser[0]);
-                this.Datanewuser = [];
-                await this.getDatabyParam(this.paramsUsuarios);
-                console.log("Usuario creado exitosamente.");
-            } catch (error) {
-                // Manejar errores (¡fundamental!)
-                console.error("Error al crear el usuario:", error);
-                // Aquí podrías mostrar un mensaje al usuario o tomar otras acciones
-            }
-        },
-
-        async addprof() {
-            this.Datanewprof.push({
-                id_ips: "1",
-                estado: true,
-                doc: this.pro_tipodoc + this.pro_numdoc,
-                name1: this.pro_name1,
-                name2: this.pro_name2,
-                apell1: this.pro_apell1,
-                apell2: this.pro_apell2,
-                cel: this.pro_celular,
-                reg_medico: this.pro_reg_medico,
-                tipo: this.pro_tipo,
-                correo: this.pro_correo,
-                pass: "12345",
-                bd: "profesionales",
-            });
-            try {
-                this.btn_addprof();
-                await this.createEntradaProf(this.Datanewprof[0]);
-                this.Datanewprof = [];
-                await this.getDatabyParam(this.paramsProfesionales);
-            } catch (error) {
-                // Manejar errores (¡fundamental!)
-                console.error("Error al crear el profesional:", error);
-                // Aquí podrías mostrar un mensaje al usuario o tomar otras acciones
-            }
-        },
-
-        /* _---------------------------------------------------------------------------- */
-        //cambiar metodo por update y cambiar estado de profesional
-        async eliminaritemP(id) {
-            console.log("eliminanfo prof" + id);
-            this.DataDeleteP.push({
-                id: id,
-                bd: "profesionales",
-            });
-            try {
-                await this.DeleteItem(this.DataDeleteP[0]);
-                this.DataDeleteP = [];
-                await this.getDatabyParam(this.paramsProfesionales);
-            } catch (error) {
-                // Manejar errores (¡fundamental!)
-                console.error("Error al eliminar el registro", error);
-                // Aquí podrías mostrar un mensaje al usuario o tomar otras acciones
-            }
-        },
-
-        async eliminaritemU(id) {
-            this.DataDeleteU.push({
-                id: id,
-                bd: "usuarios",
-            });
-            this.DeleteItem(this.DataDeleteU[0]);
-            try {
-                await this.getDatabyParam(this.paramsUsuarios);
-                this.DataDeleteU = [];
-                await this.getDatabyParam(this.paramsUsuarios);
-            } catch (error) {
-                // Manejar errores (¡fundamental!)
-                console.error("Error al eliminar el registro", error);
-                // Aquí podrías mostrar un mensaje al usuario o tomar otras acciones
-            }
-        },
 
         /* -------------------inicio guardar datos empresa ----------------------- */
         //1- cargar imagen y generar miniatura
@@ -513,32 +357,23 @@ export default {
     },
     computed: {
         /*  mapstates */
-        ...mapState("Agendas", [
-            "datausuarios",
-            "existeusuarios",
-
-        ]),
-
         ...mapState("Auth", [
-            "dataprofesionales",
-            "existeprofesionales",
             "DataEmpresa",
             "DataPagina",
             "actualizarEmp",
             "actualizarPag",
             "statePagina",
             "stateEmpresa",
-        ])
+        ]),
+
+
     },
 
     created() {
         // Ejecutar en paralelo las que no dependen entre sí
         Promise.all([
-            this.getDatabyParam(this.paramsUsuarios),
-            this.getDatabyParam(this.paramsProfesionales),
             this.getDataIPSbyParam(this.paramsEmpresa),
             this.getDataIPSbyParam(this.paramsPagina),
-
         ])
     },
 
@@ -551,244 +386,6 @@ export default {
 
     <div class="container-fluid">
         <div class="accordion  accordion-flush" id="accordionExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                        Usuarios del Sistema ({{ existeusuarios }})
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <div class="row">
-                            <div class="col-8">
-                                <h6>Usuarios registrados en el sistema</h6>
-                            </div>
-                            <div class="col-4">
-                                <button class="btn btn-warning btn-sm" @click="btn_adduser">
-                                    + Nuevo
-                                </button>
-                            </div>
-                        </div>
-                        <div class="container" v-if="this.form_user">
-                            <div>
-                                <h6><strong>Registro de nuevo usuario</strong></h6>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <select class="form-select" id="user_tipo_doc" name="user_tipo_doc" aria-label="Default select example" v-model="user_tipodoc">
-                                            <option value="" selected>Seleccione Tipo de Doc</option>
-                                            <option value="CC">Cedula</option>
-                                            <option value="TI">T Identidad</option>
-                                            <option value="PA">Pasaporte</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <input type="number" class="form-control" id="user_num_doc" name="user_num_doc" placeholder="# Documento" v-model="user_numdoc" />
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control" id="user_nombre" name="user_nombre" placeholder="Nombre" v-model="user_nombre" />
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <select class="form-select" id="user_rol" name="user_rol" aria-label="Default select example" v-model="user_rol">
-                                            <option value="">Seleccione Rol</option>
-                                            <option value="admin">Administrador</option>
-                                            <option value="registro">Registro</option>
-                                            <option value="prof">Profesional</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <h6>
-                                            <strong>Nota: </strong>Los nuevos usuarios se crean con la
-                                            contraseña <strong>12345</strong> al ingresar deberan asignar una
-                                            nueva
-                                        </h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <button class="btn btn-success btn-sm" @click="adduser" v-if="
-                                                this.user_tipodoc !== '' &&
-                                                this.user_numdoc !== '' &&
-                                                this.user_nombre !== '' &&
-                                                this.user_rol !== ''
-                                            ">
-                                            Guardar
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Rol</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Documento</th>
-                                    <th scope="col">Estado</th>
-                                    <th>Opc</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="user in datausuarios" :key="user.id">
-                                    <th>{{ user.rol }}</th>
-                                    <td>{{ user.nombre }}</td>
-                                    <td>{{ user.doc }}</td>
-                                    <td>{{ user.estado }}</td>
-                                    <td>
-                                        <button class="btn btn-danger m-1 btn-sm" @click="eliminaritemU(user.id)">
-                                            <i class="bi bi-trash3-fill"></i>
-                                        </button>
-                                        <button class="btn btn-warning m-1 btn-sm">
-                                            <i class="bi bi-key"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <!-- ----------------------------------- -->
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Profesionales ( {{ existeprofesionales }} )
-                    </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <div class="row">
-                            <div class="col-8">
-                                <h6>Profesionales registrados en el sistema</h6>
-                            </div>
-                            <div class="col-4">
-                                <button class="btn btn-warning btn-sm" @click="btn_addprof">
-                                    + Nuevo
-                                </button>
-                            </div>
-                        </div>
-                        <div class="container" v-if="this.form_prof">
-                            <div><strong>Registro de profesionales</strong></div>
-                            <br />
-                            <div class="row">
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <select class="form-select" id="prof_tipo_doc" name="prof_tipo_doc" aria-label="Default select example" v-model="pro_tipodoc">
-                                            <option value="">Seleccione Tipo de Doc</option>
-                                            <option value="CC">Cedula</option>
-                                            <option value="TI">T Identidad</option>
-                                            <option value="PA">Pasaporte</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <input type="number" class="form-control" id="prof_num_doc" name="prof_num_doc" placeholder="# Documento" v-model="pro_numdoc" />
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control" id="prof_name1" name="prof_name1" placeholder=" 1er Nombre" v-model="pro_name1" />
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control" id="prof_name2" name="prof_name2" placeholder="2do Nombre" v-model="pro_name2" />
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control" id="prof_apell1" name="prof_apell1" placeholder="1er Apellido" v-model="pro_apell1" />
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control" id="prof_apell2" name="prof_apell2" placeholder="2do Apellido" v-model="pro_apell2" />
-                                    </div>
-                                </div>
-
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <input type="email" class="form-control" id="prof_correo" name="prof_correo" placeholder="Email" v-model="pro_correo" />
-                                    </div>
-                                </div>
-
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <input type="number" class="form-control" id="prof_celular" name="prof_celular" placeholder="#Celular" v-model="pro_celular" />
-                                    </div>
-                                </div>
-
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <input type="text" class="form-control" id="prof_reg_medico" name="prof_reg_medico" placeholder="Reg Medico" v-model="pro_reg_medico" />
-                                    </div>
-                                </div>
-
-                                <div class="col-6 col-md-4">
-                                    <div class="mb-3">
-                                        <select class="form-select" id="prof_tipo" name="prof_tipo" aria-label="Default select example" v-model="pro_tipo">
-                                            <option value="">Seleccione Tipo Profesional</option>
-                                            <option value="fisioterapia">Fisioterapia</option>
-                                            <option value="consulta">Consulta</option>
-                                            <option value="clases">Clases</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4">
-                                    <button class="btn btn-success btn-sm" @click="addprof" v-if="
-                                            this.pro_tipodoc !== '' &&
-                                            this.pro_numdoc !== '' &&
-                                            this.pro_name1 !== '' &&
-                                            this.pro_apell1 !== '' &&
-                                            this.pro_email !== '' &&
-                                            this.pro_celular !== '' &&
-                                            this.pro_reg_medico !== '' &&
-                                            this.pro_tipo !== '' &&
-                                            this.pro_correo !== ''
-                                        ">
-                                        Guardar
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">tipo</th>
-                                    <th scope="col">nombre</th>
-                                    <th scope="col">cel</th>
-                                    <th scope="col">opc</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="prof in dataprofesionales" :key="prof.id">
-                                    <th>{{ prof.tipo }}</th>
-                                    <td>{{ prof.name1 }} {{ prof.apell1 }}</td>
-                                    <td>{{ prof.cel }}</td>
-                                    <td>
-                                        <button class="btn btn-warning m-1 btn-sm">
-                                            <i class="bi bi-key"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <!-- ----------------------------------- -->
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">

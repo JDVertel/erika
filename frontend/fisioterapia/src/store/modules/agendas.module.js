@@ -178,7 +178,7 @@ const actions = {
         });
         const { data } = response;
         const datasalida = [];
-        for (let id of Object.keys(data)) {
+        for (let id of Object.keys(data || {})) {
             datasalida.push({ id, ...data[id] });
         }
         if (datasalida.length > 0) {
@@ -225,7 +225,7 @@ const actions = {
         });
         const { data } = response;
         const datasalida = [];
-        for (let id of Object.keys(data)) {
+        for (let id of Object.keys(data || {})) {
             datasalida.push({ id, ...data[id] });
         }
         // Ordenar por fecha

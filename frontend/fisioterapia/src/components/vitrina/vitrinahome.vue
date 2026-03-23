@@ -1011,7 +1011,7 @@ export default {
         </div>
       </div>
 
-      <router-link to="/dashboard">Home</router-link>
+      <router-link to="/">Home</router-link>
     </div>
   </div>
 </template>

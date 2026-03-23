@@ -3,9 +3,11 @@ import registroPaciente from "@/components/usuarios/registro.vue";
 
 import {
     mapActions,
-    mapState
+    mapState,
+    mapGetters
 } from "vuex";
 import moment from "moment";
+import { getCachedUserProfile } from "@/security/accessControl";
 export default {
     data: () => ({
         //Auth
@@ -23,8 +25,6 @@ export default {
         //  list  -  parametro - valor
         //parametros de consulta pacientes
         paramsPaciente: [],
-        //parametros de consulta profesionales
-        paramsProfesionales: [],
         //parametros para buscar citas por fechas
         paramsFechasCitas: [],
         //--------------agendamiento
@@ -78,18 +78,20 @@ export default {
     methods: {
         ...mapActions("Agendas", [
             "getDatabyParam",
-            "loadProfesionales",
             "getDataByRangoSuperior",
+            "getDataUsersbyParam",
+            "NewgetDataUsersbyParam",
             "createEntradaCitaNueva",
             "getDatarCitasFecha",
-            "getDataUsersbyParam",
             "DeleteItem",
             "clearDataStoreA",
             "clearStorePaciente",
             "createEntradanewPaciente",
             "ClosetModalNewPaciente",
-            "NewgetDataUsersbyParam",
             "getCountDatabyParam",
+        ]),
+        ...mapActions("users", [
+            "loadUsers",
         ]),
 
         /* ---------PACIENTES--------------------------------------------------------------------------- */
@@ -144,14 +146,9 @@ export default {
             this.btnagendar = true;
         },
         /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-        GetAllProfesionalesToIPS() {
-            this.paramsProfesionales = [{
-                bd: "profesionales",
-                parametro: "id_ips",
-                valor: this.id_ips,
-                rta: "setStateProfesionales",
-            }, ];
-            this.getDataUsersbyParam(this.paramsProfesionales);
+        async GetAllProfesionalesToIPS() {
+            // Cargar profesionales del módulo usuarios (nueva fuente)
+            await this.loadUsers();
         },
         /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
         filtarProf() {
@@ -345,7 +342,28 @@ export default {
             "dataAllCitasPaciente",
             "dataAllCitas",
         ]),
-        ...mapState("Auth", ["user", "id_ips", "id_user", "rol", "info", "dataprofesionales", "existeprofesionales"]),
+        ...mapState("users", ["users"]),
+        ...mapGetters("users", ["getProfessionalsByIps"]),
+
+        perfilLogueado() {
+            return getCachedUserProfile() || {};
+        },
+
+        id_ips() {
+            return this.perfilLogueado.id_ips || "1";
+        },
+
+        id_user() {
+            return this.perfilLogueado.uid || "";
+        },
+
+        dataprofesionales() {
+            return this.getProfessionalsByIps(this.id_ips);
+        },
+
+        existeprofesionales() {
+            return this.dataprofesionales.length;
+        },
 
         sortedListaCitasDia() {
             return this.desord_ListaCitasDia.sort((a, b) => {
@@ -777,7 +795,7 @@ export default {
     <br />
 
     <div class="container home">
-        <router-link to="/dashboard">Home</router-link>
+        <router-link to="/">Home</router-link>
     </div>
 </div>
 </template>

@@ -16,7 +16,7 @@ import { createStore } from "vuex";
  */
 
 // Import modules from centralized location
-import { Auth, Agendas, Hc, vitrina } from "./modules/index";
+import { Auth, Agendas, Hc, vitrina, users } from "./modules/index";
 
 /**
  * Vuex Store Instance
@@ -27,7 +27,8 @@ const store = createStore({
     Auth,
     Agendas,
     hc: Hc,
-    vitrina
+    vitrina,
+    users
   },
 
   // Global error handler can be added here in the future

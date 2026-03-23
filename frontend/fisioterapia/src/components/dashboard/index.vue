@@ -4,6 +4,7 @@ import {
     mapState,
     mapActions
 } from "vuex";
+import { getCachedUserProfile, hasModuleAccess } from "@/security/accessControl";
 
 export default {
     components: {},
@@ -17,6 +18,10 @@ export default {
 
     methods: {
         ...mapActions("vitrina", ["load_Vitrina"]),
+        canAccess(moduleKey) {
+            const profile = getCachedUserProfile();
+            return hasModuleAccess(profile, moduleKey);
+        },
         /*         ...mapActions('Agendas', ['getDatabyParam', 'loadProfesionales', 'getDataByRangoSuperior', 'createEntradaCitaNueva', 'getDatarCitasFecha', 'getDataUsersbyParam', 'DeleteItem']), */
 
         /*     BuscarProfesionales() {
@@ -73,7 +78,7 @@ export default {
     </div>
     <div class="dashboard-content container">
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-12 col-md-6 col-lg-4" v-if="canAccess('informes')">
                 <router-link to="/informes" class="dashboard-link-card">
                     <div class="card mb-4 cardDash dashboard-card">
                         <div class="row">
@@ -94,7 +99,7 @@ export default {
 
             <!--  -->
 
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-12 col-md-6 col-lg-4" v-if="canAccess('agendas')">
                 <router-link to="/agendas" class="dashboard-link-card">
                     <div class="card mb-4 cardDash dashboard-card">
                         <div class="row">
@@ -114,7 +119,7 @@ export default {
             </div>
             <!--  -->
 
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-12 col-md-6 col-lg-4" v-if="canAccess('vitrina')">
                 <router-link to="/vitrina" class="dashboard-link-card">
                     <div class="card mb-4 cardDash dashboard-card">
                         <div class="row">
@@ -133,7 +138,7 @@ export default {
                 </router-link>
             </div>
     
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-12 col-md-6 col-lg-4" v-if="canAccess('hc')">
                 <router-link to="/buscar_hc" class="dashboard-link-card">
                     <div class="card mb-4 cardDash dashboard-card">
                         <div class="row">
@@ -154,7 +159,7 @@ export default {
 
             <!--  -->
 
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-12 col-md-6 col-lg-4" v-if="canAccess('parametros')">
                 <router-link to="/parametros" class="dashboard-link-card">
                     <div class="card mb-4 cardDash dashboard-card">
                         <div class="row">
@@ -169,6 +174,25 @@ export default {
                         </div>
                         <hr>
                         <strong class="dashboard-card-desc centrarcontenido">Parámetros del sistema</strong>
+                    </div>
+                </router-link>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4" v-if="canAccess('users_admin')">
+                <router-link to="/dashboard/usuarios" class="dashboard-link-card">
+                    <div class="card mb-4 cardDash dashboard-card">
+                        <div class="row">
+                            <div class="col-3 p-2 dashboard-icon-box">
+                                <img src="https://img.icons8.com/ios/50/conference-call--v1.png" class="img_Dashboard dashboard-icon" />
+                            </div>
+                            <div class="col-9 p-2">
+                                <div class="col-12">
+                                    <h2 class="dashboard-card-title">Usuarios</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <strong class="dashboard-card-desc centrarcontenido">Gestión de perfiles</strong>
                     </div>
                 </router-link>
             </div>

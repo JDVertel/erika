@@ -14,6 +14,7 @@ import Auth from "./auth.module.js";
 import Agendas from "./agendas.module.js";
 import Hc from "./hc.module.js";
 import vitrina from "./vitrina.module.js";
+import users from "./users.module.js";
 
 /**
  * Module Registry
@@ -74,6 +75,19 @@ export const moduleRegistry = {
         actions: 17,
         mutations: 7,
         consolidated: true
+    },
+
+    Users: {
+        name: "Users",
+        namespace: "users",
+        module: users,
+        description: "User and profile management with Firebase Auth + Firestore + Realtime DB",
+        currentPath: "src/store/modules/users.module.js",
+        legacyPath: "N/A",
+        state: ["users", "loading", "error", "successMessage"],
+        actions: 5,
+        mutations: 7,
+        consolidated: true
     }
 };
 
@@ -109,4 +123,4 @@ export function listModules() {
 }
 
 // Export modules individually for convenience
-export { Auth, Agendas, Hc, vitrina };
+export { Auth, Agendas, Hc, vitrina, users };

@@ -247,7 +247,6 @@ const actions = {
      */
     getDataIPSbyParam: async ({ commit }, parametros) => {
         const [{ bd, parametro, valor, mutation }] = parametros;
-        console.log("Getting IPS data by param:", { bd, parametro, valor });
         const response = await firebase_api.get(`/${bd}.json`, {
             params: {
                 orderBy: `"${parametro}"`,

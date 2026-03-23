@@ -29,24 +29,19 @@ export default {
 
   methods: {
     ...mapActions("Agendas", [
-      "getDataUsersbyParam",
       "getDataByRangoSuperior",
       "CreateAgendaNueva",
       "getDatabyParam",
       "DeleteItem",
       "GetAgendasSelectAct",
     ]),
+    ...mapActions("users", [
+      "loadUsers",
+    ]),
 
     async BuscarProfesionales() {
-      this.paramsProfesionales = [
-        {
-          bd: "profesionales",
-          parametro: "id_ips",
-          valor: this.id_ips,
-          rta: "setStateProfesionales",
-        },
-      ];
-      this.getDataUsersbyParam(this.paramsProfesionales);
+      // Cargar usuarios del módulo nuevo
+      await this.loadUsers();
       await this.GetListadoAgendas();
       this.fijarfechadia();
       await this.FiltrarAgendaDia();
@@ -165,8 +160,15 @@ export default {
 
   /* --------------------------------------------------------------------------------------------------- */
   computed: {
-    ...mapState("Auth", ["user", "id_ips", "rol", "info", "dataprofesionales"]),
+    ...mapState("Auth", ["user", "id_ips", "rol", "info"]),
     ...mapState("Agendas", ["dataAgendas"]),
+    ...mapState("users", ["users"]),
+    ...mapGetters("users", ["getProfessionalsByIps"]),
+
+    dataprofesionales() {
+      // Usar el getter para obtener profesionales de la IPS actual
+      return this.getProfessionalsByIps(this.id_ips);
+    },
 
     formattedDate() {
       return moment(this.fecha_agenda).format("YYYY-MM-DD");
@@ -419,7 +421,7 @@ organizar las fechas(reservar cita)  en orden ya que aparecen desordenadas
     </div>
     <br />
     <div class="container home">
-      <router-link to="/dashboard">Home</router-link>
+      <router-link to="/">Home</router-link>
     </div>
   </div>
 </template>

@@ -1,5 +1,6 @@
 <script>
 import { mapActions, mapState } from "vuex";
+import { getCachedUserProfile } from "@/security/accessControl";
 import moment from "moment";
 
 export default {
@@ -19,7 +20,6 @@ export default {
   }),
   methods: {
     ...mapActions("Agendas", ["getDatabyParam", "updateReserva"]),
-    ...mapActions("Auth", ["getDatabyKey"]),
 
     async GetAllCitasDia() {
       this.paramsGetAllcitas = [
@@ -30,9 +30,10 @@ export default {
           rta: "setStateCitas",
         },
       ];
-      await this.getDatabyParam(this.paramsGetAllcitas);
-      this.DataPCita = this.dataCitas.filter(
-        (cita) => cita.idprofesional == this.id_profesional
+      const result = await this.getDatabyParam(this.paramsGetAllcitas);
+      const citas = Array.isArray(result) ? result : [];
+      this.DataPCita = citas.filter(
+        (cita) => cita.idprofesional === this.idprofesionalLogueado
       );
 
       this.CitasAsistidas = this.DataPCita.filter((cita) => cita.estado == "SI");
@@ -50,82 +51,67 @@ export default {
         id: Dcita.id,
         estado: rta,
         bd: "citas",
-        /* recompilar esto , solo se reuqiere actualizar el estado */
       };
-
-      if (rta == "SI") {
-        console.log("cita asistida");
-      } else {
-        console.log("cita no asistida");
-      }
 
       await this.updateReserva(this.ParamsActualizarCita);
       this.GetAllCitasDia();
     },
 
-    async getDataProfesional() {
-      return new Promise((resolve) => {
-        this.params = {
-          bd: "profesionales",
-          clavePrincipal: this.id_profesional,
-          rta: "setStateDataProfesional",
-        };
-        this.$nextTick(() => {
-          this.getDatabyKey(this.params);
-          // Espera a que los datos estén disponibles
-          const checkData = setInterval(() => {
-            if (this.dataprofesionales && this.dataprofesionales.length > 0) {
-              clearInterval(checkData);
-              resolve();
-            }
-          }, 100);
-          // Timeout de 5 segundos
-          setTimeout(() => {
-            clearInterval(checkData);
-            resolve();
-          }, 5000);
-        });
-      });
+    async GetAllAgendas() {
+      // Obtiene todas las agendas asignadas al profesional logueado
+      const paramsAgendas = [
+        {
+          bd: "agendas",
+          parametro: "id_profesional",
+          valor: this.idprofesionalLogueado,
+          rta: "setStateAgendas",
+        },
+      ];
+      await this.getDatabyParam(paramsAgendas);
     },
   },
   computed: {
-    ...mapState("Agendas", ["dataCitas"]),
-    ...mapState("Auth", ["id_ips", "dataprofesionales", "id_profesional"]),
+    ...mapState("Agendas", ["dataCitas", "dataAgendas"]),
+    ...mapState("Auth", ["id_ips"]),
+
+    // Perfil del usuario logueado desde caché
+    perfilLogueado() {
+      return getCachedUserProfile() || {};
+    },
+
+    // UID del profesional logueado (desde el perfil cacheado)
+    idprofesionalLogueado() {
+      return this.perfilLogueado.uid || "";
+    },
+
+    // Nombre completo del profesional logueado
+    nombreProfesional() {
+      const nombre = this.perfilLogueado.nombre || "";
+      const apellido = this.perfilLogueado.apellido || "";
+      return `${nombre} ${apellido}`.trim() || "Profesional";
+    },
+
+    // Tipo de consulta del profesional logueado
+    tipoCita() {
+      return this.perfilLogueado.tipo_consulta || "";
+    },
+
+    rolUsuario() {
+      return this.perfilLogueado.rol || "";
+    },
+
     idIPS() {
-      return this.id_ips || "1"; // Default to '1' if not available
+      return this.perfilLogueado.id_ips || this.id_ips || "1";
     },
 
     diaformatedfecha() {
       return moment(new Date()).format("YYYY-MM-DD");
     },
-
-    idprofesionalLogueado() {
-      if (this.id_profesional) {
-        return this.id_profesional;
-      }
-      if (this.dataprofesionales && this.dataprofesionales.length > 0) {
-        return this.dataprofesionales[0].id;
-      }
-      return this.id_profesional; // Fallback to data property
-    },
-
-    tipoCita() {
-      const tipo =
-        this.dataprofesionales && this.dataprofesionales.length
-          ? this.dataprofesionales[0].tipo
-          : null;
-      return (
-        tipo ||
-        (this.CitasAgendadas && this.CitasAgendadas.length
-          ? this.CitasAgendadas[0].tipocita
-          : "")
-      );
-    },
   },
 
   created() {
     this.fijarfechadia();
-    Promise.all([this.GetAllCitasDia(), this.getDataProfesional()]).then(() => {
+    Promise.all([this.GetAllCitasDia(), this.GetAllAgendas()]).then(() => {
       this.isLoading = false;
     });
   },
@@ -142,18 +128,12 @@ export default {
         </div>
         <div class="col-7" style="text-align: right">
           Profesional:
-          <span v-if="dataprofesionales && dataprofesionales.length">
-            {{ dataprofesionales[0].name1 }} {{ dataprofesionales[0].apell1 }}
-          </span>
-          <span v-else> Cargando profesional... </span>
+          <span>{{ nombreProfesional }}</span>
           <br />
           Consulta
-          <span v-if="dataprofesionales && dataprofesionales.length">
-            {{ dataprofesionales[0].tipo }}
-          </span>
-          <span v-else> ... </span>
+          <span>{{ tipoCita || "—" }}</span>
           / <small> {{ fechaHoy }}</small> <br />
-          <small>IPS: {{ idIPS }}</small>
+          <small>Rol: {{ rolUsuario }}</small> &nbsp; <small>IPS: {{ idIPS }}</small>
         </div>
       </div>
     </div>
@@ -268,6 +248,34 @@ export default {
           </table>
         </div>
       </div>
+      <br /><br />
+
+      <h5 class="card-title">Agendas Asignadas</h5>
+      <div v-if="dataAgendas && dataAgendas.length > 0" class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead class="table-secondary">
+            <tr>
+              <th scope="col">Fecha</th>
+              <th scope="col">Horario</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="agenda in dataAgendas" :key="agenda.id">
+              <td>{{ agenda.fecha }}</td>
+              <td>{{ agenda.horainicio }} - {{ agenda.horafinal }}</td>
+              <td>{{ agenda.tipo }}</td>
+              <td>
+                <span v-if="agenda.estado === 'activa'" class="badge bg-success">Activa</span>
+                <span v-else-if="agenda.estado === 'inactiva'" class="badge bg-danger">Inactiva</span>
+                <span v-else class="badge bg-secondary">{{ agenda.estado }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div v-else class="alert alert-info">No hay agendas asignadas</div>
       <br /><br />
     </div>
   </div>
